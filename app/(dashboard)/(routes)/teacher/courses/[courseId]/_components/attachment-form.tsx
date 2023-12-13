@@ -11,7 +11,7 @@ import { File, ImageIcon, Loader2, Pencil, PlusCircle, X } from 'lucide-react'
 import Image from 'next/image'
 
 import toast from 'react-hot-toast'
-import { Course } from '@prisma/client'
+import { Attachment, Course } from '@prisma/client'
 import { FileUpload } from '@/components/file-upload'
 
 interface AttachmentFormProps {
