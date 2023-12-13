@@ -4,25 +4,22 @@ import * as z from 'zod'
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-import { Course } from '@prisma/client'
-
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { Course } from '@prisma/client'
 
 import {
   Form,
   FormControl,
   FormField,
-  FormLabel,
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import toast from 'react-hot-toast'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { Textarea } from '@/components/ui/textarea'
 import { Combobox } from '@/components/ui/combobox'
 
 interface CategoryFormProps {
@@ -35,7 +32,11 @@ const formSchema = z.object({
   categoryId: z.string().min(1),
 })
 
-export const CategoryForm = ({ initialData, courseId, options }: CategoryFormProps) => {
+export const CategoryForm = ({
+  initialData,
+  courseId,
+  options,
+}: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -45,7 +46,7 @@ export const CategoryForm = ({ initialData, courseId, options }: CategoryFormPro
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryId: initialData?.description || '',
+      categoryId: initialData?.categoryId || '',
     },
   })
 
@@ -57,15 +58,17 @@ export const CategoryForm = ({ initialData, courseId, options }: CategoryFormPro
       toast.success('Course updated')
       toggleEdit()
       router.refresh()
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong')
     }
   }
 
-const selectedOption = options.find((option) => option.value === initialData.categoryId)
+  const selectedOption = options.find(
+    (option) => option.value === initialData.categoryId
+  )
 
   return (
-    <div className="mt-6 bg-slate-100 rounded-md p-4">
+    <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Course category
         <Button onClick={toggleEdit} variant="ghost">
@@ -101,10 +104,7 @@ const selectedOption = options.find((option) => option.value === initialData.cat
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox
-                      options={...options}
-                      {...field}
-                    />
+                    <Combobox options={...options} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
