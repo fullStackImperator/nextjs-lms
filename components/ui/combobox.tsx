@@ -18,10 +18,15 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
-interface ComboBoxProps {
+// interface ComboBoxProps {
+//   options: { label: string; value: string }[]
+//   value?: string
+//   onChange: (value: string) => void
+// }
+interface ComboboxProps {
   options: { label: string; value: string }[]
   value?: string
-  onChange: (value: string) => void
+  onChange: (Value: string) => void
 }
 
 export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
