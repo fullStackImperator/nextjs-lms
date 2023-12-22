@@ -94,6 +94,12 @@ export const columns: ColumnDef<Course>[] = [
                 Edit
               </DropdownMenuItem>
             </Link>
+            <Link href={`/teacher/courses/${id}/grading`}>
+              <DropdownMenuItem>
+                <Pencil className="h-4 w-4 mr-2" />
+                Grade
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       )

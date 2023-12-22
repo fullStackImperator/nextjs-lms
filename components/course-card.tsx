@@ -11,7 +11,7 @@ type CourseCardProps = {
     imageUrl: string;
     chaptersLength: number;
     price: number;
-    progress: number | null;
+    progress?: number | null;
     category: string;
 }
 

@@ -1,5 +1,5 @@
 import { db } from '@/lib/db'
-import { Categories } from './_components/categories'
+import { Categories } from '../../_components/categories'
 import { SearchInput } from '@/components/search-input'
 import { getCourses } from '@/actions/get-courses'
 import { auth } from '@clerk/nextjs'
@@ -15,15 +15,12 @@ import { CoursesList } from '@/components/courses-list'
 
 type SearchPageProps = {
   searchParams: {
-    title: string;
-    categoryId: string;
+    title: string
+    categoryId: string
   }
 }
 
-const SearchPage = async ({
-  searchParams,
-}: SearchPageProps) => {
-
+const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { userId } = auth()
 
   if (!userId) {
@@ -39,7 +36,7 @@ const SearchPage = async ({
   const courses = await getCourses({
     userId,
     ...searchParams,
-  }) 
+  })
 
   // console.log('items: ', courses)
 
