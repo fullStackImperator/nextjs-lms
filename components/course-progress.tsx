@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 
 
 type CourseProgressProps = {
-    value: number;
-    variant?: "default" | "success";
-    size?: "default" | "sm";
+  value: number | null
+  variant?: 'default' | 'success'
+  size?: 'default' | 'sm'
 }
 
 const colorByVariant = {
@@ -24,19 +24,17 @@ export const CourseProgress = ({
     size,
 }: CourseProgressProps) => {
     return (
-        <div>
-            <Progress 
-                className="h-2"
-                value={value}
-                variant={variant}
-            />
-            <p className={cn(
-                "font-medium mt-2 text-sky-700",
-                colorByVariant[variant || "default"],
-                sizeByVariant[size || "default"],
-            )}>
-                {Math.round(value)}% Complete
-            </p>
-        </div>
+      <div>
+        <Progress className="h-2" value={value} variant={variant} />
+        <p
+          className={cn(
+            'font-medium mt-2 text-sky-700',
+            colorByVariant[variant || 'default'],
+            sizeByVariant[size || 'default']
+          )}
+        >
+          {typeof value === 'number' ? `${Math.round(value)}% Complete` : ''}
+        </p>
+      </div>
     )
 }

@@ -6,13 +6,13 @@ import { formatPrice } from "@/lib/format";
 import { CourseProgress } from "./course-progress";
 
 type CourseCardProps = {
-    id: string;
-    title: string;
-    imageUrl: string;
-    chaptersLength: number;
-    price: number;
-    progress?: number | null;
-    category: string;
+  id: string
+  title: string
+  imageUrl: string
+  chaptersLength: number
+  price: number
+  progress?: number | null
+  category: string
 }
 
 
@@ -53,7 +53,7 @@ export const CourseCard = ({
                 <CourseProgress
                     variant={progress === 100 ? "success" : "default"}
                     size="sm"
-                    value={progress}
+                    value={progress!}
                 />
             </div>
           ) : (
