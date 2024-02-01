@@ -3,13 +3,14 @@ import { Category, Course } from '@prisma/client'
 import { getProgress } from '@/actions/get-progress'
 import { db } from '@/lib/db'
 
+// type Leaderboard = {
+//   userId: string
+//   totalPoints: number
+// }
+
 type Leaderboard = {
   [userId: string]: number; 
-  userId: string
-  totalPoints: number
 }
-
-
 export const getLeaderboard = async (): Promise<Leaderboard[]> => {
   try {
     const gradings = await db.grading.findMany({
@@ -19,7 +20,8 @@ export const getLeaderboard = async (): Promise<Leaderboard[]> => {
       },
     })
 
-    const leaderboard = {}
+    const leaderboard: Leaderboard = {}; // Specify the type for the leaderboard object
+
 
     gradings.forEach((grading) => {
       const userId = grading.userId
