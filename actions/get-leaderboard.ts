@@ -11,7 +11,7 @@ import { db } from '@/lib/db'
 type Leaderboard = {
   [userId: string]: number; 
 }
-export const getLeaderboard = async (): Promise<Leaderboard[]> => {
+export const getLeaderboard = async (): Promise<Leaderboard> => {
   try {
     const gradings = await db.grading.findMany({
       select: {
