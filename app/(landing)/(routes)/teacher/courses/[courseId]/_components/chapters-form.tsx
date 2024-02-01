@@ -96,7 +96,7 @@ const onEdit = (id: string) => {
         </div>
       )}
       <div className="font-medium flex items-center justify-between">
-        Course chapters
+        Projekt Kapitel
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
             <>Cancel</>
@@ -122,7 +122,7 @@ const onEdit = (id: string) => {
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Einführung in den Kurs...'"
+                      placeholder="e.g. 'Einführung in das Projekt...'"
                       {...field}
                     />
                   </FormControl>
@@ -143,7 +143,7 @@ const onEdit = (id: string) => {
             !initialData.chapters.length && 'text-slate-500 italic'
           )}
         >
-          {!initialData.chapters.length && 'No chapters'}
+          {!initialData.chapters.length && 'Keine Kapitel'}
           <ChaptersList
             onEdit={onEdit}
             onReorder={onReorder}

@@ -33,7 +33,7 @@ export const CourseProgress = ({
             sizeByVariant[size || 'default']
           )}
         >
-          {typeof value === 'number' ? `${Math.round(value)}% Complete` : ''}
+          {typeof value === 'number' ? `${Math.round(value)}% Fortschritt` : ''}
         </p>
       </div>
     )

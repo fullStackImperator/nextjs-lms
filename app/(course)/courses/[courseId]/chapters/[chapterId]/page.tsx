@@ -56,7 +56,10 @@ const ChapterIdPage = async ({
           />
         )}
         {isLocked && (
-          <Banner variant="warning" label="Du musst zuerst den Kurs kaufen." />
+          <Banner
+            variant="warning"
+            label="Du musst dich für den Kurs anmelden."
+          />
         )}
         <div className="flex flex-col max-w-4xl mx-auto pb-20">
           <div className="p-4">
@@ -83,7 +86,7 @@ const ChapterIdPage = async ({
               ) : (
                 <CourseEnrollButton
                   courseId={params.courseId}
-                  price={course.price!}
+                  level={course.level!}
                 />
               )}
             </div>

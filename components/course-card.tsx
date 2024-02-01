@@ -10,7 +10,7 @@ type CourseCardProps = {
   title: string
   imageUrl: string
   chaptersLength: number
-  price: number
+  level: number
   progress?: number | null
   category: string
 }
@@ -21,7 +21,7 @@ export const CourseCard = ({
     title,
     imageUrl,
     chaptersLength,
-    price,
+    level,
     progress,
     category,
 }: CourseCardProps) => {
@@ -58,7 +58,7 @@ export const CourseCard = ({
             </div>
           ) : (
             <p className="text-md md:text-sm font-medium">
-                {formatPrice(price)}
+                Kurs Level: {level}
             </p>
           )}
         </div>

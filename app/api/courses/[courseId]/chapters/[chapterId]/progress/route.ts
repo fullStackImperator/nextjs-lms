@@ -11,6 +11,9 @@ export async function PUT(
         const {userId} = auth()
         const {isCompleted} = await req.json()
 
+console.log('userId', userId)
+console.log('params.chapterId', params.chapterId)
+
         if (!userId) {
             return new NextResponse("Unauthorized", {status: 401})
         }
@@ -33,7 +36,6 @@ export async function PUT(
         })
 
         return NextResponse.json(userProgress)
-
     } catch (error) {
         console.log("[CHAPTER_ID_PROGRESS]", error)
         return new NextResponse("Internal Error", {status:500})

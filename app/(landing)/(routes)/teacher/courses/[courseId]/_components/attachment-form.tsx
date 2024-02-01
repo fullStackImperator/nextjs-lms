@@ -62,13 +62,13 @@ export const AttachmentForm = ({
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course attachments
+        Projekt Material
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && <>Cancel</>}
           {!isEditing && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a file
+              Datei hinzufügen
             </>
           )}
         </Button>
@@ -77,7 +77,7 @@ export const AttachmentForm = ({
         <>
           {initialData.attachments.length === 0 && (
             <p className="text-sm mt-2 text-slate-500 italic">
-              No attachments yet
+              Keine Dateien vorhanden
             </p>
           )}
           {initialData.attachments.length > 0 && (
@@ -119,7 +119,7 @@ export const AttachmentForm = ({
             }}
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Fügen Sie Zusatzmaterial hinzu, welches den Schülern hilft den Kurs
+            Fügen Sie Kursmaterial hinzu, das den Schülern hilft das Projekt
             zu bewältigen.
           </div>
         </div>

@@ -16,6 +16,7 @@ const CoursesPage = async () => {
         return redirect("/")
     }
 
+    // find courses of the teacher !
     const courses = await db.course.findMany({
         where: {
             userId: userId,
@@ -25,6 +26,36 @@ const CoursesPage = async () => {
         }
     })
     
+
+// const enrolledUsers = await db.purchase.findMany({
+//   where: {
+//     courseId: YOUR_COURSE_ID, // Replace with the actual course ID you're interested in
+//   },
+//   select: {
+//     userId: true,
+//   },
+// })
+
+
+
+    const coursesWithEnrolledStudents = await db.course.findMany({
+      include: {
+        purchases: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+    })
+
+    // Assuming coursesWithEnrolledStudents is an array of Course objects
+    const tableData = coursesWithEnrolledStudents.map((course) => ({
+      id: course.id,
+      title: course.title,
+      enrolledStudents: course.purchases.length,
+      isPublished: course.isPublished,
+    }))
+
     return (
       <div>
         <div className="p-6">
@@ -33,7 +64,7 @@ const CoursesPage = async () => {
                     New Course
                 </Button>
                 </Link> */}
-          <DataTable columns={columns} data={courses} />
+          <DataTable columns={columns} data={tableData} />
         </div>
       </div>
     )

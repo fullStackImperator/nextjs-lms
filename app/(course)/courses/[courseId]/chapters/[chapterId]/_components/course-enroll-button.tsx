@@ -3,29 +3,35 @@
 import { Button } from "@/components/ui/button"
 import { formatPrice } from "@/lib/format"
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 
 type CourseEnrollButtonProps = {
-    price: number;
+    level: number;
     courseId: string;
 }
 
 
 export const CourseEnrollButton = ({
-    price,
+    level,
     courseId,
 }: CourseEnrollButtonProps) => {
     const [isLoading, setIsLoading] = useState(false)
+
+    const router = useRouter()
 
     const onClick = async () => {
         try {
             setIsLoading(true)
 
-            const response = await axios.post(`/api/courses/${courseId}/checkout`)
+            await axios.post(`/api/courses/${courseId}/checkout`)
 
-            window.location.assign(response.data.url)
+            toast.success('Erfolgreich angemeldet')
+            
+            router.refresh()
+
         } catch (error) {
             toast.error("Something went wrong")
         } finally {
@@ -34,13 +40,13 @@ export const CourseEnrollButton = ({
     }
 
     return (
-        <Button
+      <Button
         onClick={onClick}
         disabled={isLoading}
         size="sm"
-            className="w-full md:w-auto"
-        >
-            Enroll for {formatPrice(price)}
-        </Button>
+        className="w-full md:w-auto"
+      >
+        Anmelden
+      </Button>
     )
 }

@@ -65,7 +65,7 @@ export const ChapterAccessForm = ({
         `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       )
-      toast.success('Chapter updated')
+      toast.success('Kapitel erfolgreich bearbeitet')
       toggleEdit()
       router.refresh()
     } catch (error) {
@@ -83,7 +83,7 @@ export const ChapterAccessForm = ({
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-               Verfügbarkeit bearbeiten
+              Verfügbarkeit bearbeiten
             </>
           )}
         </Button>
@@ -96,9 +96,9 @@ export const ChapterAccessForm = ({
           )}
         >
           {initialData.isFree ? (
-            <>This chapter is free for preview</>
+            <>Dieses Kapitel ist einsehbar ohne Anmeldung</>
           ) : (
-            <>This chapter is not free</>
+            <>TDieses Kapitel ist nur mit Anmeldung verfügbar</>
           )}
         </div>
       )}

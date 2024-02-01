@@ -32,6 +32,8 @@ export const ChapterVideoForm = ({
   courseId,
   chapterId,
 }: ChapterVideoFormProps) => {
+
+  
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -44,7 +46,7 @@ export const ChapterVideoForm = ({
         `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       )
-      toast.success('Chapter updated')
+      toast.success('Kiptel erfolgreich bearbeitet')
       toggleEdit()
       router.refresh()
     } catch (error) {
@@ -61,13 +63,13 @@ export const ChapterVideoForm = ({
           {!isEditing && !initialData.videoUrl && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add a video
+              Video hinzufügen
             </>
           )}
           {!isEditing && initialData.videoUrl && (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit video
+              Video bearbeiten
             </>
           )}
         </Button>
@@ -101,8 +103,7 @@ export const ChapterVideoForm = ({
       )}
       {initialData.videoUrl && !isEditing && (
         <div className="text-xs text-muted-foreground mt-2">
-          Video can take a few minutes to process. Refresh the page if video
-          does not appear
+          Es kann einen Augenblick dauern, bis das Video hochgeladen wird. Laden Sie die Seite neu, sollte das Video nicht sichtbar werden.
         </div>
       )}
     </div>

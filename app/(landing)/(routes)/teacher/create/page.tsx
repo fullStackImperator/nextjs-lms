@@ -20,7 +20,7 @@ import toast from 'react-hot-toast'
 
 const formSchema = z.object({
   title: z.string().min(1, {
-    message: 'Title is required',
+    message: 'Titel ist erforderlich',
   }),
 })
 
@@ -48,10 +48,9 @@ const CreatePage = () => {
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
-        <h1 className="text-2xl">Name your course</h1>
+        <h1 className="text-2xl">Geben Sie ein Projekttitel an</h1>
         <p className="text-sm text-slate-600">
-          What would you like to name your course? Don&apos;t worry, you can
-          change the name later.
+          Wie möchten Sie das Projekt nennen? Keine Sorge, Sie können den Titel später anpassen.
         </p>
         <Form {...form}>
           <form
@@ -64,16 +63,16 @@ const CreatePage = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course title</FormLabel>
+                  <FormLabel>Projekt Titel</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder="z.B. 'Pokemon aus dem 3D Drucker'"
                       {...field} // passes onChange.. onBlur name etc
                     />
                   </FormControl>
                   <FormDescription>
-                    What will you teach in this course?
+                    Was soll in dem Projekt gelehrt werden?
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -86,7 +85,7 @@ const CreatePage = () => {
                 </Button>
               </Link>
               <Button type="submit" disabled={!isValid || isSubmitting}>
-                Continue
+                Weiter
               </Button>
             </div>
           </form>

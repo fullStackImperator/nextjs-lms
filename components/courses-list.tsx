@@ -25,7 +25,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
             title={item.title}
             imageUrl={item.imageUrl!}
             chaptersLength={item.chapters.length}
-            price={item.price!}
+            level={item.level!}
             progress={item.progress}
             category={item?.category?.name!}
           />
@@ -33,7 +33,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
       </div>
       {items.length === 0 && (
         <div className="text-center text-sm text-muted-foreground mt-10">
-          Kein Kurs gefunden
+          Kein Projekt gefunden
         </div>
       )}
     </div>

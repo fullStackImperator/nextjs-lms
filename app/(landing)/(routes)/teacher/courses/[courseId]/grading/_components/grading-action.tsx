@@ -2,9 +2,7 @@
 
 import axios from 'axios'
 import { ArrowLeft, Trash } from 'lucide-react'
-import {
-  useState,
-} from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
@@ -21,10 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-
-
-
-
 
 interface GradingActionsProps {
   courseId: string
@@ -94,48 +88,56 @@ export const GradingActions = ({
           Zurück zur Kursübersicht
         </Link>
         {/* </div> */}
-        <Button onClick={onClick} variant="outline" size="sm">
-          Punkte übertragen
+        <Button onClick={onClick} variant="success" size="sm">
+          Punkte übernehmen
         </Button>
       </div>
       {/* <GradingActions 
             courseId={params.courseId}
         /> */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-        <div className="space-y-4">
-          <Table>
-            <TableCaption>Points for enrolled students</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Schüler</TableHead>
-                <TableHead>Punkte</TableHead>
-                <TableHead>Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {enrollmentWithGrading.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell>{student.userId}</TableCell>
-                  <TableCell>
-                    <Input
-                      id={`punkte-${student.userId}`}
-                      defaultValue={student.grading?.points}
-                      onChange={(e) => {
-                        const newPoints = parseInt(e.target.value, 10) || 0
-                        handleInputChange(student.userId, newPoints)
-                      }}
-                      className="h-8"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {/* Add any additional action buttons or elements here */}
-                  </TableCell>
+      <h1 className="mt-6 mb-4 text-muted-foreground">Kurs: {courseId.title}</h1>
+      <h4 className="mt-2 mb-4 text-muted-foreground">
+        Punkte verteilen für angemeldete Schüler
+      </h4>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"> */}
+      <div className="space-y-4">
+        <div className="flex flex-col relative gap-4 w-full">
+          <div className="w-full p-4 z-0 flex flex-col relative justify-between gap-4 overflow-auto rounded-lg shadow-small">
+            <Table className="min-w-full h-auto table-auto w-full">
+              {/* <TableCaption>Points for enrolled students</TableCaption> */}
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Schüler</TableHead>
+                  <TableHead>Punkte</TableHead>
+                  {/* <TableHead>Action</TableHead> */}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {enrollmentWithGrading.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell>{student.userId}</TableCell>
+                    <TableCell>
+                      <Input
+                        id={`punkte-${student.userId}`}
+                        defaultValue={student.grading?.points}
+                        onChange={(e) => {
+                          const newPoints = parseInt(e.target.value, 10) || 0
+                          handleInputChange(student.userId, newPoints)
+                        }}
+                        className="h-8"
+                      />
+                    </TableCell>
+                    {/* <TableCell> */}
+                    {/* Add any additional action buttons or elements here */}
+                    {/* </TableCell> */}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </div>
+      {/* </div> */}
     </div>
   )
 }

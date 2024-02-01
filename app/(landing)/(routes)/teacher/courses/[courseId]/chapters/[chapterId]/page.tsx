@@ -91,7 +91,7 @@ const ChapterIdPage = async ({
                     <div>
                     <div className="flex items-center gap-x-2">
                         <IconBadge icon={LayoutDashboard} />
-                        <h2 className="text-xl">Customize your chapter</h2>
+                        <h2 className="text-xl">kapitel Informationen</h2>
                     </div>
                     <ChapterTitleForm
                         initialData={chapter}
@@ -107,7 +107,7 @@ const ChapterIdPage = async ({
                     <div>
                         <div className="flex items-center gap-x-2">
                             <IconBadge icon={Eye} />
-                            <h2 className="text-xl">Access Settings</h2>
+                            <h2 className="text-xl">Sichtbarkeit</h2>
                         </div>
                         <ChapterAccessForm
                             initialData={chapter}

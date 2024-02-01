@@ -17,6 +17,7 @@ model Course {
   description String? @db.Text
   imageUrl String? @db.Text
   price Float?
+  level Int?
   isPublished Boolean @default(false)
 
   categoryId String?
@@ -111,6 +112,8 @@ model Purchase {
 
   courseId String
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

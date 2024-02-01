@@ -32,7 +32,7 @@ export const getChapter = async ({
             id: courseId,
           },
           select: {
-            price: true,
+            level: true,
           }
         })
 

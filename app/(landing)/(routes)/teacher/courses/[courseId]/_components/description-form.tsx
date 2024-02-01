@@ -32,7 +32,7 @@ interface DescriptionFormProps {
 
 const formSchema = z.object({
   description: z.string().min(1, {
-    message: 'Description is required',
+    message: 'Beschreibung ist notwendig',
   }),
 })
 
@@ -55,7 +55,7 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
         await axios.patch(`/api/courses/${courseId}`, values)
-        toast.success("Course updated")
+        toast.success("Projekt aktualisiert")
         toggleEdit()
         router.refresh()
     } catch (error) {
@@ -66,21 +66,21 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course description
+        Projekt Beschreibung
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit description
+              Beschreibung bearbeiten
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
       <p className={cn("text-sm mt-2", !initialData.description && "text-slate-500 italic")}>
-        {initialData.description || "No description"}
+        {initialData.description || "Keine Beschreibung"}
         </p>
       )}
       {isEditing && (
@@ -107,7 +107,7 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Speichern
               </Button>
             </div>
           </form>

@@ -8,6 +8,8 @@ import { CheckCircle, Clock } from 'lucide-react'
 import Image from 'next/image'
 import { InfoCard } from './_components/info-card'
 import { redirect } from 'next/navigation'
+import { UserScoreBanner } from '../leaderboard/_components/banner-score'
+import { getUserPoints } from '@/actions/get-userPoints'
 
 
 
@@ -25,9 +27,12 @@ export default async function Dashboard() {
     coursesInProgress,
   } = await getDashboardCourses(userId)
 
-  
+  const userPoints = await getUserPoints()
+
+
   return (
     <div className="p-6 space-y-4">
+      <UserScoreBanner userPoints={userPoints} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InfoCard
           icon={Clock}
