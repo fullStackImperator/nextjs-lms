@@ -4,6 +4,7 @@ import { getProgress } from '@/actions/get-progress'
 import { db } from '@/lib/db'
 
 type Leaderboard = {
+  [userId: string]: number; 
   userId: string
   totalPoints: number
 }
