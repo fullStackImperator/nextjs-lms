@@ -46,6 +46,6 @@ export const getLeaderboard = async (): Promise<Leaderboard> => {
     return leaderboardArray
   } catch (error) {
     console.log('[GET_LEADERBOARD]', error)
-    return []
+    return {}
   }
 }
