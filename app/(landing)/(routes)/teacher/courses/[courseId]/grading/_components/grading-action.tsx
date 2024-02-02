@@ -34,12 +34,14 @@ interface GradingActionsProps {
       createdAt?: Date
       updatedAt?: Date
     } | null
-  }[]
+  }[],
+  courseName: string,
 }
 
 export const GradingActions = ({
   courseId,
   enrollmentWithGrading,
+  courseName,
 }: GradingActionsProps) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
@@ -79,7 +81,6 @@ export const GradingActions = ({
   return (
     <div className="p-6">
       <div className="flex items-center justify-between align-middle">
-        {/* <div className="flex items-center text-sm mb-6"> */}
         <Link
           href={`/teacher/courses`}
           className="flex items-center text-sm hover:opacity-75 transition "
@@ -87,7 +88,6 @@ export const GradingActions = ({
           <ArrowLeft className="h-4 w-4 mr-2" />
           Zurück zur Kursübersicht
         </Link>
-        {/* </div> */}
         <Button onClick={onClick} variant="success" size="sm">
           Punkte übernehmen
         </Button>
@@ -95,8 +95,8 @@ export const GradingActions = ({
       {/* <GradingActions 
             courseId={params.courseId}
         /> */}
-      <h1 className="mt-6 mb-4 text-muted-foreground">Kurs: {courseId.title}</h1>
-      <h4 className="mt-2 mb-4 text-muted-foreground">
+      <h1 className="p-6 mt-6 text-xl text-bold ">Kurs: {courseName}</h1>
+      <h4 className="pl-6 mb-4 text-muted-foreground">
         Punkte verteilen für angemeldete Schüler
       </h4>
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"> */}

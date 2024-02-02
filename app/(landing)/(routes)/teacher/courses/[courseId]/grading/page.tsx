@@ -60,7 +60,16 @@ const CourseGradingPage = async ({
   // console.log('enrolledStudents: ', enrolledStudents)
   // console.log('enrollmentWithGrading: ', enrollmentWithGrading)
   
-  
+    // Fetch course details based on the courseId
+  const course = await db.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+    select: {
+      title: true,
+    },
+  })
+
   const userList = await clerkClient.users.getUserList()
   
   console.log('userList: ', userList)
@@ -71,6 +80,7 @@ const CourseGradingPage = async ({
       <GradingActions
         courseId={params.courseId}
         enrollmentWithGrading={enrollmentWithGrading!}
+        courseName={course.title}
       />
     </>
   )

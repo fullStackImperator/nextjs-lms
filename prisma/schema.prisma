@@ -26,6 +26,8 @@ model Course {
   chapters Chapter[]
   attachments Attachment[]
   purchases Purchase[]
+  requirements String[] // List of requirements for the course
+
 
   gradings Grading[]
 
