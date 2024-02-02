@@ -3,6 +3,11 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { isTeacher } from '@/lib/teacher'
 
+interface Leaderboard {
+  [userId: string]: number;
+}
+
+
 export async function GET(
   req: Request,
   { params }: { params: { courseId: string } }
@@ -24,7 +29,7 @@ export async function GET(
     })
 
     // const leaderboard = {}
-    const leaderboard: Leaderboard = {}; // Initialize leaderboard as an empty object
+    const leaderboard: Leaderboard = {}
 
 
     gradings.forEach((grading) => {
