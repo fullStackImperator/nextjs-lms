@@ -80,7 +80,7 @@ const CourseGradingPage = async ({
       <GradingActions
         courseId={params.courseId}
         enrollmentWithGrading={enrollmentWithGrading!}
-        courseName={course.title}
+        courseName={course?.title}
       />
     </>
   )

@@ -35,7 +35,7 @@ interface GradingActionsProps {
       updatedAt?: Date
     } | null
   }[],
-  courseName: string,
+  courseName?: string | "",
 }
 
 export const GradingActions = ({
