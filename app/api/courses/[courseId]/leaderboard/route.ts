@@ -23,7 +23,9 @@ export async function GET(
             },
     })
 
-    const leaderboard = {}
+    // const leaderboard = {}
+    const leaderboard: Leaderboard = {}; // Initialize leaderboard as an empty object
+
 
     gradings.forEach((grading) => {
         const userId = grading.userId
