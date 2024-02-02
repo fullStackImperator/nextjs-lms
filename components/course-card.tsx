@@ -40,13 +40,14 @@ export const CourseCard = ({
             {title}
           </div>
           <p className="text-xs text-muted-foreground">{category}</p>
-          <div className="my-3 flex items-center gap-x-2 text-sm">
-            <div className="flex items-center gap-x-1 text-slate-500">
+          <div className="my-3 flex items-center justify-between text-sm">
+            <div className="flex items-center gap-x-2 text-slate-500">
               <IconBadge size="sm" icon={BookOpen} />
               <span>
                 {chaptersLength} {chaptersLength === 1 ? 'Kapitel' : 'Kapitel'}
               </span>
             </div>
+            <p className="text-md md:text-sm text-slate-500 font-medium">Level: {level}</p>
           </div>
           {progress !== null ? (
             <div>

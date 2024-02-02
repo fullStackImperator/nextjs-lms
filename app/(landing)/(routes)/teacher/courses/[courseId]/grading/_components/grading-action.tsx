@@ -95,7 +95,7 @@ export const GradingActions = ({
       {/* <GradingActions 
             courseId={params.courseId}
         /> */}
-      <h1 className="p-6 mt-6 text-xl text-bold ">Kurs: {courseName}</h1>
+      <h1 className="p-6 mt-6 text-xl font-bold">Kurs: {courseName}</h1>
       <h4 className="pl-6 mb-4 text-muted-foreground">
         Punkte verteilen für angemeldete Schüler
       </h4>

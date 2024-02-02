@@ -24,7 +24,7 @@ export const CoursesListLanding = ({ items }: CoursesListProps) => {
             title={item.title}
             imageUrl={item.imageUrl!}
             chaptersLength={item.chapters.length}
-            price={item.price!}
+            level={item?.level!}
             category={item?.category?.name!}
           />
         ))}
