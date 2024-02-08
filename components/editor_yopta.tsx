@@ -1,4 +1,6 @@
 // import { Inter } from 'next/font/google';
+import NextImage from 'next/image'
+
 import { useEffect, useState } from 'react'
 import YooptaEditor from '@yoopta/editor'
 

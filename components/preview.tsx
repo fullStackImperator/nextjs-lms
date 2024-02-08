@@ -100,42 +100,48 @@ const plugins = [
   }),
   Image.extend({
     renderer: {
-      editor: Image.getPlugin.renderer.editor,
+      // @ts-ignore
+      editor: Image.getPlugin.renderer.editor!,
+      // @ts-ignore
       render: (props) => {
-        const { element, children, attributes, size } = props;
-
-        if (!element.data.url) return null;
+        // @ts-ignore
+        const { element, children, attributes, size } = props
+        // @ts-ignore
+        if (!element.data.url) return null
 
         return (
           <div {...attributes} contentEditable={false}>
             <NextImage
+              // @ts-ignore
               src={element.data.url || element.data['data-src']}
+              // @ts-ignore
               width={size?.width || element.data.size.width}
+              // @ts-ignore
               height={size?.height || element.data.size.height}
               alt="supe iamge"
               style={{ display: 'block', marginTop: 20 }}
             />
             {children}
           </div>
-        );
+        )
       },
     },
-    options: {
-      maxWidth: 650,
-      maxHeight: 650,
-      onUpload: async (file: File) => {
-        const response = await uploadToCloudinary(file, 'image');
-        return { url: response.url, width: response.data.width, height: response.data.height };
-      },
-    },
+    // options: {
+    //   maxWidth: 650,
+    //   maxHeight: 650,
+    //   onUpload: async (file: File) => {
+    //     const response = await uploadToCloudinary(file, 'image');
+    //     return { url: response.url, width: response.data.width, height: response.data.height };
+    //   },
+    // },
   }),
   Video.extend({
-    options: {
-      maxWidth: 650,
-      maxHeight: 650,
-    },
+    // options: {
+    //   maxWidth: 650,
+    //   maxHeight: 650,
+    // },
   }),
-];
+]
 
 const marks = [Bold, Italic, CodeMark, Underline, Strike];
 
@@ -145,20 +151,20 @@ interface PreviewProps {
 }
 
 export default function Preview({ value }: PreviewProps) {
- 
-//     // Map the YooptaValue array into Descendant array
-//   const data: Descendant[] = value.map((item) => {
-//     // Map each YooptaValue item to a Descendant item
-//     return {
-//       type: item.type as keyof Descendant,
-//       id: item.id,
-//       children: item.children.map((child) => ({
-//         ...child,
-//         text: child.text || '',
-//       })),
-//     }
-//   })
-
+  //     // Map the YooptaValue array into Descendant array
+  //   const data: Descendant[] = value.map((item) => {
+  //     // Map each YooptaValue item to a Descendant item
+  //     return {
+  //       type: item.type as keyof Descendant,
+  //       id: item.id,
+  //       children: item.children.map((child) => ({
+  //         ...child,
+  //         text: child.text || '',
+  //       })),
+  //     }
+  //   })
+  
+  // @ts-ignore
   return (
     // <main
     //   style={{
@@ -168,9 +174,10 @@ export default function Preview({ value }: PreviewProps) {
     //   }}
     //   className={`flex min-h-screen w-full h-full flex-col items-center justify-between p-24 `}
     // >
-      <div className="w-full h-full bg-white p-2">
-        <YoptaRenderer data={value} plugins={plugins} marks={marks} />
-      </div>
+
+    <div className="w-full h-full bg-white p-2">
+      <YoptaRenderer data={value} plugins={plugins} marks={marks} />
+    </div>
     // </main>
   )
 }
