@@ -21,7 +21,7 @@ import Toolbar from '@yoopta/toolbar'
 
 // import { uploadToCloudinary } from '@/utils/cloudinary'
 import { YooptaValue } from '@/lib/yopta/initialData'
-// import { initalValue } from '@/lib/yopta/values'
+
 
 // list of plugins should be placed outside component
 const plugins = [
