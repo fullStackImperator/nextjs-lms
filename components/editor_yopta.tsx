@@ -37,12 +37,12 @@ const plugins = [
   BulletedList,
   TodoList,
   File.extend({
-    options: {
-      onUpload: async (file: File) => {
-        const response = await uploadToCloudinary(file, 'auto')
-        return { url: response.url }
-      },
-    },
+    // options: {
+    //   onUpload: async (file: File) => {
+    //     const response = await uploadToCloudinary(file, 'auto')
+    //     return { url: response.url }
+    //   },
+    // },
   }),
   Embed.extend({
     options: {
@@ -51,32 +51,32 @@ const plugins = [
     },
   }),
   Image.extend({
-    options: {
-      maxWidth: 650,
-      maxHeight: 650,
-      onUpload: async (file: File) => {
-        const response = await uploadToCloudinary(file, 'image')
-        return {
-          url: response.url,
-          width: response.data.width,
-          height: response.data.height,
-        }
-      },
-    },
+    // options: {
+    //   maxWidth: 650,
+    //   maxHeight: 650,
+    //   onUpload: async (file: File) => {
+    //     const response = await uploadToCloudinary(file, 'image')
+    //     return {
+    //       url: response.url,
+    //       width: response.data.width,
+    //       height: response.data.height,
+    //     }
+    //   },
+    // },
   }),
   Video.extend({
-    options: {
-      maxWidth: 650,
-      maxHeight: 650,
-      onUpload: async (file: File) => {
-        const response = await uploadToCloudinary(file, 'video')
-        return {
-          url: response.url,
-          width: response.data.width,
-          height: response.data.height,
-        }
-      },
-    },
+    // options: {
+    //   maxWidth: 650,
+    //   maxHeight: 650,
+    //   onUpload: async (file: File) => {
+    //     const response = await uploadToCloudinary(file, 'video')
+    //     return {
+    //       url: response.url,
+    //       width: response.data.width,
+    //       height: response.data.height,
+    //     }
+    //   },
+    // },
   }),
 ]
 
