@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 
 import { Chapter } from '@prisma/client'
 
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
 
@@ -24,7 +23,6 @@ import {
 } from '@/components/ui/form'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
-import { Preview } from '@/components/preview'
 import { Checkbox } from '@/components/ui/checkbox'
 
 interface ChapterAccessFormProps {
