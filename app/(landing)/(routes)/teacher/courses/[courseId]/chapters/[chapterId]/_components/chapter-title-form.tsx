@@ -68,7 +68,7 @@ export const ChapterTitleForm = ({ initialData, courseId, chapterId }: ChapterTi
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Titel bearbeiten
             </>
           )}
         </Button>

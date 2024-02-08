@@ -1,5 +1,5 @@
 // import { Inter } from 'next/font/google';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import YooptaEditor from '@yoopta/editor'
 
 import Paragraph from '@yoopta/paragraph'
@@ -89,19 +89,23 @@ const TOOLS = {
 
 
 interface EditorProps {
-  onChange: (value: YooptaValue[]) => void
   value: YooptaValue[]
+  onChange: (value: YooptaValue[]) => void
 }
 
 
-export default function Editor({ onChange, value }: EditorProps) {
+export default function Editor({ value, onChange }: EditorProps) {
+  // const [editorContent, setEditorContent] = useState(value)
   // const [editorValue, setEditorValue] = useState<YooptaValue[]>(initalValue)
   // list of marks should be placed inside your component
   const marks = [Bold, Italic, CodeMark, Underline, Strike]
 
-  console.log('yopta val: ', value)
+  // console.log('yopta val: ', editorContent)
 
-
+  // Update the editor content when the value prop changes
+  // useEffect(() => {
+  //   setEditorContent(value)
+  // }, [value])
 
   return (
     // <main
@@ -116,7 +120,7 @@ export default function Editor({ onChange, value }: EditorProps) {
         onChange={onChange}
         plugins={plugins}
         marks={marks}
-        placeholder="Type '/' to start"
+        placeholder="Tippe '/' zum starten..."
         tools={TOOLS}
         // offline="withBasicExample"
       />

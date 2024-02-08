@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/video-player";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
-import { Preview } from "@/components/preview";
+import Preview from "@/components/preview";
 import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/course-progress-button";
 
@@ -25,15 +25,15 @@ const ChapterIdPage = async ({
     const {
         chapter,
         course,
-        muxData,
+        // muxData,
         attachments,
         nextChapter,
         userProgress,
         purchase,
     } = await getChapter({
         userId: userId,
-        chapterId: params.chapterId,
         courseId: params.courseId,
+        chapterId: params.chapterId,
     })
 
     if (!chapter || !course) {
@@ -44,7 +44,8 @@ const ChapterIdPage = async ({
     const isLocked = !chapter.isFree && !purchase
     const completeOnEnd = !!purchase && !userProgress?.isCompleted
 
-
+    // console.log("next chapter id", nextChapter?.id)
+    // console.log('!!userProgress?.isCompleted', !!userProgress?.isCompleted)
 
 
     return (
@@ -62,7 +63,7 @@ const ChapterIdPage = async ({
           />
         )}
         <div className="flex flex-col max-w-4xl mx-auto pb-20">
-          <div className="p-4">
+          {/* <div className="p-4">
             <VideoPlayer
               chapterId={params.chapterId}
               title={chapter.title}
@@ -72,7 +73,7 @@ const ChapterIdPage = async ({
               isLocked={isLocked}
               completeOnEnd={completeOnEnd}
             />
-          </div>
+          </div> */}
           <div>
             <div className="p-4 flex flex-col md:flex-row items-center justify-between">
               <h2 className="text-2xl font-semibold nb-2">{chapter.title}</h2>
@@ -91,8 +92,8 @@ const ChapterIdPage = async ({
               )}
             </div>
             <Separator />
-            <div>
-              <Preview value={chapter.description!} />
+            <div className="mt-4">
+              <Preview value={chapter.descriptionEditor!} />
             </div>
             {!!attachments.length && (
               <>

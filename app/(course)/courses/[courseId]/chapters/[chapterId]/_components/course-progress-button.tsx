@@ -1,71 +1,76 @@
-"use client"
+'use client'
 
-import { Button } from "@/components/ui/button"
-import { useConfettiStore } from "@/hooks/use-confetti-store"
-import axios from "axios"
-import { CheckCircle, XCircle } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import toast from "react-hot-toast"
+import { Button } from '@/components/ui/button'
+import { useConfettiStore } from '@/hooks/use-confetti-store'
+import axios from 'axios'
+import { CheckCircle, XCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 type CourseProgressButtonProps = {
-    chapterId: string
-    courseId: string
-    nextChapterId?: string
-    isCompleted?: boolean
+  chapterId: string
+  courseId: string
+  nextChapterId?: string
+  isCompleted?: boolean
 }
 
 export const CourseProgressButton = ({
-    chapterId,
-    courseId,
-    nextChapterId,
-    isCompleted,
+  chapterId,
+  courseId,
+  nextChapterId,
+  isCompleted,
 }: CourseProgressButtonProps) => {
 
-    const router = useRouter()
-    const confetti = useConfettiStore()
-    const [isLoading, setIsLoading] = useState(false)
 
-    const onClick = async () => {
-        try {
-            setIsLoading(true)
+  console.log('next chapter id', nextChapterId)
+  console.log('!!userProgress?.isCompleted', isCompleted)
 
-            await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
-                isCompleted: !isCompleted
-            })
+  const router = useRouter()
+  const confetti = useConfettiStore()
+  const [isLoading, setIsLoading] = useState(false)
 
-            // Check if course is completed !!!
-            if (!isCompleted && !nextChapterId) {
-                confetti.onOpen()
-            }
-        
-            if (!isCompleted && nextChapterId) {
-                router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
-            }
+  const onClick = async () => {
+    try {
+      setIsLoading(true)
 
-            toast.success("Progress updated")
-            router.refresh()
-
-        } catch (error) {
-            toast.error("Something went wrong")
-        } finally {
-            setIsLoading(false)
+      await axios.put(
+        `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+        {
+          isCompleted: !isCompleted,
         }
+      )
+
+      // Check if course is completed !!!
+      if (!isCompleted && !nextChapterId) {
+        confetti.onOpen()
+      }
+
+      if (!isCompleted && nextChapterId) {
+        router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
+      }
+
+      toast.success('Progress updated')
+      router.refresh()
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
     }
+  }
 
+  const Icon = isCompleted ? XCircle : CheckCircle
 
-    const Icon = isCompleted ? XCircle : CheckCircle
-
-    return (
-      <Button
-        onClick={onClick}
-        disabled={isLoading}
-        type="button"
-        className=""
-        variant={isCompleted ? 'outline' : 'success'}
-      >
-        {isCompleted ? 'Nicht fertig' : 'Als fertig markieren'}
-        <Icon className="h-4 w-4 ml-2" />
-      </Button>
-    )
+  return (
+    <Button
+      onClick={onClick}
+      disabled={isLoading}
+      type="button"
+      className=""
+      variant={isCompleted ? 'outline' : 'success'}
+    >
+      {isCompleted ? 'Nicht fertig' : 'Als fertig markieren'}
+      <Icon className="h-4 w-4 ml-2" />
+    </Button>
+  )
 }
