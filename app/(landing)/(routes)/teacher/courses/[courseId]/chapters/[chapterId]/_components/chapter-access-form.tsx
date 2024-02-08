@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/form'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
-import { Editor } from '@/components/editor'
 import { Preview } from '@/components/preview'
 import { Checkbox } from '@/components/ui/checkbox'
 

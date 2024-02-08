@@ -4,7 +4,7 @@ import * as z from 'zod'
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Chapter } from '@prisma/client'
@@ -23,8 +23,31 @@ import {
 } from '@/components/ui/form'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
-import { Editor } from '@/components/editor'
-import { Preview } from '@/components/preview'
+
+// import { Editor } from '@/components/editor'
+// import Editor from '@/components/editor_lexical'
+import Editor from '@/components/editor_yopta'
+// import NoteViewer from '@/components/editor_lexical'
+// import Show from '@/components/show'
+// import Preview from '@/components/preview'
+import {Preview} from '@/components/preview'
+
+
+
+import type { ParagraphElement } from '@yoopta/paragraph'
+import type { BlockquoteElement } from '@yoopta/blockquote'
+import type { CodeElement } from '@yoopta/code'
+import type { EmbedElement } from '@yoopta/embed'
+import type { ImageElement } from '@yoopta/image'
+import type { LinkElement } from '@yoopta/link'
+import type { CalloutElement } from '@yoopta/callout'
+import type { VideoElement } from '@yoopta/video'
+import type {
+  HeadingOneElement,
+  HeadingTwoElement,
+  HeadingThreeElement,
+} from '@yoopta/headings'
+import { YooptaValue } from '@/lib/yopta/initialData'
 
 
 interface ChapterDescriptionFormProps {
@@ -33,9 +56,18 @@ interface ChapterDescriptionFormProps {
   chapterId: string
 }
 
-const formSchema = z.object({
-  description: z.string().min(1),
-})
+
+// Define your form schema using the YooptaValue type
+// const formSchema = z.object({
+//   descriptionEditor: z.array(YooptaValue),
+// })
+
+// Define your form data interface
+interface FormData {
+  descriptionEditor: YooptaValue[];
+}
+
+
 
 export const ChapterDescriptionForm = ({
   initialData,
@@ -48,18 +80,25 @@ export const ChapterDescriptionForm = ({
 
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
     defaultValues: {
-      description: initialData?.description || '',
+      descriptionEditor: initialData?.descriptionEditor
+        ? typeof initialData.descriptionEditor === 'string'
+          ? JSON.parse(initialData.descriptionEditor)
+          : initialData.descriptionEditor
+        : '',
     },
   })
 
   const { isSubmitting, isValid } = form.formState
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: FormData) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values)
+      // console.log(values)
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      )
       toast.success('Chapter updated')
       toggleEdit()
       router.refresh()
@@ -67,6 +106,10 @@ export const ChapterDescriptionForm = ({
       toast.error('Something went wrong')
     }
   }
+
+  
+
+
 
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
@@ -87,14 +130,12 @@ export const ChapterDescriptionForm = ({
         <div
           className={cn(
             'text-sm mt-2',
-            !initialData.description && 'text-slate-500 italic'
+            !initialData.descriptionEditor && 'text-slate-500 italic'
           )}
         >
-          {!initialData.description && 'No description'}
-          {initialData.description && (
-            <Preview 
-              value = {initialData.description}
-            />
+          {!initialData.descriptionEditor && 'No description'}
+          {initialData.descriptionEditor && (
+            <Preview value={initialData?.description!} />
           )}
         </div>
       )}
@@ -106,10 +147,14 @@ export const ChapterDescriptionForm = ({
           >
             <FormField
               control={form.control}
-              name="description"
+              name="descriptionEditor"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
+                    {/* <div className="relative">
+                      <NoteViewer setContent={setContent} />
+                      <Show content={content} />
+                    </div> */}
                     <Editor
                       {...field}
                     />

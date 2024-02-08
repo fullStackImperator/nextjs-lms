@@ -23,13 +23,28 @@ export const Editor = ({
         )
     }
 
+    const quillModules = {
+    toolbar: [
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image', 'video'],
+        [{ align: [] }],
+        [{ color: [] }],
+        ['code-block'],
+        ['clean'],
+    ],
+    }
+
+
     return (
-        <div className="bg-white">
-            <ReactQuill
-                theme="snow"
-                value={value}
-                onChange={onChange}
-            />
-        </div>
-    );
+      <div className="bg-white">
+        <ReactQuill
+          theme="snow"
+          value={value}
+          modules={quillModules}
+          onChange={onChange}
+        />
+      </div>
+    )
 }
