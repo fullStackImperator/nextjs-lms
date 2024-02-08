@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import Preview from "@/components/preview";
 import { File } from "lucide-react";
 import { CourseProgressButton } from "./_components/course-progress-button";
+import { YooptaValue } from '@/lib/yopta/initialData'
 
 
 const ChapterIdPage = async ({
@@ -93,7 +94,7 @@ const ChapterIdPage = async ({
             </div>
             <Separator />
             <div className="mt-4">
-              <Preview value={chapter.descriptionEditor!} />
+              <Preview value={chapter.descriptionEditor! as YooptaValue[]} />
             </div>
             {!!attachments.length && (
               <>

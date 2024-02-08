@@ -115,7 +115,7 @@ export const ChapterDescriptionForm = ({
         >
           {!initialData.descriptionEditor && 'No description'}
           {initialData.descriptionEditor && (
-            <Preview value={initialData?.descriptionEditor!} />
+            <Preview value={initialData?.descriptionEditor! as YooptaValue[]} />
           )}
         </div>
       )}
