@@ -25,8 +25,6 @@ export type YooptaValue =
   | HeadingTwoElement
   | HeadingThreeElement
 
-
-
 // export const yooptaInitData: YooptaValue[] = [
 //   {
 //     id: 'w8KBqhH7kE1rdJgPBuj_E',
