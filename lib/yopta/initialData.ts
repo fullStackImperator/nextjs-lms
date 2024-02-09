@@ -20,7 +20,7 @@ export type YooptaValue =
   | ImageElement
   | LinkElement
   | CalloutElement
-  | VideoElementv
+  | VideoElement
   | HeadingOneElement
   | HeadingTwoElement
   | HeadingThreeElement
