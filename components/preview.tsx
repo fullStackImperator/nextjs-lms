@@ -16,6 +16,8 @@ import { NumberedList, BulletedList, TodoList } from '@yoopta/lists';
 import { Bold, Italic, CodeMark, Underline, Strike } from '@yoopta/marks';
 import { HeadingOne, HeadingThree, HeadingTwo } from '@yoopta/headings';
 import { YooptaValue } from '@/lib/yopta/initialData'
+import { Descendant } from 'slate'; // Assuming this is where Descendant is imported from
+
 // import { Descendant } from '@yoopta/renderer'
 // import { initalValue } from '@/lib/yopta/values'
 // import { uploadToCloudinary } from '@/utils/cloudinary';
@@ -163,7 +165,7 @@ export default function Preview({ value }: PreviewProps) {
   //       })),
   //     }
   //   })
-  
+
   // @ts-ignore
   return (
     // <main
@@ -176,7 +178,11 @@ export default function Preview({ value }: PreviewProps) {
     // >
 
     <div className="w-full h-full bg-white p-2">
-      <YoptaRenderer data={value} plugins={plugins} marks={marks} />
+      <YoptaRenderer
+        data={value as Descendant[]}
+        plugins={plugins}
+        marks={marks}
+      />
     </div>
     // </main>
   )
