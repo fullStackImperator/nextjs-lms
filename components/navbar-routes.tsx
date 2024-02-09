@@ -10,7 +10,7 @@ import { SearchInput } from './search-input'
 import { isTeacher } from '@/lib/teacher'
 
 export const NavbarRoutes = () => {
-  const {userId} = useAuth()
+  const { userId } = useAuth()
   const pathname = usePathname()
   const router = useRouter()
 
@@ -18,31 +18,64 @@ export const NavbarRoutes = () => {
   const isPlayerPage = pathname?.includes('/courses')
   const isSearchPage = pathname === '/search'
 
-  return (
-    <>
-      {isSearchPage && (
-        <div className="hidden md:block">
-          <SearchInput />
+
+  const isUserTeacher = userId && isTeacher(userId)
+
+    return (
+      <>
+        {isSearchPage && (
+          <div className="hidden md:block">
+            <SearchInput />
+          </div>
+        )}
+        <div className="flex gap-x-2 ml-auto">
+          {isTeacherPage || isPlayerPage ? (
+            <Link href="/dashboard">
+              <Button size="sm" variant="ghost">
+                <LogOut className="h-4 w-4 mr-2" />
+                Exit
+              </Button>
+            </Link>
+          ) : isTeacher(userId) ? (
+            <Link href="/teacher/courses">
+              <Button size="sm" variant="ghost">
+                <UserCog className="h-4 w-4 mr-2" />
+                Lehrer modus
+              </Button>
+            </Link>
+          ) : null}
+          <UserButton afterSignOutUrl="/" />
         </div>
-      )}
-      <div className="flex gap-x-2 ml-auto">
-        {isTeacherPage || isPlayerPage ? (
-          <Link href="/dashboard">
-            <Button size="sm" variant="ghost">
-              <LogOut className="h-4 w-4 mr-2" />
-              Exit
-            </Button>
-          </Link>
-        ) : isTeacher(userId) ? (
-          <Link href="/teacher/courses">
-            <Button size="sm" variant="ghost">
-              <UserCog className="h-4 w-4 mr-2" />
-              Lehrer modus
-            </Button>
-          </Link>
-        ) : null}
-        <UserButton afterSignOutUrl="/" />
-      </div>
-    </>
-  )
-}
+      </>
+    )
+  }
+
+//   return (
+//     <>
+//       {isSearchPage && (
+//         <div className="hidden md:block">
+//           <SearchInput />
+//         </div>
+//       )}
+//       <div className="flex gap-x-2 ml-auto">
+//         {(isTeacherPage || isPlayerPage) && (
+//           <Link href="/dashboard">
+//             <Button size="sm" variant="ghost">
+//               <LogOut className="h-4 w-4 mr-2" />
+//               Exit
+//             </Button>
+//           </Link>
+//         )}
+//         {isUserTeacher && (
+//           <Link href="/teacher/courses">
+//             <Button size="sm" variant="ghost">
+//               <UserCog className="h-4 w-4 mr-2" />
+//               Lehrer modus
+//             </Button>
+//           </Link>
+//         )}
+//         <UserButton afterSignOutUrl="/" />
+//       </div>
+//     </>
+//   )
+// }
