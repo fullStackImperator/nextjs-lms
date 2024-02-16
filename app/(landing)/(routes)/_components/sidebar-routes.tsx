@@ -1,7 +1,7 @@
 "use client"
 
 import { Sidebar } from "./sidebar"
-import { Compass, Layout, List, BarChart, Trophy } from 'lucide-react'
+import { Compass, Layout, List, BarChart, Trophy, ShieldPlus} from 'lucide-react'
 import { SidebarItem } from "./sidebar-item"
 import { usePathname } from "next/navigation"
 
@@ -28,6 +28,11 @@ const teacherRoutes = [
     icon: List,
     label: 'Meine Projekte',
     href: '/teacher/courses',
+  },
+  {
+    icon: ShieldPlus,
+    label: 'Bedges',
+    href: '/teacher/create-badges',
   },
   {
     icon: BarChart,

@@ -74,7 +74,7 @@ export const columns: ColumnDef<CoursesWithEnrolledStudentsProps>[] = [
     },
   },
   {
-    header: 'Bearbeiten',
+    header: 'Bearbeiten / Bewerten',
     id: 'actions',
     cell: ({ row }) => {
       const { id } = row.original
@@ -97,7 +97,13 @@ export const columns: ColumnDef<CoursesWithEnrolledStudentsProps>[] = [
             <Link href={`/teacher/courses/${id}/grading`}>
               <DropdownMenuItem>
                 <Pencil className="h-4 w-4 mr-2" />
-                Punkte verteilen
+                Punkte erteilen
+              </DropdownMenuItem>
+            </Link>
+            <Link href={`/teacher/courses/${id}/badges`}>
+              <DropdownMenuItem>
+                <Pencil className="h-4 w-4 mr-2" />
+                Bedges erteilen
               </DropdownMenuItem>
             </Link>
           </DropdownMenuContent>

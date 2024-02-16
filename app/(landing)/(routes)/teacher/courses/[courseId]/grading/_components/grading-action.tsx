@@ -97,7 +97,7 @@ export const GradingActions = ({
         /> */}
       <h1 className="p-6 mt-6 text-xl font-bold">Kurs: {courseName}</h1>
       <h4 className="pl-6 mb-4 text-muted-foreground">
-        Punkte verteilen für angemeldete Schüler
+        Punkte für angemeldete Schüler erteilen
       </h4>
       {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16"> */}
       <div className="space-y-4">

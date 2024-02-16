@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { CourseSidebarItem } from "./course-sidebar-item"
 import { CourseProgress } from "@/components/course-progress"
 import { CourseEnrollButton } from "../chapters/[chapterId]/_components/course-enroll-button"
+import { CourseUnEnrollButton } from '../chapters/[chapterId]/_components/course-unenroll-button'
 
 type CourseSidebarProps = {
     course: Course & {
@@ -48,14 +49,14 @@ export const CourseSidebar = async ({
               <CourseProgress variant="success" value={progressCount} />
             </div>
           )}
-          {/* {purchase && (
+          {purchase && (
             <div className="mt-5">
-              <CourseEnrollButton
+              <CourseUnEnrollButton
                 courseId={course.id}
                 level={course.level!}
               />
             </div>
-          )} */}
+          )}
         </div>
         <div className="flex flex-col w-full">
           {course.chapters.map((chapter) => (

@@ -10,29 +10,27 @@ import { InfoCard } from './_components/info-card'
 import { redirect } from 'next/navigation'
 import { UserScoreBanner } from '../leaderboard/_components/banner-score'
 import { getUserPoints } from '@/actions/get-userPoints'
-
-
-
+import { getUserBadges } from '@/actions/get-userBadges'
 
 export default async function Dashboard() {
-  
-  const {userId} =auth()
+  const { userId } = auth()
 
   if (!userId) {
-    return redirect("/")
+    return redirect('/')
   }
 
-  const {
-    completedCourses,
-    coursesInProgress,
-  } = await getDashboardCourses(userId)
+  const { completedCourses, coursesInProgress } = await getDashboardCourses(
+    userId
+  )
 
   const userPoints = await getUserPoints()
+  const userBadges = await getUserBadges()
 
+  // console.log('userBadges: ', userBadges)
 
   return (
     <div className="p-6 space-y-4">
-      <UserScoreBanner userPoints={userPoints} />
+      <UserScoreBanner userPoints={userPoints} userBadges={userBadges} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InfoCard
           icon={Clock}

@@ -14,7 +14,14 @@ import Image from 'next/image'
 import { MainNav } from '@/components/main-nav'
 import { marketingConfig } from '@/config/nav-config'
 import { cn } from '@/lib/utils'
-import { SignIn, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import {
+  SignIn,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
+
 
 // interface SearchPageProps {
 //   searchParams: {
@@ -31,7 +38,6 @@ type SearchPageProps = {
 }
 
 const LandingPage = async ({ searchParams }: SearchPageProps) => {
-
 
   const categories = await db.category.findMany({
     orderBy: {
@@ -126,7 +132,6 @@ const LandingPage = async ({ searchParams }: SearchPageProps) => {
           </div>
         </div>
       </div>
- 
 
       <div className="flex flex-col items-center">
         <div className="px-6 pt-6">

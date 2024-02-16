@@ -4,8 +4,7 @@ import {
   LayoutDashboard,
   ListChecks,
   File,
-  ArrowLeft,
-  CableCar,
+  Wrench,
   Dumbbell,
 } from 'lucide-react'
 
@@ -22,6 +21,9 @@ import { ChaptersForm } from './_components/chapters-form'
 import Link from 'next/link'
 import { CourseActions } from './_components/course-actions'
 import { Banner } from '@/components/banner'
+import { PrerequisiteForm } from './_components/prerequisite-form'
+import { LevelForm } from './_components/level-form'
+
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
@@ -126,18 +128,20 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <ChaptersForm initialData={course} courseId={course.id} />
             </div>
             <div>
-              <div className="flex items-center gap-x-2">
+              <div className="flex items-center mt-8 gap-x-2">
                 <IconBadge icon={Dumbbell} />
                 <h2 className="text-xl">Schwierigkeitsgrad</h2>
               </div>
-              <PriceForm initialData={course} courseId={course.id} />
+              {/* <PriceForm initialData={course} courseId={course.id} /> */}
+              <LevelForm initialData={course} courseId={course.id} />
             </div>
             <div>
-              <div className="flex items-center gap-x-2">
-                <IconBadge icon={File} />
-                <h2 className="text-xl">Resourcen & Material</h2>
+              <div className="flex items-center mt-8 gap-x-2">
+                <IconBadge icon={Wrench} />
+                <h2 className="text-xl">Benötigte Materialien</h2>
               </div>
-              <AttachmentForm initialData={course} courseId={course.id} />
+              {/* <AttachmentForm initialData={course} courseId={course.id} /> */}
+              <PrerequisiteForm initialData={course} courseId={course.id} />
             </div>
           </div>
         </div>

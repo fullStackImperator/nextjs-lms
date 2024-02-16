@@ -7,7 +7,8 @@ import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import Preview from "@/components/preview";
 import { File } from "lucide-react";
-import { CourseProgressButton } from "./_components/course-progress-button";
+// import { CourseProgressButton } from "./_components/course-progress-button";
+import { CourseProgressButton } from "@/app/(course)/courses/[courseId]/chapters/[chapterId]/_components/course-progress-button";
 import { YooptaValue } from '@/lib/yopta/initialData'
 
 

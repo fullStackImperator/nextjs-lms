@@ -7,11 +7,25 @@ import { Camera, Lock, Star, Trophy } from 'lucide-react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
-type UserScoreBannerProps = {
-  userPoints: number
+interface UserBadge {
+  badge: {
+    id: string
+    name: string
+    imageUrl: string
+    createdAt?: Date
+    updatedAt?: Date
+  }
 }
 
-export const UserScoreBanner = ({ userPoints }: UserScoreBannerProps) => {
+type UserScoreBannerProps = {
+  userPoints: number
+  userBadges: UserBadge[]
+}
+
+export const UserScoreBanner = ({
+  userPoints,
+  userBadges,
+}: UserScoreBannerProps) => {
   // const { userId } = auth()
   const { isSignedIn, user, isLoaded } = useUser()
 
@@ -25,28 +39,16 @@ export const UserScoreBanner = ({ userPoints }: UserScoreBannerProps) => {
 
   return (
     <div className="rounded-xl p-4 border shadow-sm bg-sky-600 text-white">
-      <div className="flex items-center space-x-4 w-full">
+      <div className="flex items-center  w-full">
         <span className="flex relative justify-center items-center box-border overflow-hidden align-middle z-10 outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-14 h-14 text-small bg-default text-default-foreground rounded-full ring-2 ring-offset-2 ring-offset-background ring-default">
           <Avatar className="flex object-cover w-full h-full transition-opacity ">
-            {/* className="h-5 w-5" */}
             <AvatarImage src={user?.imageUrl} />
             <AvatarFallback>{user?.username}</AvatarFallback>
           </Avatar>
-
-          {/* <Image
-            width={240}
-            height={240}
-            className="inline-block rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt="user-avatar"
-          /> */}
         </span>
-        <div className="space-y-1">
-          <p className="text-lg md:text-xl font-semibold">
-            {' '}
-            {/* {userId} */}
-            {user?.username}
-          </p>
+
+        <div className="space-y-1  ml-8 ">
+          <p className="text-lg md:text-xl font-semibold">{user?.username}</p>
           <div className="flex items-center gap-x-2 text-xs md:text-sm">
             <Star className="h-4 w-4" />
             <p className="">XP Punkte: {userPoints}</p>
@@ -55,6 +57,26 @@ export const UserScoreBanner = ({ userPoints }: UserScoreBannerProps) => {
             <Trophy className="h-4 w-4" />
             <p className="">Level: </p>
           </div>
+        </div>
+
+        <div className="flex items-center ml-16">
+          {userBadges.map((userBadge) => (
+            <div
+              key={userBadge.badge.id}
+              className="text-center flex flex-col items-center mr-4 transition ease-in-out delay-100 hover:cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:scale-105 rounded-lg p-2 bg-[#FFBF00]/90  ring-offset-2 ring-4"
+            >
+              <Avatar className="h-10 w-10 border-2 border-white">
+                <AvatarImage
+                  src={userBadge.badge.imageUrl}
+                  alt={userBadge.badge.name}
+                />
+                <AvatarFallback>BG</AvatarFallback>
+              </Avatar>
+              <p className="mt-2 text-muted-foreground text-sm">
+                {userBadge.badge.name}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

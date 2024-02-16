@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/table'
 import { UserScoreBanner } from './_components/banner-score'
 import { getUserPoints } from '@/actions/get-userPoints'
+import { getUserBadges } from '@/actions/get-userBadges'
 
 
 
@@ -36,12 +37,13 @@ export default async function Dashboard() {
 
   const leaderboard = await getLeaderboard()
   const userPoints = await getUserPoints()
+  const userBadges = await getUserBadges()
 
   let rank = 0 // Initialize the rank counter
 
   return (
     <div className="p-6 space-y-4">
-      <UserScoreBanner userPoints={userPoints} />
+      <UserScoreBanner userPoints={userPoints} userBadges={userBadges} />
       <div className="flex flex-col relative gap-4 w-full">
         <div className="w-full p-4 z-0 flex flex-col relative justify-between gap-4 overflow-auto rounded-lg shadow-small">
           <Table className="min-w-full h-auto table-auto w-full">
