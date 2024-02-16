@@ -5,13 +5,8 @@ import { NextResponse } from 'next/server'
 import { isTeacher } from '@/lib/teacher'
 import { UTApi } from 'uploadthing/server'
 
-
-export const utapi = new UTApi()
-
-
-export async function POST(
-  req: Request
-) {
+export async function POST(req: Request) {
+  const utapi = new UTApi()
   try {
     const { userId } = auth()
     const values = await req.json()
@@ -33,8 +28,8 @@ export async function POST(
   }
 }
 
-
 export async function PATCH(req: Request) {
+  const utapi = new UTApi()
   try {
     const { userId } = auth()
     const values = await req.json()
@@ -56,11 +51,11 @@ export async function PATCH(req: Request) {
 
     // Extract filename from oldImageUrl
     // console.log('oldImageUrl: ', oldImageUrl)
-    
+
     const filename = oldImageUrl.substring(oldImageUrl.lastIndexOf('/') + 1)
-    
+
     // console.log('filename: ', filename)
-    
+
     await utapi.deleteFiles(filename)
 
     return NextResponse.json(badge, { status: 200 })
@@ -69,8 +64,6 @@ export async function PATCH(req: Request) {
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
-
-
 
 export async function GET(req: Request) {
   try {
@@ -83,8 +76,8 @@ export async function GET(req: Request) {
   }
 }
 
-
 export async function DELETE(req: Request) {
+  const utapi = new UTApi()
   try {
     const { userId } = auth()
     const data = await req.json()
@@ -99,10 +92,10 @@ export async function DELETE(req: Request) {
     const { id, imageUrl } = data
 
     // delete badge from database
-    await db.badge.delete({ 
-      where: { 
-        id: id 
-      } 
+    await db.badge.delete({
+      where: {
+        id: id,
+      },
     })
 
     // delete image in uploadthing
