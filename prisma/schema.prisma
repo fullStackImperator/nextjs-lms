@@ -11,6 +11,19 @@ generator client {
 }
 
 
+model User {
+  id          String @id @default(uuid())
+  userName    String?
+  firstName   String
+  lastName    String
+  email       String
+  teacher     Boolean?
+  admin       Boolean?
+
+  // createdAt   DateTime 
+  // updatedAt   DateTime
+}
+
 model Course {
   id String @id @default(uuid())
   userId String
