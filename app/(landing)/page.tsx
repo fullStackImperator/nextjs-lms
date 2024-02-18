@@ -139,7 +139,7 @@ const LandingPage = async ({ searchParams }: SearchPageProps) => {
         </div>
         <div className="p-6 space-y-4">
           <Categories categories={categories} />
-          <CoursesListLanding items={courses} />
+          {/* <CoursesListLanding items={courses} /> */}
         </div>
       </div>
     </>
