@@ -234,7 +234,7 @@ export const BadgeActions = ({
                       {/* TODO: COMBOBOX and multiple badges possible */}
                       <Combobox
                         options={options}
-                        value={selectedBadges[student.userId] || null}
+                        value={selectedBadges[student.userId] || ''}
                         onChange={(value) =>
                           handleBadgeChange(value, student.userId)
                         }
