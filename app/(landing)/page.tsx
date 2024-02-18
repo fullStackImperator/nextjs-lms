@@ -4,7 +4,6 @@ import { SearchInput } from '@/components/search-input'
 import { redirect } from 'next/navigation'
 // import { CoursesList } from '@/components/courses-list'
 import { getLandingpageCourses } from '@/actions/get-landingpage-courses'
-import { CoursesListLanding } from '@/components/courses-list-landing'
 
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Link from 'next/link'
