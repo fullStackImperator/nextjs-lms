@@ -66,7 +66,8 @@ export default async function Dashboard() {
               {leaderboard.map((user) => (
                 <TableRow key={user.userId}>
                   <TableCell className="rounded-s-lg">{++rank}.</TableCell>
-                  <TableCell>{user.userId}</TableCell>
+                  <TableCell>{user.userName}</TableCell>
+                  {/* <TableCell>{user.userId}</TableCell> */}
                   <TableCell className="rounded-e-lg ">
                     <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-6 text-sm rounded-full bg-green-500/20 text-green-600">
                       <span className="flex-1 text-inherit font-normal px-1">

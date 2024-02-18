@@ -26,6 +26,7 @@ interface GradingActionsProps {
     id: string
     courseId: string
     userId: string
+    userName: string
     grading?: {
       id?: string
       userId?: string
@@ -34,8 +35,8 @@ interface GradingActionsProps {
       createdAt?: Date
       updatedAt?: Date
     } | null
-  }[],
-  courseName?: string | "",
+  }[]
+  courseName?: string | ''
 }
 
 export const GradingActions = ({
@@ -115,7 +116,7 @@ export const GradingActions = ({
               <TableBody>
                 {enrollmentWithGrading.map((student) => (
                   <TableRow key={student.id}>
-                    <TableCell>{student.userId}</TableCell>
+                    <TableCell>{student.userName}</TableCell>
                     <TableCell>
                       <Input
                         id={`punkte-${student.userId}`}

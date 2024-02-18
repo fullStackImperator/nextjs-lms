@@ -10,6 +10,7 @@ interface UserBadge {
 
 interface LeaderboardUser {
   userId: string
+  userName: string | null | undefined
   totalPoints: number
   badges: UserBadge[]
 }
@@ -17,6 +18,7 @@ interface LeaderboardUser {
 
 export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
   try {
+    // Fetch all gradings including userId and points
     const gradings = await db.grading.findMany({
       select: {
         userId: true,
@@ -24,10 +26,31 @@ export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
       },
     })
 
-    const leaderboard: LeaderboardUser[] = [] // Initialize leaderboard as an empty array
+    // Initialize an object to store cumulative points for each user
+    const userPointsMap: Record<string, number> = {}
 
+    // Aggregate points for each user
     for (const grading of gradings) {
       const { userId, points } = grading
+      // Add points to the cumulative total for the user
+      userPointsMap[userId] = (userPointsMap[userId] || 0) + points
+    }
+
+    // Initialize leaderboard as an empty array
+    const leaderboard: LeaderboardUser[] = []
+
+    // Fetch user information and badges
+    for (const userId of Object.keys(userPointsMap)) {
+      const user = await db.user.findUnique({
+        where: {
+          id: userId,
+        },
+        select: {
+          id: true,
+          userName: true,
+        },
+      })
+
       const userBadges = await db.userBadge.findMany({
         where: {
           userId,
@@ -45,7 +68,8 @@ export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
 
       leaderboard.push({
         userId,
-        totalPoints: points,
+        userName: user?.userName,
+        totalPoints: userPointsMap[userId], // Set total points for the user
         badges,
       })
     }

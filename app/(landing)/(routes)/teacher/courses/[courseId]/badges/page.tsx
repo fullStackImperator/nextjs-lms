@@ -41,7 +41,6 @@ const CourseBadgePage = async ({
   })
   // console.log('enrolledStudents: ', enrolledStudents)
 
-  
   // Assuming userBadges is related to User
   const badgePromises = enrolledStudents.map(async (enrollment) => {
     const userBadges = await db.userBadge.findMany({
@@ -49,22 +48,30 @@ const CourseBadgePage = async ({
         userId: enrollment.userId,
       },
     })
-    
+
+    // Fetch user information from the User table using Prisma
+    const user = await db.user.findUnique({
+      where: {
+        id: enrollment.userId,
+      },
+      select: {
+        userName: true,
+      },
+    })
+
+    const userName = user?.userName || 'Unknown'
+
     return {
       ...enrollment,
+      userName: userName,
       userBadges: userBadges || null,
     }
   })
-  
+
   const enrollmentWithBadges = await Promise.all(badgePromises)
-  
-
-
 
   // get all badges
   const badges = await db.badge.findMany()
-
-
 
   // Fetch course details based on the courseId
   const course = await db.course.findUnique({

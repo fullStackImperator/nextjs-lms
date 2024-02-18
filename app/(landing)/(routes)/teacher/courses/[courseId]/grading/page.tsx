@@ -20,7 +20,6 @@ import axios from 'axios'
 
 import { clerkClient } from '@clerk/nextjs'
 
-
 const CourseGradingPage = async ({
   params,
 }: {
@@ -49,8 +48,21 @@ const CourseGradingPage = async ({
       },
     })
 
+    // Fetch user information from the User table using Prisma
+    const user = await db.user.findUnique({
+      where: {
+        id: enrollment.userId,
+      },
+      select: {
+        userName: true,
+      },
+    })
+
+    const userName = user?.userName || 'Unknown'
+
     return {
       ...enrollment,
+      userName: userName,
       grading: grading || null,
     }
   })
@@ -59,8 +71,8 @@ const CourseGradingPage = async ({
 
   // console.log('enrolledStudents: ', enrolledStudents)
   // console.log('enrollmentWithGrading: ', enrollmentWithGrading)
-  
-    // Fetch course details based on the courseId
+
+  // Fetch course details based on the courseId
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
@@ -71,9 +83,8 @@ const CourseGradingPage = async ({
   })
 
   const userList = await clerkClient.users.getUserList()
-  
-  console.log('userList: ', userList)
 
+  console.log('userList: ', userList)
 
   return (
     <>

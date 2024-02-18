@@ -1,12 +1,21 @@
-import { Category, Course } from '@prisma/client'
-import { getProgress } from '@/actions/get-progress'
+// import { Category, Course } from '@prisma/client'
+// import { getProgress } from '@/actions/get-progress'
 import { db } from '@/lib/db'
 
-type Leaderboard = {
-  [userId: string]: number; // Define the shape of the leaderboard object
+interface UserBadge {
+  id: string
+  name: string
+  imageUrl: string
 }
 
-export const getLeaderboard = async () => {
+interface LeaderboardUser {
+  userId: string
+  totalPoints: number
+  badges: UserBadge[]
+}
+
+
+export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
   try {
     const gradings = await db.grading.findMany({
       select: {
@@ -15,31 +24,38 @@ export const getLeaderboard = async () => {
       },
     })
 
-    const leaderboard: Leaderboard = {}; // Initialize leaderboard as an empty object
+    const leaderboard: LeaderboardUser[] = [] // Initialize leaderboard as an empty array
 
-    gradings.forEach((grading) => {
-      const userId = grading.userId;
-      const points = grading.points;
+    for (const grading of gradings) {
+      const { userId, points } = grading
+      const userBadges = await db.userBadge.findMany({
+        where: {
+          userId,
+        },
+        select: {
+          badge: true,
+        },
+      })
 
-      if (leaderboard[userId]) {
-        leaderboard[userId] += points; // Increment points if userId exists in the leaderboard
-      } else {
-        leaderboard[userId] = points; // Otherwise, set points for the userId
-      }
-    });
+      const badges: UserBadge[] = userBadges.map((userBadge) => ({
+        id: userBadge.badge.id,
+        name: userBadge.badge.name,
+        imageUrl: userBadge.badge.imageUrl,
+      }))
 
-    // Convert leaderboard object to an array of objects
-    const leaderboardArray = Object.keys(leaderboard).map((userId) => ({
-      userId,
-      totalPoints: leaderboard[userId],
-    }));
+      leaderboard.push({
+        userId,
+        totalPoints: points,
+        badges,
+      })
+    }
 
     // Sort the leaderboard by totalPoints in descending order
-    leaderboardArray.sort((a, b) => b.totalPoints - a.totalPoints);
+    leaderboard.sort((a, b) => b.totalPoints - a.totalPoints)
 
-    return leaderboardArray;
+    return leaderboard
   } catch (error) {
-    console.log('[GET_LEADERBOARD]', error);
-    return [];
+    console.log('[GET_LEADERBOARD]', error)
+    return []
   }
 }

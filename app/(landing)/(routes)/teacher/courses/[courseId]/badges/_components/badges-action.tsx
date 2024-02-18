@@ -47,6 +47,7 @@ interface BadgeActionsProps {
     id: string
     courseId: string
     userId: string
+    userName: string
     userBadges?:
       | {
           id?: string
@@ -184,7 +185,7 @@ export const BadgeActions = ({
               <TableBody>
                 {enrollmentWithBadges.map((student) => (
                   <TableRow key={student.id}>
-                    <TableCell>{student.userId}</TableCell>
+                    <TableCell>{student.userName}</TableCell>
 
                     <TableCell>
                       {student.userBadges ? (
