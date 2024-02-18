@@ -78,7 +78,7 @@ export const BadgeActions = ({
   //   setUpdatedPoints((prev) => ({ ...prev, [userId]: points }))
   // }
 
-  const handleBadgeChange = (value: string, userId: string) => {
+  const handleBadgeChange = (value: string | null, userId: string) => {
     setSelectedBadges((prevState) => ({
       ...prevState,
       [userId]: value,
