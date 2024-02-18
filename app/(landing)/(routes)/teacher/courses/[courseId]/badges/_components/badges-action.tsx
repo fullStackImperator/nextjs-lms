@@ -79,9 +79,9 @@ export const BadgeActions = ({
   // }
 
   const handleBadgeChange = (value: string | null, userId: string) => {
-    setSelectedBadges((prevState) => ({
+    setSelectedBadges((prevState: { [userId: string]: string | null }) => ({
       ...prevState,
-      [userId]: value,
+      [userId]: value !== null ? value : null,
     }))
   }
 
@@ -113,38 +113,38 @@ export const BadgeActions = ({
     }
   }
 
+  const onDelete = async (
+    userId: string,
+    badgeId: string,
+    userBadgeId: string
+  ) => {
+    try {
+      setIsLoading(true)
 
-
-    const onDelete = async ( userId: string, badgeId: string, userBadgeId: string) => {
-      try {
-        setIsLoading(true)
-
-        // Ensure userId and badgeId are not null or undefined
-        if (!userId || !badgeId) {
-          toast.error('Invalid userId or badgeId')
-          return
-        }
-
-        console.log('userId: ', userId)
-        console.log('badgeId: ', badgeId)
-        console.log('userBadgeId: ', userBadgeId)
-
-        await axios.delete(`/api/badges/give-badges`, {
-          data: { userId, badgeId, userBadgeId }, // Include userId and badgeId in the request data
-        })
-
-        toast.success('Erfolgreich vom Schüler gelöscht')
-
-        router.refresh()
-      } catch (error) {
-        console.log('error: ', error)
-        toast.error('Something went wrong')
-      } finally {
-        setIsLoading(false)
+      // Ensure userId and badgeId are not null or undefined
+      if (!userId || !badgeId) {
+        toast.error('Invalid userId or badgeId')
+        return
       }
+
+      console.log('userId: ', userId)
+      console.log('badgeId: ', badgeId)
+      console.log('userBadgeId: ', userBadgeId)
+
+      await axios.delete(`/api/badges/give-badges`, {
+        data: { userId, badgeId, userBadgeId }, // Include userId and badgeId in the request data
+      })
+
+      toast.success('Erfolgreich vom Schüler gelöscht')
+
+      router.refresh()
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
     }
-
-
+  }
 
   return (
     <div className="p-6">
