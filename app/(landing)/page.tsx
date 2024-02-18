@@ -1,7 +1,7 @@
 import { db } from '@/lib/db'
-import { Categories } from './_components/categories'
-import { SearchInput } from '@/components/search-input'
-import { redirect } from 'next/navigation'
+// import { Categories } from './_components/categories'
+// import { SearchInput } from '@/components/search-input'
+// import { redirect } from 'next/navigation'
 // import { CoursesList } from '@/components/courses-list'
 import { getLandingpageCourses } from '@/actions/get-landingpage-courses'
 
@@ -9,17 +9,17 @@ import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { MainNav } from '@/components/main-nav'
 import { marketingConfig } from '@/config/nav-config'
 import { cn } from '@/lib/utils'
-import {
-  SignIn,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs'
+// import {
+//   SignIn,
+//   SignInButton,
+//   SignedIn,
+//   SignedOut,
+//   UserButton,
+// } from '@clerk/nextjs'
 
 
 // interface SearchPageProps {
@@ -132,15 +132,15 @@ const LandingPage = async ({ searchParams }: SearchPageProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
+      {/* <div className="flex flex-col items-center">
         <div className="px-6 pt-6">
           <SearchInput />
         </div>
         <div className="p-6 space-y-4">
           <Categories categories={categories} />
-          {/* <CoursesListLanding items={courses} /> */}
+          <CoursesListLanding items={courses} />
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
