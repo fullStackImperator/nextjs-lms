@@ -72,36 +72,36 @@ export const CourseCard = ({
               Dieses Material benötigst du:
             </p>
             {prerequisites ? (
-              <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md">
+              <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md mb-2">
                 <p className="flex-1 text-md md:text-sm text-slate-500  font-medium">
                   {prerequisites}
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col p-2 mt-2 bg-emerald-50 rounded-md">
+              <div className="flex flex-col p-2 mt-2 bg-emerald-50 rounded-md mb-2">
                 <p className="flex-1 text-md md:text-sm text-slate-500 font-medium">
                   Keine Materialien benötigt <br />
                 </p>
               </div>
             )}
-            <Separator className="my-2" />
+            {/* <Separator className="my-2" /> */}
             <p className="text-xs px-2 text-muted-foreground">
               Das solltest du wissen:
             </p>
             {vorkenntnisse ? (
-              <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md">
+              <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md mb-2">
                 <p className="flex-1 text-md md:text-sm text-slate-500  font-medium">
                   {vorkenntnisse}
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col p-2 mt-2 bg-emerald-50 rounded-md">
+              <div className="flex flex-col p-2 mt-2 bg-emerald-50 rounded-md mb-2">
                 <p className="flex-1 text-md md:text-sm text-slate-500 font-medium">
                   Kein Vorwissen benötigt <br />
                 </p>
               </div>
             )}
-            <Separator className="my-2" />
+            {/* <Separator className="my-2" /> */}
             <p className="text-xs px-2 text-muted-foreground">Das lernst du:</p>
             {kompetenzen ? (
               <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md">
