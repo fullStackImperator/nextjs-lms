@@ -6,6 +6,8 @@ import {
   File,
   Wrench,
   Dumbbell,
+  BookCheck,
+  BookPlus,
 } from 'lucide-react'
 
 import { db } from '@/lib/db'
@@ -22,6 +24,8 @@ import Link from 'next/link'
 import { CourseActions } from './_components/course-actions'
 import { Banner } from '@/components/banner'
 import { PrerequisiteForm } from './_components/prerequisite-form'
+import { VorkenntnisseForm } from './_components/vorkenntnisse-form'
+import { KompetenzenForm } from './_components/kompetenz-form'
 import { LevelForm } from './_components/level-form'
 
 
@@ -142,6 +146,22 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               </div>
               {/* <AttachmentForm initialData={course} courseId={course.id} /> */}
               <PrerequisiteForm initialData={course} courseId={course.id} />
+            </div>
+            <div>
+              <div className="flex items-center mt-8 gap-x-2">
+                <IconBadge icon={BookCheck} />
+                <h2 className="text-xl">Benötigte Vorkenntnisse</h2>
+              </div>
+              {/* <AttachmentForm initialData={course} courseId={course.id} /> */}
+              <VorkenntnisseForm initialData={course} courseId={course.id} />
+            </div>
+            <div>
+              <div className="flex items-center mt-8 gap-x-2">
+                <IconBadge icon={BookPlus} />
+                <h2 className="text-xl">Zu erwerbende Kompetenzen</h2>
+              </div>
+              {/* <AttachmentForm initialData={course} courseId={course.id} /> */}
+              <KompetenzenForm initialData={course} courseId={course.id} />
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 import BadgeList from './_components/badges-list'
 import BadgesDialog from './_components/badges-dialog'
 import { useState } from 'react'
+import Link from 'next/link'
 
 // Define the Badge type
 type Badge = {
@@ -33,8 +34,17 @@ const CreateBadgesPage = () => {
     <div className="max-w-5xl mx-auto mt-8 flex flex-col  md:items-center md:justify-center p-6">
       <div className="text-center mb-8 ">
         <h1 className="text-2xl text-center  ">Erstelle einen Badge</h1>
-        <p className="text-sm text-slate-600 text-center">
-          Der Badge kann anschliessend an Schüler vergeben werden
+        <p className="mt-1 text-sm text-slate-600 text-center">
+          Der Badge kann anschliessend{' '}
+          <Link
+            href="/teacher/courses"
+            className="underline"
+            // target="_blank"
+          >
+            {' '}
+            in den Projekten{' '}
+          </Link>{' '}
+          an Schüler vergeben werden
         </p>
         <BadgesDialog
           open={!!selectedBadge}

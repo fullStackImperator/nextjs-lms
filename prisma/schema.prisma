@@ -30,6 +30,8 @@ model Course {
   title String @db.Text
   description String? @db.Text
   prerequisites String? @db.Text
+  vorkenntnisse String? @db.Text
+  kompetenzen String? @db.Text
   imageUrl String? @db.Text
   price Float?
   level Int?

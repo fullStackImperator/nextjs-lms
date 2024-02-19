@@ -29,6 +29,8 @@ export const CoursesList = ({ items }: CoursesListProps) => {
             progress={item.progress}
             category={item?.category?.name!}
             prerequisites={item?.prerequisites!}
+            vorkenntnisse={item?.vorkenntnisse!}
+            kompetenzen={item?.kompetenzen!}
           />
         ))}
       </div>
