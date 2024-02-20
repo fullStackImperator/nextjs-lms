@@ -36,7 +36,7 @@ export async function PATCH(req: Request) {
 
     console.log('values :', values)
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
