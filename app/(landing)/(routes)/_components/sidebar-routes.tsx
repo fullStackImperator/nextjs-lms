@@ -25,14 +25,14 @@ const guestRoutes = [
 
 const teacherRoutes = [
   {
-    icon: Users,
-    label: 'Alle User',
-    href: '/teacher/users',
-  },
-  {
     icon: List,
     label: 'Meine Projekte',
     href: '/teacher/courses',
+  },
+  {
+    icon: Users,
+    label: 'Alle User',
+    href: '/teacher/users',
   },
   {
     icon: ShieldPlus,

@@ -50,8 +50,8 @@ export const NavbarRoutes = () => {
 
 
   // console.log('userId: ', userId)
-  console.log('client error: ', error)
-  console.log('client userIsTeacher: ', userIsTeacher)
+  // console.log('client error: ', error)
+  // console.log('client userIsTeacher: ', userIsTeacher)
 
   if (error) {
     return <div>Error: {error.message}</div>
