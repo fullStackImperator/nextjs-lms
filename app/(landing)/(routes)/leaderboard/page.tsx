@@ -58,7 +58,7 @@ export default async function Dashboard() {
               <TableRow className="bg-zinc-100 border-b-0">
                 <TableHead className="rounded-s-lg">Rang</TableHead>
                 <TableHead>Schüler</TableHead>
-                <TableHead className="rounded-e-lg">Punkte</TableHead>
+                <TableHead className="">Punkte</TableHead>
                 <TableHead className="rounded-e-lg">Badges</TableHead>
               </TableRow>
             </TableHeader>

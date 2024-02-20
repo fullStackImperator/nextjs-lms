@@ -1,7 +1,7 @@
 "use client"
 
 import { Sidebar } from "./sidebar"
-import { Compass, Layout, List, BarChart, Trophy, ShieldPlus} from 'lucide-react'
+import { Compass, Layout, List, BarChart, Trophy, ShieldPlus, Users} from 'lucide-react'
 import { SidebarItem } from "./sidebar-item"
 import { usePathname } from "next/navigation"
 
@@ -24,6 +24,11 @@ const guestRoutes = [
 ]
 
 const teacherRoutes = [
+  {
+    icon: Users,
+    label: 'Alle User',
+    href: '/teacher/users',
+  },
   {
     icon: List,
     label: 'Meine Projekte',

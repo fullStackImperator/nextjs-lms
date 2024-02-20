@@ -17,8 +17,8 @@ model User {
   firstName   String
   lastName    String
   email       String
-  teacher     Boolean?
-  admin       Boolean?
+  isTeacher   Boolean?
+  isAdmin     Boolean?
 
   // createdAt   DateTime 
   // updatedAt   DateTime
