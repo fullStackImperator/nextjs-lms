@@ -8,6 +8,9 @@ import { LogOut, UserCog } from 'lucide-react'
 import Link from 'next/link'
 import { SearchInput } from './search-input'
 import { isTeacher } from '@/lib/teacher'
+import useSwr from 'swr'
+// import useSwr from 'swr'
+
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth()
@@ -18,8 +21,43 @@ export const NavbarRoutes = () => {
   const isPlayerPage = pathname?.includes('/courses')
   const isSearchPage = pathname === '/search'
 
+  const {
+    data: userIsTeacher,
+    isLoading,
+    isValidating,
+    mutate,
+    error,
+  } = useSwr('isTeacher', isTeacher)
 
-  const isUserTeacher = userId && isTeacher(userId)
+  // const { data: isTeacher, error } = useSWR(userId ? userId : null, fetchTeacherStatus);
+
+  // const {
+  //   data: isTeacher,
+  //   isLoading,
+  //   isValidating,
+  //   mutate,
+  //   error,
+  // } = useSwr('users', fetchTeacherStatus(userId))
+
+// const { data: orders } = useSWR({ url: '/api/orders', args: userId }, isTeacher)
+
+
+
+// const { data: userIsTeacher, error } = useSWR('isTeacher', () =>
+//   isTeacher(userId)
+// )
+
+
+
+  // console.log('userId: ', userId)
+  console.log('client error: ', error)
+  console.log('client userIsTeacher: ', userIsTeacher)
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+    
+  // const isUserTeacher = userId && await isTeacher(userId)
 
     return (
       <>
@@ -36,7 +74,7 @@ export const NavbarRoutes = () => {
                 Exit
               </Button>
             </Link>
-          ) : isTeacher(userId) ? (
+          ) : userIsTeacher ? (
             <Link href="/teacher/courses">
               <Button size="sm" variant="ghost">
                 <UserCog className="h-4 w-4 mr-2" />

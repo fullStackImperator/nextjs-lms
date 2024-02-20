@@ -17,7 +17,7 @@ export async function GET(
     const { courseId } = params
 
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 

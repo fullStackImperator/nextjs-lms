@@ -84,7 +84,7 @@ export async function DELETE(req: Request) {
 
     console.log('data :', data)
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 

@@ -55,7 +55,7 @@ export async function DELETE(req: Request) {
 
     console.log('data:', data)
 
-    if (!authUserId || !isTeacher(authUserId)) {
+    if (!authUserId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 

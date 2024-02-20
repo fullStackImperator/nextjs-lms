@@ -1,4 +1,6 @@
+'use server'
 import { db } from '@/lib/db'
+import { auth } from '@clerk/nextjs'
 
 // const teacherIds = [
 //   process.env.NEXT_PUBLIC_TEACHER_ID,
@@ -24,8 +26,13 @@ import { db } from '@/lib/db'
 //   return teacherIds.includes(userId)
 // }
 
-export const isTeacher = async (userId?: string | null): Promise<boolean> => {
+export const isTeacher = async (): Promise<boolean> => {
   try {
+    // console.log('in server. userId: ', userId)
+    const { userId } = auth()
+
+    console.log('in server. userId: ', userId)
+
     if (!userId) return false // If userId is not provided, return false
 
     // Query the database to retrieve the user based on userId
@@ -38,6 +45,8 @@ export const isTeacher = async (userId?: string | null): Promise<boolean> => {
       },
     })
 
+    console.log('in server. user: ', user)
+    console.log('in server. !!user?.isTeacher: ', !!user?.isTeacher)
     // Check if the user exists and is a teacher
     return !!user?.isTeacher // Return true if the user exists and is a teacher, false otherwise
   } catch (error) {

@@ -12,7 +12,7 @@ export async function PATCH(
     const { courseId } = params
     const updateData = await req.json()
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 

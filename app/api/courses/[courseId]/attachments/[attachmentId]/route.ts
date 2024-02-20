@@ -10,7 +10,7 @@ export async function DELETE(
   try {
     const { userId } = auth()
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
