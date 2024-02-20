@@ -11,7 +11,7 @@ const TeacherLayout = ({
 
     const {userId} = auth()
 
-    if(!isTeacher(userId)) {
+    if(!isTeacher()) {
         return redirect("/")
     }
 
