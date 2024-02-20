@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
     const { userId } = auth()
     const updateData = await req.json()
 
-    if (!userId || !isTeacher(userId)) {
+    if (!userId || !isTeacher()) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
@@ -51,7 +51,7 @@ export async function DELETE(req: Request) {
     const { userId: authUserId } = auth()
 
     const data = await req.json()
-    const {userId, badgeId, userBadgeId } = data
+    const { userId, badgeId, userBadgeId } = data
 
     console.log('data:', data)
 
