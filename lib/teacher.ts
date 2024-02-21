@@ -31,7 +31,7 @@ export const isTeacher = async (): Promise<boolean> => {
     // console.log('in server. userId: ', userId)
     const { userId } = auth()
 
-    console.log('in server. userId: ', userId)
+    // console.log('in server. userId: ', userId)
 
     if (!userId) return false // If userId is not provided, return false
 
@@ -45,8 +45,8 @@ export const isTeacher = async (): Promise<boolean> => {
       },
     })
 
-    console.log('in server. user: ', user)
-    console.log('in server. !!user?.isTeacher: ', !!user?.isTeacher)
+    // console.log('in server. user: ', user)
+    // console.log('in server. !!user?.isTeacher: ', !!user?.isTeacher)
     // Check if the user exists and is a teacher
     return !!user?.isTeacher // Return true if the user exists and is a teacher, false otherwise
   } catch (error) {

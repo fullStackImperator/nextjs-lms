@@ -101,14 +101,14 @@ export const columns = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Ist Lehrer?
+          Rolle
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
     cell: ({ row }) => {
       const isTeacherValue = row.original.isTeacher;
-      return <span>{isTeacherValue ? 'Ja' : 'Nein'}</span>
+      return <span>{isTeacherValue ? 'Lehrer' : 'Schüler'}</span>
     },
   },
   {
