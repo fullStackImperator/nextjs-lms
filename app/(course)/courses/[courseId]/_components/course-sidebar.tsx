@@ -7,6 +7,20 @@ import { CourseProgress } from "@/components/course-progress"
 import { CourseEnrollButton } from "../chapters/[chapterId]/_components/course-enroll-button"
 import { CourseUnEnrollButton } from '../chapters/[chapterId]/_components/course-unenroll-button'
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
+import { Button } from "@/components/ui/button"
+import { Minus, Plus } from "lucide-react"
+
+
 type CourseSidebarProps = {
     course: Course & {
         chapters: (Chapter & {
@@ -71,6 +85,43 @@ export const CourseSidebar = async ({
             />
           ))}
         </div>
+        {purchase && (
+          <div className="mt-5 p-8">
+            <Drawer>
+              <DrawerTrigger>
+                <Button variant="outline">AI Assistant</Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <div className="mx-auto w-full max-w-6xl">
+                  <DrawerHeader className="text-center flex flex-col items-center">
+                    <DrawerTitle>Chatte mit AI</DrawerTitle>
+                    <DrawerDescription>
+                      Stelle Fragen oder fordere Erklaerungen
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <div className="p-4 pb-0">
+                    <div className="mt-3 mb-4 h-[420px]">
+                      <iframe
+                        src="https://interfaces.zapier.com/embed/page/clo2s9nrg203090pmsbd6su8eh?"
+                        style={{
+                          maxWidth: '1200px',
+                          width: '100%',
+                          height: '440px',
+                        }}
+                      ></iframe>
+                    </div>
+                  </div>
+                  <DrawerFooter>
+                    {/* <Button>Submit</Button> */}
+                    <DrawerClose asChild>
+                      <Button variant="outline">Cancel</Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </div>
+              </DrawerContent>
+            </Drawer>
+          </div>
+        )}
       </div>
     )
 }
