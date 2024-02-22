@@ -16,7 +16,7 @@ import { CoursesList } from '@/components/courses-list'
 type SearchPageProps = {
   searchParams: {
     title: string
-    categoryId: string
+    categoryId?: string
   }
 }
 

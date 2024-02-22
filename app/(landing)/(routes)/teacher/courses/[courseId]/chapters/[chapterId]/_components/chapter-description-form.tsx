@@ -94,14 +94,14 @@ export const ChapterDescriptionForm = ({
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Kapitel Inhalt
+        <p className="text-xl">Kapitel Inhalt</p>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <p className="text-xl">Zurück</p>
           ) : (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Inhalt bearbeiten
+              <Pencil className="h-6 w-6 mr-2" />
+              <p className="text-xl">Inhalt bearbeiten</p>
             </>
           )}
         </Button>
@@ -120,7 +120,7 @@ export const ChapterDescriptionForm = ({
         </div>
       )}
       {isEditing && (
-        <div>
+        <div className="p-2">
           <Editor
             value={initialData?.descriptionEditor! as YooptaValue[]}
             onChange={setEditorContent}

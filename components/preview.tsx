@@ -98,7 +98,7 @@ const plugins = [
   }),
   Embed.extend({
     options: {
-      maxWidth: 650,
+      maxWidth: 1024,
       maxHeight: 750,
     },
   }),
@@ -142,8 +142,8 @@ const plugins = [
   Video.extend({
     // @ts-ignore
     options: {
-      maxWidth: 650,
-      maxHeight: 650,
+      maxWidth: 10240,
+      maxHeight: 850,
     },
   }),
 ]

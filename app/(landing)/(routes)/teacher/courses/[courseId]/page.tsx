@@ -52,8 +52,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           createdAt: 'desc',
         },
       },
+      categories: true, // Include categories related to the course
     },
   })
+
+  // console.log('course from db: ', course)
+
 
   const categories = await db.category.findMany({
     orderBy: {
@@ -72,7 +76,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.description,
     course.imageUrl,
     course.price,
-    course.categoryId,
+    // course.categoryId,
     course.chapters.some((chapter) => chapter.isPublished),
   ]
 

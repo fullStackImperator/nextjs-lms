@@ -9,6 +9,8 @@ interface User {
   lastName: string
   email: string
   isTeacher?: boolean | null
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export const getUsers = async (): Promise<User[]> => {

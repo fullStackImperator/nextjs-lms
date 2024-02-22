@@ -61,8 +61,9 @@ export async function POST(req: Request) {
   
   if (eventType === 'user.created' || eventType === 'user.updated') {
     
-    const { email_addresses, primary_email_address_id, first_name, last_name, username } =
-    // const { email_addresses, primary_email_address_id, first_name, last_name, id, username } =
+    // const { email_addresses, primary_email_address_id, first_name, last_name, username, created_at  } =
+    // const { email_addresses, primary_email_address_id, first_name, last_name, username, updated_at, created_at  } =
+    const { email_addresses, primary_email_address_id, first_name, last_name, id, username } =
       evt.data
     
       const emailObject = email_addresses?.find((email) => {
@@ -80,6 +81,7 @@ export async function POST(req: Request) {
         lastName: `${last_name || ''}`,
         userName: `${username || ''}`,
         email: emailObject.email_address,
+        // updatedAt: `${updated_at || ''}`,
       },
       create: {
         id: id,
@@ -87,6 +89,7 @@ export async function POST(req: Request) {
         lastName: `${last_name || ''}`,
         userName: `${username || ''}`,
         email: emailObject.email_address,
+        // createdAt: `${created_at || ''}`,   // gets filled by default
       },
     })
   }

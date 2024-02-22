@@ -20,14 +20,14 @@ interface CategoriesProps {
   categories: Category[]
 }
 
-const iconMap: Record<Category['name'], IconType> = {
-  Musik: FcMusic,
-  Photographie: FcOldTimeCamera,
-  Workshop: FcFactory,
-  Programmieren: FcCommandLine,
-  Film: FcFilmReel,
-  '3D Drucken': FcEngineering,
-}
+// const iconMap: Record<Category['name'], IconType> = {
+//   Musik: FcMusic,
+//   Photographie: FcOldTimeCamera,
+//   Workshop: FcFactory,
+//   Programmieren: FcCommandLine,
+//   Film: FcFilmReel,
+//   '3D Drucken': FcEngineering,
+// }
 
 export const Categories = ({ categories }: CategoriesProps) => {
   return (
@@ -36,7 +36,7 @@ export const Categories = ({ categories }: CategoriesProps) => {
         <CategoryItem
           key={category.id}
           label={category.name}
-          icon={iconMap[category.name]}
+          // icon={iconMap[category.name]}
           value={category.id}
         />
       ))}

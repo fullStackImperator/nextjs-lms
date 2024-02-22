@@ -3,7 +3,7 @@ import { db } from '@/lib/db'
 // import { SearchInput } from '@/components/search-input'
 // import { redirect } from 'next/navigation'
 // import { CoursesList } from '@/components/courses-list'
-import { getLandingpageCourses } from '@/actions/get-landingpage-courses'
+// import { getLandingpageCourses } from '@/actions/get-landingpage-courses'
 
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import Link from 'next/link'
@@ -29,24 +29,24 @@ import { cn } from '@/lib/utils'
 //   }
 // }
 
-type SearchPageProps = {
-  searchParams: {
-    title: string
-    categoryId: string
-  }
+// type SearchPageProps = {
+//   searchParams: {
+//     title: string
+//     categoryId: string
+//   }
 }
 
-const LandingPage = async ({ searchParams }: SearchPageProps) => {
+const LandingPage = async () => {
 
-  const categories = await db.category.findMany({
-    orderBy: {
-      name: 'asc',
-    },
-  })
+  // const categories = await db.category.findMany({
+  //   orderBy: {
+  //     name: 'asc',
+  //   },
+  // })
 
-  const courses = await getLandingpageCourses({
-    ...searchParams,
-  })
+  // const courses = await getLandingpageCourses({
+  //   ...searchParams,
+  // })
 
   // console.log('items: ', courses)
 

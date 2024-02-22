@@ -108,14 +108,14 @@ const plugins = [
   }),
   Embed.extend({
     options: {
-      maxWidth: 650,
-      maxHeight: 750,
+      maxWidth: 1024,
+      maxHeight: 1024,
     },
   }),
   Image.extend({
     options: {
-      maxWidth: 650,
-      maxHeight: 650,
+      maxWidth: 1024,
+      maxHeight: 1024,
       onUpload: async (file: File) => {
         const response = await handleImageUpload(file)
         return {
@@ -128,14 +128,14 @@ const plugins = [
   }),
   Video.extend({
     options: {
-      maxWidth: 650,
-      maxHeight: 650,
+      maxWidth: 1024,
+      maxHeight: 1024,
       onUpload: async (file: File) => {
         const response = await handleVideoUpload(file)
         return {
           url: response.url,
-          width: 650,
-          height: 450,
+          width: 850,
+          height: 850,
         }
       },
     },
@@ -174,7 +174,7 @@ export default function Editor({ value, onChange }: EditorProps) {
     //   style={{ padding: '5rem 0' }}
     //   className={`flex min-h-screen w-full h-full flex-col items-center justify-between p-24`}
     // >
-    <div className="w-full h-full bg-white p-2">
+    <div className="w-full h-full bg-white p-14">
       <YooptaEditor<any>
         // value={editorValue}
         value={value}
