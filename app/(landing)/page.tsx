@@ -34,7 +34,7 @@ import { cn } from '@/lib/utils'
 //     title: string
 //     categoryId: string
 //   }
-}
+// }
 
 const LandingPage = async () => {
 
