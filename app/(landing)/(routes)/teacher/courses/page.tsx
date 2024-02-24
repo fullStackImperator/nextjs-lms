@@ -16,15 +16,15 @@ const CoursesPage = async () => {
         return redirect("/")
     }
 
-    // find courses of the teacher !
-    const courses = await db.course.findMany({
-        where: {
-            userId: userId,
-        },
-        orderBy: {
-            createdAt: "desc",
-        }
-    })
+    // // find courses of the teacher !
+    // const courses = await db.course.findMany({
+    //     where: {
+    //         userId: userId,
+    //     },
+    //     orderBy: {
+    //         createdAt: "desc",
+    //     }
+    // })
     
 
 // const enrolledUsers = await db.purchase.findMany({
@@ -39,12 +39,18 @@ const CoursesPage = async () => {
 
 
     const coursesWithEnrolledStudents = await db.course.findMany({
+      where: {
+        userId: userId,
+      },
       include: {
         purchases: {
           select: {
             userId: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     })
 

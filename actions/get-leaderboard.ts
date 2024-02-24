@@ -10,8 +10,8 @@ interface UserBadge {
 
 interface LeaderboardUser {
   userId: string
-  userName: string | undefined
-  userImageUrl: string | undefined
+  userName: string | null | undefined
+  userImageUrl: string | null | undefined
   totalPoints: number
   badges: UserBadge[]
 }
