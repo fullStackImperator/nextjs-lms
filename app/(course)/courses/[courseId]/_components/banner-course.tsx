@@ -171,7 +171,12 @@ export const BannerCourse = ({
           </div>
 
           <div className="col-span-2 relative">
-            <Image src={course.imageUrl} fill className="object-cover" />
+            <Image
+              src={course.imageUrl}
+              alt={course.title}
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </div>
