@@ -1,9 +1,7 @@
 import { IconBadge } from '@/components/icon-badge'
 import {
-  CircleDollarSign,
   LayoutDashboard,
   ListChecks,
-  File,
   Wrench,
   Dumbbell,
   BookCheck,
@@ -17,16 +15,17 @@ import { TitleForm } from './_components/title-form'
 import { DescriptionForm } from './_components/description-form'
 import { ImageForm } from './_components/image-form'
 import { CategoryForm } from './_components/category-form'
-import { PriceForm } from './_components/price-form'
-import { AttachmentForm } from './_components/attachment-form'
+// import { PriceForm } from './_components/price-form'
+// import { AttachmentForm } from './_components/attachment-form'
 import { ChaptersForm } from './_components/chapters-form'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { CourseActions } from './_components/course-actions'
 import { Banner } from '@/components/banner'
 import { PrerequisiteForm } from './_components/prerequisite-form'
 import { VorkenntnisseForm } from './_components/vorkenntnisse-form'
 import { KompetenzenForm } from './_components/kompetenz-form'
 import { LevelForm } from './_components/level-form'
+import { LongDescriptionForm } from './_components/longDescription-form'
 
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
@@ -74,10 +73,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const requiredFields = [
     course.title,
     course.description,
+    course.longDescription,
     course.imageUrl,
     course.price,
     // course.categoryId,
     course.chapters.some((chapter) => chapter.isPublished),
+    course.prerequisites,
+    course.vorkenntnisse,
+    course.kompetenzen,
   ]
 
   const totalFields = requiredFields.length
@@ -117,6 +120,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             </div>
             <TitleForm initialData={course} courseId={course.id} />
             <DescriptionForm initialData={course} courseId={course.id} />
+            <LongDescriptionForm initialData={course} courseId={course.id} />
             <ImageForm initialData={course} courseId={course.id} />
             <CategoryForm
               initialData={course}

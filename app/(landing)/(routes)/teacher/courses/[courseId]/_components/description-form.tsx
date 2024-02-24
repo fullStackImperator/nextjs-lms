@@ -33,6 +33,13 @@ interface DescriptionFormProps {
 const formSchema = z.object({
   description: z.string().min(1, {
     message: 'Beschreibung ist notwendig',
+  }).refine((val) => {
+    // Count words
+    const wordCount = val.trim().split(/\s+/).length;
+    // Validate word count
+    return wordCount <= 20;
+  }, {
+    message: 'Die Kurzeschreibung darf höchstens 20 Wörter enthalten',
   }),
 })
 
@@ -66,7 +73,7 @@ export const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps)
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Projekt Beschreibung
+        Projekt Kurzbeschreibung (max 20 Wörter)
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>

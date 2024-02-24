@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { SearchInput } from './search-input'
 import { isTeacher } from '@/lib/teacher'
 import useSwr from 'swr'
+import { Logo } from '@/app/(landing)/(routes)/_components/logo'
 // import useSwr from 'swr'
 
 
@@ -61,6 +62,11 @@ export const NavbarRoutes = () => {
 
     return (
       <>
+
+        <div className='px-6'>
+          <Logo />
+        </div>
+      
         {isSearchPage && (
           <div className="hidden md:block">
             <SearchInput />

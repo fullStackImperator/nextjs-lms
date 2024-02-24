@@ -4,24 +4,26 @@ import * as z from 'zod'
 import axios from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Pencil } from 'lucide-react'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-// import { Chapter } from '@prisma/client'
+
 import { Course } from '@prisma/client'
+
+import { Button } from '@/components/ui/button'
+import { Pencil } from 'lucide-react'
 
 import {
   Form,
   FormControl,
   FormField,
+  FormLabel,
   FormItem,
   FormMessage,
 } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
+import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
-import { Editor } from '@/components/editor'
-import { Preview } from '@/components/previewQuill'
+import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
 
 interface KompetenzenFormProps {
   initialData: Course
@@ -30,14 +32,11 @@ interface KompetenzenFormProps {
 
 const formSchema = z.object({
   kompetenzen: z.string().min(1, {
-    message: 'Kompetenzen sind notwendig',
+    message: 'Benötigte Materialien sind notwendig',
   }),
 })
 
-export const KompetenzenForm = ({
-  initialData,
-  courseId,
-}: KompetenzenFormProps) => {
+export const KompetenzenForm = ({ initialData, courseId }: KompetenzenFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -56,41 +55,38 @@ export const KompetenzenForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values)
-      toast.success('Course updated')
+      toast.success('Projekt aktualisiert')
       toggleEdit()
       router.refresh()
-    } catch {
+    } catch (error) {
       toast.error('Something went wrong')
     }
   }
 
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Was wird gelernt
+        Zu erwerbende Kompetenzen
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Zurück</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Was wird gelernt bearbeiten
+              Zu erwerbende Kompetenzen bearbeiten
             </>
           )}
         </Button>
       </div>
       {!isEditing && (
-        <div
+        <p
           className={cn(
             'text-sm mt-2',
             !initialData.kompetenzen && 'text-slate-500 italic'
           )}
         >
-          {!initialData.kompetenzen && 'Keine Beschreibung'}
-          {initialData.kompetenzen && (
-            <Preview value={initialData.kompetenzen} />
-          )}
-        </div>
+          {initialData.kompetenzen || 'Keine Kompetenzen werden erworben'}
+        </p>
       )}
       {isEditing && (
         <Form {...form}>
@@ -104,7 +100,11 @@ export const KompetenzenForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Editor {...field} />
+                    <Input
+                      disabled={isSubmitting}
+                      placeholder="z.B. 'Technische Lösungen planen, entwerfen, fertigen, optimieren, prüfen und testen'"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

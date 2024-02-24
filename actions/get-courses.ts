@@ -55,7 +55,8 @@ export const getCourses = async ({
     })
 
 
-        console.log('courses: ', courses)
+    // console.log('courses: ', courses)
+    // console.log('courses: ', courses)
 
 
 

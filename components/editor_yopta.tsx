@@ -1,7 +1,7 @@
 // import { Inter } from 'next/font/google';
-import NextImage from 'next/image'
+// import NextImage from 'next/image'
 
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import YooptaEditor from '@yoopta/editor'
 
 import Paragraph from '@yoopta/paragraph'
@@ -25,72 +25,66 @@ import Toolbar from '@yoopta/toolbar'
 import { YooptaValue } from '@/lib/yopta/initialData'
 import { uploadFiles } from '@/lib/uploadFiles'
 
+// Function to handle image upload using UploadThing
+const handleImageUpload = async (file: File) => {
+  try {
+    // Upload the image file using UploadThing
+    const response = await uploadFiles('editorImage', { files: [file] })
+    // Extract the URL and other necessary data from the response
+    const imageUrl = response[0]?.url
+    // const width = response[0]?.data?.width;
+    // const height = response[0]?.data?.height;
 
-  // Function to handle image upload using UploadThing
-  const handleImageUpload = async (file: File) => {
-    try {
-      // Upload the image file using UploadThing
-      const response = await uploadFiles("editorImage", { files: [file] });
-      // Extract the URL and other necessary data from the response
-      const imageUrl = response[0]?.url;
-      // const width = response[0]?.data?.width;
-      // const height = response[0]?.data?.height;
+    // Return the image URL and dimensions in the required format
+    return { url: imageUrl }
+    // return { url: imageUrl, width, height };
+  } catch (error) {
+    console.error('Error uploading image:', error)
+    return { url: '' }
+  }
+}
 
-      // Return the image URL and dimensions in the required format
-      return { url: imageUrl };
-      // return { url: imageUrl, width, height };
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      return { url: '' }
-    }
-  };
+// Function to handle image upload using UploadThing
+const handleVideoUpload = async (file: File) => {
+  try {
+    // Upload the image file using UploadThing
+    const response = await uploadFiles('editorVideo', { files: [file] })
+    // Extract the URL and other necessary data from the response
+    const videoUrl = response[0]?.url
+    // const width = response[0]?.data?.width;
+    // const height = response[0]?.data?.height;
 
+    // Return the image URL and dimensions in the required format
+    return { url: videoUrl }
+    // return { url: imageUrl, width, height };
+  } catch (error) {
+    console.error('Error uploading video:', error)
+    return { url: '' }
+  }
+}
 
-  // Function to handle image upload using UploadThing
-  const handleVideoUpload = async (file: File) => {
-    try {
-      // Upload the image file using UploadThing
-      const response = await uploadFiles("editorVideo", { files: [file] });
-      // Extract the URL and other necessary data from the response
-      const videoUrl = response[0]?.url
-      // const width = response[0]?.data?.width;
-      // const height = response[0]?.data?.height;
+// Function to handle image upload using UploadThing
+const handleFileUpload = async (file: File) => {
+  try {
+    // Upload the image file using UploadThing
+    const response = await uploadFiles('editorFile', { files: [file] })
+    // Extract the URL and other necessary data from the response
+    const fileUrl = response[0]?.url
+    // const width = response[0]?.data?.width;
+    // const height = response[0]?.data?.height;
 
-      // Return the image URL and dimensions in the required format
-      return { url: videoUrl };
-      // return { url: imageUrl, width, height };
-    } catch (error) {
-      console.error('Error uploading video:', error);
-      return { url: '' }
-    }
-  };
-
-  // Function to handle image upload using UploadThing
-  const handleFileUpload = async (file: File) => {
-    try {
-      // Upload the image file using UploadThing
-      const response = await uploadFiles("editorFile", { files: [file] });
-      // Extract the URL and other necessary data from the response
-      const fileUrl = response[0]?.url
-      // const width = response[0]?.data?.width;
-      // const height = response[0]?.data?.height;
-
-      // Return the image URL and dimensions in the required format
-      return { url: fileUrl }
-      // return { url: imageUrl, width, height };
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      return { url: '' }
-    }
-  };
-
+    // Return the image URL and dimensions in the required format
+    return { url: fileUrl }
+    // return { url: imageUrl, width, height };
+  } catch (error) {
+    console.error('Error uploading file:', error)
+    return { url: '' }
+  }
+}
 
 // list of plugins should be placed outside component
 const plugins = [
   Paragraph,
-  HeadingOne,
-  HeadingTwo,
-  HeadingThree,
   Blockquote,
   Callout,
   Code,
@@ -98,6 +92,9 @@ const plugins = [
   NumberedList,
   BulletedList,
   TodoList,
+  HeadingOne,
+  HeadingTwo,
+  HeadingThree,
   File.extend({
     options: {
       onUpload: async (file: File) => {
@@ -120,8 +117,8 @@ const plugins = [
         const response = await handleImageUpload(file)
         return {
           url: response.url,
-          width: 650,
-          height: 450,
+          width: 850,
+          height: 650,
         }
       },
     },
@@ -135,7 +132,7 @@ const plugins = [
         return {
           url: response.url,
           width: 850,
-          height: 850,
+          height: 650,
         }
       },
     },
@@ -149,12 +146,10 @@ const TOOLS = {
   LinkTool: <LinkTool />,
 }
 
-
 interface EditorProps {
   value: YooptaValue[]
   onChange: (value: YooptaValue[]) => void
 }
-
 
 export default function Editor({ value, onChange }: EditorProps) {
   // const [editorContent, setEditorContent] = useState(value)
@@ -183,6 +178,7 @@ export default function Editor({ value, onChange }: EditorProps) {
         plugins={plugins}
         marks={marks}
         placeholder="Tippe '/' zum starten..."
+        autoFocus
         tools={TOOLS}
         // offline="withBasicExample"
       />

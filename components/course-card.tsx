@@ -71,7 +71,7 @@ export const CourseCard = ({
             {/* <p className="flex-1 text-sm md:text-sm text-slate-500  font-medium">
               Benötigtes Material:
             </p> */}
-            <Separator className="my-2" />
+            {/* <Separator className="my-2" />
             <p className="text-xs px-2 text-muted-foreground">
               Dieses Material benötigst du:
             </p>
@@ -88,7 +88,6 @@ export const CourseCard = ({
                 </p>
               </div>
             )}
-            {/* <Separator className="my-2" /> */}
             <p className="text-xs px-2 text-muted-foreground">
               Das solltest du wissen:
             </p>
@@ -105,7 +104,6 @@ export const CourseCard = ({
                 </p>
               </div>
             )}
-            {/* <Separator className="my-2" /> */}
             <p className="text-xs px-2 text-muted-foreground">Das lernst du:</p>
             {kompetenzen ? (
               <div className="flex flex-col p-2 mt-2 bg-rose-50 rounded-md">
@@ -119,7 +117,7 @@ export const CourseCard = ({
                   Keine Kompetenzen werden erworben <br />
                 </p>
               </div>
-            )}
+            )} */}
             <Separator className="my-4" />
             {progress !== null ? (
               <div>

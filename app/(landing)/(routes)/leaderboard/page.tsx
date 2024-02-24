@@ -66,7 +66,16 @@ export default async function Dashboard() {
               {leaderboard.map((user) => (
                 <TableRow key={user.userId}>
                   <TableCell className="rounded-s-lg">{++rank}.</TableCell>
-                  <TableCell>{user.userName}</TableCell>
+                  <TableCell>
+                    {/* <Avatar className="h-8 w-8 border-2 border-white">
+                      <AvatarImage
+                        src={user.userImageUrl}
+                        alt={user.userName}
+                      />
+                      <AvatarFallback>BG</AvatarFallback>
+                    </Avatar> */}
+                    {user.userName}
+                  </TableCell>
                   {/* <TableCell>{user.userId}</TableCell> */}
                   <TableCell className="rounded-e-lg ">
                     <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-6 text-sm rounded-full bg-green-500/20 text-green-600">

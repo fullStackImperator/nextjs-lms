@@ -10,7 +10,8 @@ interface UserBadge {
 
 interface LeaderboardUser {
   userId: string
-  userName: string | null | undefined
+  userName: string | undefined
+  userImageUrl: string | undefined
   totalPoints: number
   badges: UserBadge[]
 }
@@ -48,6 +49,7 @@ export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
         select: {
           id: true,
           userName: true,
+          userImageUrl: true,
         },
       })
 
@@ -69,6 +71,7 @@ export const getLeaderboard = async (): Promise<LeaderboardUser[]> => {
       leaderboard.push({
         userId,
         userName: user?.userName,
+        userImageUrl: user?.userImageUrl,
         totalPoints: userPointsMap[userId], // Set total points for the user
         badges,
       })

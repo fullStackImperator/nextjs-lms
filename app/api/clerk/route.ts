@@ -63,8 +63,7 @@ export async function POST(req: Request) {
     
     // const { email_addresses, primary_email_address_id, first_name, last_name, username, created_at  } =
     // const { email_addresses, primary_email_address_id, first_name, last_name, username, updated_at, created_at  } =
-    const { email_addresses, primary_email_address_id, first_name, last_name, id, username } =
-      evt.data
+    const { email_addresses, primary_email_address_id, first_name, last_name, id, username, image_url } = evt.data
     
       const emailObject = email_addresses?.find((email) => {
       return email.id === primary_email_address_id
@@ -77,24 +76,26 @@ export async function POST(req: Request) {
     await db.user.upsert({
       where: { id: id },
       update: {
+        userName: `${username || ''}`,
+        userImageUrl: `${image_url || ''}`,
         firstName: `${first_name || ''}`,
         lastName: `${last_name || ''}`,
-        userName: `${username || ''}`,
         email: emailObject.email_address,
         // updatedAt: `${updated_at || ''}`,
       },
       create: {
         id: id,
+        userName: `${username || ''}`,
+        userImageUrl: `${image_url || ''}`,
         firstName: `${first_name || ''}`,
         lastName: `${last_name || ''}`,
-        userName: `${username || ''}`,
         email: emailObject.email_address,
         // createdAt: `${created_at || ''}`,   // gets filled by default
       },
     })
   }
 
-  console.log(`User ${id} was ${eventType}`)
+  console.log(`User ${id} was ${eventType} with`)
 
   // const payload: WebhookEvent = await req.json()
   // console.log(payload)

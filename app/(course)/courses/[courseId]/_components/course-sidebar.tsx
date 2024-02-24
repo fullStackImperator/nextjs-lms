@@ -86,10 +86,12 @@ export const CourseSidebar = async ({
           ))}
         </div>
         {purchase && (
-          <div className="mt-5 p-8">
+          <div className="flex flex-col mt-5 p-8">
             <Drawer>
               <DrawerTrigger>
-                <Button variant="outline">AI Assistant</Button>
+                <Button variant="destructive" className="w-full">
+                  AI Assistant
+                </Button>
               </DrawerTrigger>
               <DrawerContent>
                 <div className="mx-auto w-full max-w-6xl">

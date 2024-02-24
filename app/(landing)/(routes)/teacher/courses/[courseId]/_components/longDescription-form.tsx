@@ -23,21 +23,21 @@ import { cn } from '@/lib/utils'
 import { Editor } from '@/components/editor'
 import { Preview } from '@/components/previewQuill'
 
-interface KompetenzenFormProps {
+
+
+interface LongDescriptionFormProps {
   initialData: Course
   courseId: string
 }
 
 const formSchema = z.object({
-  kompetenzen: z.string().min(1, {
-    message: 'Kompetenzen sind notwendig',
-  }),
+  longDescription: z.string().min(1),
 })
 
-export const KompetenzenForm = ({
+export const LongDescriptionForm = ({
   initialData,
   courseId,
-}: KompetenzenFormProps) => {
+}: LongDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -47,7 +47,7 @@ export const KompetenzenForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      kompetenzen: initialData?.kompetenzen || '',
+      longDescription: initialData?.longDescription || '',
     },
   })
 
@@ -67,14 +67,14 @@ export const KompetenzenForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Was wird gelernt
+        Projekt Beschreibung (lang)
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Zurück</>
+            <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Was wird gelernt bearbeiten
+              Beschreibung bearbeiten
             </>
           )}
         </Button>
@@ -83,12 +83,12 @@ export const KompetenzenForm = ({
         <div
           className={cn(
             'text-sm mt-2',
-            !initialData.kompetenzen && 'text-slate-500 italic'
+            !initialData.longDescription && 'text-slate-500 italic'
           )}
         >
-          {!initialData.kompetenzen && 'Keine Beschreibung'}
-          {initialData.kompetenzen && (
-            <Preview value={initialData.kompetenzen} />
+          {!initialData.longDescription && 'Keine Beschreibung'}
+          {initialData.longDescription && (
+            <Preview value={initialData.longDescription} />
           )}
         </div>
       )}
@@ -100,7 +100,7 @@ export const KompetenzenForm = ({
           >
             <FormField
               control={form.control}
-              name="kompetenzen"
+              name="longDescription"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
