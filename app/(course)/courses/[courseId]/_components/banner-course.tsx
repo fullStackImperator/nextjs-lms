@@ -63,10 +63,10 @@ interface Course {
   userId: string
   title: string
   description: string | null
-  prerequisites: string | null
-  vorkenntnisse: string | null
-  kompetenzen: string | null
-  imageUrl: string 
+  // prerequisites: string | null
+  // vorkenntnisse: string | null
+  // kompetenzen: string | null
+  imageUrl?: string | null
   price: number | null
   level: number | null
   isPublished: boolean
@@ -172,7 +172,7 @@ export const BannerCourse = ({
 
           <div className="col-span-2 relative">
             <Image
-              src={course.imageUrl}
+              src={course.imageUrl!}
               alt={course.title}
               fill
               className="object-cover"
