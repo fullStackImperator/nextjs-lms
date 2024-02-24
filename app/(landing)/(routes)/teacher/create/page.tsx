@@ -71,17 +71,17 @@ const CreatePage = () => {
                       {...field} // passes onChange.. onBlur name etc
                     />
                   </FormControl>
-                  <FormDescription>
+                  {/* <FormDescription>
                     Was soll in dem Projekt gelehrt werden?
-                  </FormDescription>
+                  </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
             />
             <div className="flex items-center gap-x-2">
-              <Link href="/">
+              <Link href="/dashboard">
                 <Button type="button" variant="ghost">
-                  Cancel
+                  Zurück
                 </Button>
               </Link>
               <Button type="submit" disabled={!isValid || isSubmitting}>
