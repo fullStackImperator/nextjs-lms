@@ -69,6 +69,7 @@ export const CourseActions = ({
       toast.success('Course deleted')
       router.refresh()
       router.push(`/teacher/courses`)
+      router.refresh()
     } catch {
       toast.error('Something went wrong')
     } finally {

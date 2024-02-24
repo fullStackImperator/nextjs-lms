@@ -6,6 +6,7 @@ import {
   Dumbbell,
   BookCheck,
   BookPlus,
+  ArrowLeft,
 } from 'lucide-react'
 
 import { db } from '@/lib/db'
@@ -26,6 +27,7 @@ import { VorkenntnisseForm } from './_components/vorkenntnisse-form'
 import { KompetenzenForm } from './_components/kompetenz-form'
 import { LevelForm } from './_components/level-form'
 import { LongDescriptionForm } from './_components/longDescription-form'
+import Link from 'next/link'
 
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
@@ -101,6 +103,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2">
+            <Link
+              href={`/teacher/courses`}
+              className="flex items-center text-sm hover:opacity-75 transition mb-6 "
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Zurück zur Kursübersicht
+            </Link>
             <h1 className="text-2xl font-medium">Projekt Gestaltung</h1>
             <span className="text-sm text-slate-700">
               Alle Felder ausfüllen {completionText}
