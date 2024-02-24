@@ -1,5 +1,5 @@
 import React from 'react'
-import { WhatLearntItem } from './what-learnt-item'
+// import { WhatLearntItem } from './what-learnt-item'
 import { Preview } from '@/components/previewQuill'
 
 interface WhatLearntProps {
