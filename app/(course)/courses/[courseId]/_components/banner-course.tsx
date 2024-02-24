@@ -66,7 +66,7 @@ interface Course {
   prerequisites: string | null
   vorkenntnisse: string | null
   kompetenzen: string | null
-  imageUrl: string | null
+  imageUrl: string 
   price: number | null
   level: number | null
   isPublished: boolean
