@@ -3,6 +3,7 @@ import BadgeList from './_components/badges-list'
 import BadgesDialog from './_components/badges-dialog'
 import { useState } from 'react'
 import Link from 'next/link'
+import { Award } from 'lucide-react'
 
 // Define the Badge type
 type Badge = {
@@ -33,7 +34,9 @@ const CreateBadgesPage = () => {
   return (
     <div className="max-w-5xl mx-auto mt-8 flex flex-col  md:items-center md:justify-center p-6">
       <div className="text-center mb-8 ">
-
+        <span className="justify-center flex mb-8">
+          <Award className="h-12 w-12" />
+        </span>
         <h1 className="text-2xl text-center  ">Erstelle einen Badge</h1>
         <p className="mt-1 text-sm text-slate-600 text-center">
           Der Badge kann anschliessend{' '}
