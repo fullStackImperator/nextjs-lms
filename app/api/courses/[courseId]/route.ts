@@ -26,16 +26,10 @@ export async function DELETE(
         id: courseId,
         userId: userId,
       },
-      // include: {
-      //   chapters: {
-      //     include: {
-      //       muxData: true,
-      //     },
-      //   },
-      // },
+      include: {
+        categories: true, // Include categories associated with the course
+      },
     })
-
-
 
     if (!course) {
       return new NextResponse('Not found', { status: 404 })
@@ -48,10 +42,24 @@ export async function DELETE(
     //   }
     // }
 
+    // Remove the association between the course and its categories
+    await db.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        categories: {
+          disconnect: course.categories.map((category) => ({
+            id: category.id,
+          })),
+        },
+      },
+    })
+
     const deletedCourse = await db.course.delete({
       where: {
-        id: params.courseId
-      }
+        id: params.courseId,
+      },
     })
 
     return NextResponse.json(deletedCourse)

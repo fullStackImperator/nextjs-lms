@@ -27,12 +27,13 @@ const CreateBadgesPage = () => {
   // Function to handle closing the dialog and resetting the selected badge data
   const handleCloseDialog = () => {
     setSelectedBadge(null)
-    setDialogMode('create') 
+    setDialogMode('create')
   }
 
   return (
     <div className="max-w-5xl mx-auto mt-8 flex flex-col  md:items-center md:justify-center p-6">
       <div className="text-center mb-8 ">
+
         <h1 className="text-2xl text-center  ">Erstelle einen Badge</h1>
         <p className="mt-1 text-sm text-slate-600 text-center">
           Der Badge kann anschliessend{' '}
@@ -54,8 +55,11 @@ const CreateBadgesPage = () => {
         />
       </div>
 
-      <p className="text-sm text-slate-600 text-center mt-8 mb-4">
+      <p className="text-sm text-slate-600 text-center mt-8">
         Vorhandene Badges
+      </p>
+      <p className="text-xs text-slate-600 text-center  mb-4">
+        (Klicke auf einen Badge um ihn zu bearbeiten)
       </p>
       <BadgeList onOpenDialog={handleOpenDialog} />
     </div>

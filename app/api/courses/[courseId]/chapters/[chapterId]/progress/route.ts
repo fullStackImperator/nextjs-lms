@@ -13,11 +13,11 @@ export async function PUT(
 
         console.log('userId', userId)
         console.log('params.chapterId', params.chapterId)
-
+        
         if (!userId) {
             return new NextResponse("Unauthorized", {status: 401})
         }
-
+        
         const userProgress = await db.userProgress.upsert({
             where: {
                 userId_chapterId: {
@@ -34,6 +34,8 @@ export async function PUT(
                 isCompleted,
             }
         })
+        
+        console.log('userProgress: ', userProgress)
 
         return NextResponse.json(userProgress)
     } catch (error) {
