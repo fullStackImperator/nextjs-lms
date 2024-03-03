@@ -42,7 +42,7 @@ const BadgeList = ({ onOpenDialog }: BadgeListProps) => {
       {badges.map((badge: Badge) => (
         <div
           key={badge.id}
-          className="m-4 text-center flex flex-col items-center mr-4  transition ease-in-out delay-100 hover:cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:scale-105   rounded-lg p-2 bg-orange-200  border border-red-400"
+          className="m-4 text-center flex flex-col items-center mr-4  transition ease-in-out delay-100 hover:cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:scale-105   rounded-lg p-2    bg-gradient-to-tr from-amber-200 to-yellow-500    border border-red-400"
           onClick={() => onOpenDialog(badge)}
         >
           <Avatar className="h-20 w-20 border-2 border-white">

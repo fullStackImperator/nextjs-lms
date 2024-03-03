@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Playground from '@/components/Playground'
+import Playground from './_components/playground'
 
 export const metadata: Metadata = {
   title: 'Playground | Math Editor',
