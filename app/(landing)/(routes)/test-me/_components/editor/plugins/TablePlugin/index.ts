@@ -122,14 +122,24 @@ export function TablePlugin({
       }
     )
 
+    // return () => {
+    //   unregisterMutationListener()
+    //   // Hook might be called multiple times so cleaning up tables listeners as well,
+    //   // as it'll be reinitialized during recurring call
+    //   for (const [, tableSelection] of tableSelections) {
+    //     tableSelection.removeListeners()
+    //   }
+    // }
     return () => {
       unregisterMutationListener()
-      // Hook might be called multiple times so cleaning up tables listeners as well,
-      // as it'll be reinitialized during recurring call
-      for (const [, tableSelection] of tableSelections) {
+
+      // Clean up table listeners
+      tableSelections.forEach((tableSelection, key) => {
         tableSelection.removeListeners()
-      }
+        tableSelections.delete(key)
+      })
     }
+    
   }, [editor])
 
   return null
