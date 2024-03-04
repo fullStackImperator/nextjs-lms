@@ -309,10 +309,10 @@ function useLexicalCommandsLog(
   useEffect(() => {
     const unregisterCommandListeners = new Set<() => void>()
 
-    for (const [command] of editor._commands) {
+    for (const [commandName, command] of Object.entries(editor._commands)) {
       unregisterCommandListeners.add(
         editor.registerCommand(
-          command,
+          commandName,
           (payload) => {
             setLoggedCommands((state) => {
               const newState = [...state]
