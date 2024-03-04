@@ -309,10 +309,36 @@ function useLexicalCommandsLog(
   useEffect(() => {
     const unregisterCommandListeners = new Set<() => void>()
 
+    // for (const [command] of editor._commands) {
+    //   unregisterCommandListeners.add(
+    //     editor.registerCommand(
+    //       command,
+    //       (payload) => {
+    //         setLoggedCommands((state) => {
+    //           const newState = [...state]
+    //           newState.push({
+    //             payload,
+    //             type: command.type ? command.type : 'UNKNOWN',
+    //           })
+
+    //           if (newState.length > 10) {
+    //             newState.shift()
+    //           }
+
+    //           return newState
+    //         })
+
+    //         return false
+    //       },
+    //       COMMAND_PRIORITY_HIGH
+    //     )
+    //   )
+    // }
+
     for (const [commandName, command] of Object.entries(editor._commands)) {
       unregisterCommandListeners.add(
         editor.registerCommand(
-          commandName,
+          command,
           (payload) => {
             setLoggedCommands((state) => {
               const newState = [...state]
