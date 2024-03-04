@@ -52,103 +52,110 @@ const VOICE_COMMANDS: Readonly<
 export const SUPPORT_SPEECH_RECOGNITION: boolean =
   'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
 
+
+
+
 function SpeechToTextPlugin() {
-  const [editor] = useLexicalComposerContext();
-  const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = useRef<typeof SpeechRecognition | null>(null);
-  const [transcript, setTranscript] = useState<string | null>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [editor] = useLexicalComposerContext()
+  const [isEnabled, setIsEnabled] = useState<boolean>(false)
+  // @ts-ignore
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  const recognition = useRef<typeof SpeechRecognition | null>(null)
+  const [transcript, setTranscript] = useState<string | null>(null)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (isEnabled && recognition.current === null) {
-      recognition.current = new SpeechRecognition();
-      recognition.current.continuous = true;
-      recognition.current.interimResults = true;
+      recognition.current = new SpeechRecognition()
+      recognition.current.continuous = true
+      recognition.current.interimResults = true
       recognition.current.addEventListener(
         'result',
         (event: typeof SpeechRecognition) => {
-          const resultItem = event.results.item(event.resultIndex);
-          const { transcript } = resultItem.item(0);
-          if (timer.current) clearTimeout(timer.current);
+          const resultItem = event.results.item(event.resultIndex)
+          const { transcript } = resultItem.item(0)
+          if (timer.current) clearTimeout(timer.current)
           if (transcript) {
-            setTranscript(transcript);
+            setTranscript(transcript)
             timer.current = setTimeout(() => {
-              if (timer.current) clearTimeout(timer.current);
-              setTranscript(null);
-            }, 1000);
+              if (timer.current) clearTimeout(timer.current)
+              setTranscript(null)
+            }, 1000)
           }
 
           if (!resultItem.isFinal) {
-            return;
+            return
           }
 
           editor.update(() => {
-            const selection = $getSelection();
+            const selection = $getSelection()
 
             if ($isRangeSelection(selection)) {
-              const command = VOICE_COMMANDS[transcript.toLowerCase().trim()];
+              const command = VOICE_COMMANDS[transcript.toLowerCase().trim()]
 
               if (command) {
                 command({
                   editor,
                   selection,
-                });
+                })
               } else if (transcript.match(/\s*\n\s*/)) {
-                selection.insertParagraph();
+                selection.insertParagraph()
               } else {
-                selection.insertText(transcript);
+                selection.insertText(transcript)
               }
             } else if ($isNodeSelection(selection)) {
-              const node = selection.getNodes()[0];
+              const node = selection.getNodes()[0]
               if ($isMathNode(node)) {
-                const mathfield = node.getMathfield();
+                const mathfield = node.getMathfield()
                 if (mathfield) {
-                  mathfield.executeCommand(['insert', transcript, {
-                    feedback: true,
-                    format: 'text',
-                    mode: 'text',
-                  }]);
+                  mathfield.executeCommand([
+                    'insert',
+                    transcript,
+                    {
+                      feedback: true,
+                      format: 'text',
+                      mode: 'text',
+                    },
+                  ])
                 }
               }
             }
-          });
-        },
-      );
+          })
+        }
+      )
       recognition.current.addEventListener('end', () => {
-        editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, false);
-      });
+        editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, false)
+      })
     }
 
     if (recognition.current) {
       if (isEnabled) {
-        recognition.current.start();
+        recognition.current.start()
       } else {
-        recognition.current.stop();
+        recognition.current.stop()
       }
     }
 
     return () => {
       if (recognition.current !== null) {
-        recognition.current.stop();
+        recognition.current.stop()
       }
-    };
-  }, [editor, isEnabled]);
+    }
+  }, [editor, isEnabled])
 
   useEffect(() => {
     return editor.registerCommand(
       SPEECH_TO_TEXT_COMMAND,
       (_isEnabled: boolean) => {
-        setIsEnabled(_isEnabled);
-        return true;
+        setIsEnabled(_isEnabled)
+        return true
       },
-      COMMAND_PRIORITY_EDITOR,
-    );
-  }, [editor]);
+      COMMAND_PRIORITY_EDITOR
+    )
+  }, [editor])
 
-  if (!isEnabled || !transcript) return null;
-  return <TranscriptAlert transcript={transcript} />;
-
+  if (!isEnabled || !transcript) return null
+  return <TranscriptAlert transcript={transcript} />
 }
 
 const TranscriptAlert = ({ transcript }: { transcript: string }) => {
