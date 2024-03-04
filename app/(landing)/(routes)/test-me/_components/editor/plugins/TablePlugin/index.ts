@@ -10,10 +10,10 @@ import type {
   HTMLTableElementWithWithTableSelectionState,
   InsertTableCommandPayload,
   TableObserver,
-} from '../../nodes/TableNode/TableNode';
-import type { NodeKey } from 'lexical';
+} from '../../nodes/TableNode/TableNode'
+import type { NodeKey } from 'lexical'
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import {
   $createTableNodeWithDimensions,
   $isTableNode,
@@ -22,30 +22,30 @@ import {
   TableCellNode,
   TableNode,
   TableRowNode,
-} from '../../nodes/TableNode/TableNode';
-import { $insertNodeToNearestRoot } from '@lexical/utils';
+} from '../../nodes/TableNode/TableNode'
+import { $insertNodeToNearestRoot } from '@lexical/utils'
 import {
   $getNodeByKey,
   $isTextNode,
   $nodesOfType,
   COMMAND_PRIORITY_EDITOR,
-} from 'lexical';
-import { useEffect } from 'react';
-import invariant from '../../shared/invariant';
+} from 'lexical'
+import { useEffect } from 'react'
+import invariant from '../../shared/invariant'
 
 export function TablePlugin({
   hasTabHandler = true,
 }: {
-  hasTabHandler?: boolean;
+  hasTabHandler?: boolean
 }): JSX.Element | null {
-  const [editor] = useLexicalComposerContext();
+  const [editor] = useLexicalComposerContext()
 
   useEffect(() => {
     if (!editor.hasNodes([TableNode, TableCellNode, TableRowNode])) {
       invariant(
         false,
-        'TablePlugin: TableNode, TableCellNode or TableRowNode not registered on editor',
-      );
+        'TablePlugin: TableNode, TableCellNode or TableRowNode not registered on editor'
+      )
     }
 
     return editor.registerCommand<InsertTableCommandPayload>(
@@ -54,83 +54,83 @@ export function TablePlugin({
         const tableNode = $createTableNodeWithDimensions(
           Number(rows),
           Number(columns),
-          includeHeaders,
-        );
-        $insertNodeToNearestRoot(tableNode);
+          includeHeaders
+        )
+        $insertNodeToNearestRoot(tableNode)
 
-        const firstDescendant = tableNode.getFirstDescendant();
+        const firstDescendant = tableNode.getFirstDescendant()
         if ($isTextNode(firstDescendant)) {
-          firstDescendant.select();
+          firstDescendant.select()
         }
 
-        return true;
+        return true
       },
-      COMMAND_PRIORITY_EDITOR,
-    );
-  }, [editor]);
+      COMMAND_PRIORITY_EDITOR
+    )
+  }, [editor])
 
   useEffect(() => {
-    const tableSelections = new Map<NodeKey, TableObserver>();
+    const tableSelections = new Map<NodeKey, TableObserver>()
 
     const initializeTableNode = (tableNode: TableNode) => {
-      const nodeKey = tableNode.getKey();
+      const nodeKey = tableNode.getKey()
       const tableElement = editor.getElementByKey(
-        nodeKey,
-      ) as HTMLTableElementWithWithTableSelectionState;
+        nodeKey
+      ) as HTMLTableElementWithWithTableSelectionState
       if (tableElement && !tableSelections.has(nodeKey)) {
         const tableSelection = applyTableHandlers(
           tableNode,
           tableElement,
           editor,
-          hasTabHandler,
-        );
-        tableSelections.set(nodeKey, tableSelection);
+          hasTabHandler
+        )
+        tableSelections.set(nodeKey, tableSelection)
       }
-    };
+    }
 
     // Plugins might be loaded _after_ initial content is set, hence existing table nodes
     // won't be initialized from mutation[create] listener. Instead doing it here,
     editor.getEditorState().read(() => {
-      const tableNodes = $nodesOfType(TableNode);
+      const tableNodes = $nodesOfType(TableNode)
       for (const tableNode of tableNodes) {
         if ($isTableNode(tableNode)) {
-          initializeTableNode(tableNode);
+          initializeTableNode(tableNode)
         }
       }
-    });
+    })
 
     const unregisterMutationListener = editor.registerMutationListener(
       TableNode,
       (nodeMutations) => {
-        for (const [nodeKey, mutation] of nodeMutations) {
+        nodeMutations.forEach((mutation, nodeKey) => {
           if (mutation === 'created') {
             editor.getEditorState().read(() => {
-              const tableNode = $getNodeByKey<TableNode>(nodeKey);
+              const tableNode = $getNodeByKey<TableNode>(nodeKey)
               if ($isTableNode(tableNode)) {
-                initializeTableNode(tableNode);
+                initializeTableNode(tableNode)
               }
-            });
+            })
           } else if (mutation === 'destroyed') {
-            const tableSelection = tableSelections.get(nodeKey);
+            const tableSelection = tableSelections.get(nodeKey)
 
             if (tableSelection !== undefined) {
-              tableSelection.removeListeners();
-              tableSelections.delete(nodeKey);
+              tableSelection.removeListeners()
+              tableSelections.delete(nodeKey)
             }
           }
-        }
-      },
-    );
+        })
+      }
+    )
 
     return () => {
-      unregisterMutationListener();
+      unregisterMutationListener()
       // Hook might be called multiple times so cleaning up tables listeners as well,
       // as it'll be reinitialized during recurring call
       for (const [, tableSelection] of tableSelections) {
-        tableSelection.removeListeners();
+        tableSelection.removeListeners()
       }
-    };
-  }, [editor]);
+    }
+  }, [editor])
 
-  return null;
+  return null
 }
