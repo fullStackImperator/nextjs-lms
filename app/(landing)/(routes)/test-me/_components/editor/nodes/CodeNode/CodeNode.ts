@@ -69,15 +69,32 @@ const mapToPrismLanguage = (
     : undefined;
 };
 
+// function hasChildDOMNodeTag(node: Node, tagName: string) {
+//   for (const child of node.childNodes) {
+//     if (isHTMLElement(child) && child.tagName === tagName) {
+//       return true;
+//     }
+//     hasChildDOMNodeTag(child, tagName);
+//   }
+//   return false;
+// }
+
+
 function hasChildDOMNodeTag(node: Node, tagName: string) {
-  for (const child of node.childNodes) {
+  const childNodesArray = Array.from(node.childNodes) // Convert NodeList to an array
+
+  for (const child of childNodesArray) {
     if (isHTMLElement(child) && child.tagName === tagName) {
-      return true;
+      return true
     }
-    hasChildDOMNodeTag(child, tagName);
+    if (hasChildDOMNodeTag(child, tagName)) {
+      return true // Return true if the tag is found in the child nodes
+    }
   }
-  return false;
+
+  return false // Return false if the tag is not found in any child nodes
 }
+
 
 const LANGUAGE_DATA_ATTRIBUTE = 'data-highlight-language';
 
