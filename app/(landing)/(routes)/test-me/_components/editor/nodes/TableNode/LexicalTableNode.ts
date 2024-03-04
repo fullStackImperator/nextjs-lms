@@ -114,7 +114,8 @@ export class TableNode extends ElementNode {
           const colGroup = document.createElement('colgroup')
           const tBody = document.createElement('tbody')
           if (isHTMLElement(tableElement)) {
-            tBody.append(...tableElement.children)
+            const childrenArray = Array.from(tableElement.children) // Convert HTMLCollection to an array
+            tBody.append(...childrenArray)
           }
           const firstRow = this.getFirstChildOrThrow<TableRowNode>()
 
