@@ -4,7 +4,7 @@ import { $patchStyle, getStyleObjectFromCSS } from '../../../nodes/utils';
 import { useEffect, useState } from "react";
 import { ToggleButtonGroup, ToggleButton, SvgIcon, Menu, Button, MenuItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { ViewHeadline, Delete, KeyboardArrowDown, DeleteForever, TableChart } from "@mui/icons-material";
-import { TableNode } from "@/editor/nodes/TableNode";
+import { TableNode } from "../../../nodes/TableNode/TableNode"
 import { FormatAlignLeft, FormatAlignCenter, FormatAlignRight, FormatAlignJustify } from '@mui/icons-material';
 
 const FormatImageRight = () => <SvgIcon viewBox='0 -960 960 960'>
