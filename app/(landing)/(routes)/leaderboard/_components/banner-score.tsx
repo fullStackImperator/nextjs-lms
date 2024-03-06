@@ -63,7 +63,7 @@ export const UserScoreBanner = ({
           {userBadges.map((userBadge) => (
             <div
               key={userBadge.badge.id}
-              className="text-center flex flex-col items-center mr-4 transition ease-in-out delay-100 hover:cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:scale-105 rounded-lg p-2 bg-gradient-to-tr from-amber-200 to-yellow-500 border border-red-400 "
+              className="badgeshadow text-center flex flex-col items-center mr-4 transition ease-in-out delay-100 hover:cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:scale-105 rounded-lg p-2 bg-gradient-to-tr from-amber-200 to-yellow-500 border border-red-400 "
             >
               <Avatar className="h-12 w-12 border border-white">
                 <AvatarImage

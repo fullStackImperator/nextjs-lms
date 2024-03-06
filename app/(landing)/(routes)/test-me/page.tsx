@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   description: 'Test drive the editor',
 }
 
-const page = () => <Playground />
+const page = () => (
+  <div className='py-6 px-6'>
+    <Playground />
+  </div>
+)
 
 export default page

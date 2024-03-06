@@ -97,3 +97,29 @@ body,
 .yoopta-editor {
   background-color: white !important
 } */
+
+@keyframes pendulum {
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(30deg);
+  }
+  66% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.pendulum-rotate {
+  animation: pendulum 1s ease-in-out infinite;
+}
+
+.badgeshadow {
+  box-shadow: 0 0 5px #ffbf00,
+  0 0 10px #ffbf00,
+  0 0 10px #ffbf00,
+  0 0 2px
+}

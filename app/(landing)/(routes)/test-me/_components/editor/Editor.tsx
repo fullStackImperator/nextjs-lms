@@ -27,8 +27,14 @@ export const Editor: React.FC<{
     tags: Set<string>
   ) => void
 }> = ({ initialConfig, onChange, editorRef }) => {
+
+// console.log('initialConfig: ', initialConfig)
+
   return (
-    <LexicalComposer initialConfig={{ ...editorConfig, ...initialConfig }}>
+    <LexicalComposer
+    // , editable: true
+      initialConfig={{ ...editorConfig, ...initialConfig }}
+    >
       <>
         <ToolbarPlugin />
         <EditorPlugins
@@ -36,7 +42,7 @@ export const Editor: React.FC<{
           onChange={onChange}
         />
         {editorRef && <EditorRefPlugin editorRef={editorRef} />}
-        {process.env.NODE_ENV === 'development' && <TreeViewPlugin />}
+        {/* {process.env.NODE_ENV === 'development' && <TreeViewPlugin />} */}
       </>
     </LexicalComposer>
   )

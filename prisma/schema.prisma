@@ -11,6 +11,20 @@ generator client {
 }
 
 
+model MathEditorDocument {
+  id          String    @id @default(uuid())
+  name        String
+  head        String?
+  data        Json      @db.Json // Assuming data is JSON format
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Define relationships if needed
+  // user        User      @relation(fields: [userId], references: [id])
+  // userId      String
+}
+
+
 model User {
   id          String @id @default(uuid())
   userName    String?

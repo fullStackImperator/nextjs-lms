@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import { LucideIcon } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { text } from 'stream/consumers'
 
 interface SidebarItemProps {
@@ -14,16 +15,31 @@ interface SidebarItemProps {
 export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
   const pathname = usePathname()
   const router = useRouter()
+  const [isRotating, setIsRotating] = useState(false)
 
-  const isActive = 
-  (pathname === "/" && href === "/") || 
-  pathname === href || 
-  pathname?.startsWith(`${href}/`)
+  const isActive =
+    (pathname === '/' && href === '/') ||
+    pathname === href ||
+    pathname?.startsWith(`${href}/`)
 
-    const onClick = () => {
-        router.push(href)
+  const onClick = () => {
+    setIsRotating(true)
+    router.push(href)
+  }
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout
+
+    if (isRotating) {
+      timeoutId = setTimeout(() => {
+        setIsRotating(false)
+      }, 1000) // Adjust the duration as needed
     }
 
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [isRotating])
 
   return (
     <button
@@ -39,7 +55,11 @@ export const SidebarItem = ({ icon: Icon, label, href }: SidebarItemProps) => {
       <div className="flex items-center gap-x-2 py-4">
         <Icon
           size={22}
-          className={cn('text-slate-500', isActive && 'text-sky-700')}
+          className={cn(
+            'text-slate-500',
+            isActive && 'text-sky-700 ',
+            isRotating && 'pendulum-rotate'
+          )}
         />
         {label}
       </div>
