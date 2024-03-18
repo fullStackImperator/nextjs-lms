@@ -45,7 +45,7 @@ const Board = () => {
   return (
     <div className="flex h-full w-full gap-3 overflow-scroll p-12">
       <Column
-        title="backlog"
+        title="Backlog"
         columnId="1"
         headingColor="text-neutral-500"
         cards={cards}
