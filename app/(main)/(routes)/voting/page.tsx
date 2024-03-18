@@ -58,7 +58,7 @@ const Options = ({
   return (
     <div className="col-span-1 py-12">
       <h3 className="mb-6 text-3xl font-semibold text-slate-50">
-        What's your opinion?
+        What is your opinion?
       </h3>
       <div className="mb-6 space-y-2">
         {votes.map((vote) => {

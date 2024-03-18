@@ -1,13 +1,17 @@
 'use client'
-import React, { useState, FormEvent } from 'react'
+import React, { useState, FormEvent, useEffect } from 'react'
 import { PlusCircle, Trash } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Flame } from 'lucide-react'
 
+import useSWR from 'swr'
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
 interface Card {
   title: string
   id: string
-  column: string
+  columnId: string
 }
 
 const CustomKanban = () => {
@@ -21,34 +25,49 @@ const CustomKanban = () => {
 export default CustomKanban
 
 const Board = () => {
-  const [cards, setCards] = useState<Card[]>(DEFAULT_CARDS)
+  const { data: kanbanCards, error } = useSWR('/api/kanban', fetcher)
+
+  useEffect(() => {
+    if (kanbanCards) {
+      setCards(kanbanCards)
+    }
+  }, [kanbanCards])
+
+  const [cards, setCards] = useState<Card[]>(kanbanCards || [])
+
+  if (error) return <div>Failed to load</div>
+  if (!kanbanCards) return <div>Loading...</div>
+
+  console.log('cards', cards)
+  // console.log('kanbanCards', kanbanCards)
+  // console.log('data', data)
 
   return (
     <div className="flex h-full w-full gap-3 overflow-scroll p-12">
       <Column
-        title="Backlog"
-        column="backlog"
+        title="backlog"
+        columnId="1"
         headingColor="text-neutral-500"
         cards={cards}
         setCards={setCards}
       />
       <Column
-        title="TODO"
-        column="todo"
+        title="ToDo"
+        columnId="2"
         headingColor="text-yellow-200"
         cards={cards}
         setCards={setCards}
       />
       <Column
-        title="In progress"
-        column="doing"
+        title="In Bearbeitung"
+        columnId="3"
         headingColor="text-blue-200"
         cards={cards}
         setCards={setCards}
       />
       <Column
-        title="Complete"
-        column="done"
+        title="Erledigt"
+        columnId="4"
         headingColor="text-emerald-200"
         cards={cards}
         setCards={setCards}
@@ -62,7 +81,7 @@ interface ColumnProps {
   title: string
   headingColor: string
   cards: Card[]
-  column: string
+  columnId: string
   setCards: React.Dispatch<React.SetStateAction<Card[]>>
 }
 
@@ -70,10 +89,12 @@ const Column: React.FC<ColumnProps> = ({
   title,
   headingColor,
   cards,
-  column,
+  columnId,
   setCards,
 }: ColumnProps) => {
   const [active, setActive] = useState(false)
+
+  console.log('cards in column: ', cards)
 
   const handleDragStart = (
     e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -100,7 +121,7 @@ const Column: React.FC<ColumnProps> = ({
 
       let cardToTransfer = copy.find((c) => c.id === cardId)
       if (!cardToTransfer) return
-      cardToTransfer = { ...cardToTransfer, column }
+      cardToTransfer = { ...cardToTransfer, columnId }
 
       copy = copy.filter((c) => c.id !== cardId)
 
@@ -173,7 +194,7 @@ const Column: React.FC<ColumnProps> = ({
 
   const getIndicators = () => {
     return Array.from(
-      document.querySelectorAll(`[data-column="${column}"]`)
+      document.querySelectorAll(`[data-column="${columnId}"]`)
     ) as HTMLDivElement[]
   }
 
@@ -182,7 +203,11 @@ const Column: React.FC<ColumnProps> = ({
     setActive(false)
   }
 
-  const filteredCards = cards.filter((c) => c.column === column)
+  const filteredCards = cards
+    ? cards.filter((c) => c.columnId === columnId)
+    : []
+
+  // const filteredCards = cards.filter((c) => c.column === column)
 
   return (
     <div className="w-56 shrink-0">
@@ -203,8 +228,8 @@ const Column: React.FC<ColumnProps> = ({
         {filteredCards.map((c) => {
           return <Card key={c.id} {...c} handleDragStart={handleDragStart} />
         })}
-        <DropIndicator beforeId={null} column={column} />
-        <AddCard column={column} setCards={setCards} />
+        <DropIndicator beforeId={null} columnId={columnId} />
+        <AddCard columnId={columnId} setCards={setCards} />
       </div>
     </div>
   )
@@ -213,15 +238,15 @@ const Column: React.FC<ColumnProps> = ({
 const Card: React.FC<{
   title: string
   id: string
-  column: string
+  columnId: string
   handleDragStart: (
     e: React.DragEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
     card: Card
   ) => void
-}> = ({ title, id, column, handleDragStart }) => {
+}> = ({ title, id, columnId, handleDragStart }) => {
   return (
     <>
-      <DropIndicator beforeId={id} column={column} />
+      <DropIndicator beforeId={id} columnId={columnId} />
       <motion.div
         layout
         layoutId={id}
@@ -231,14 +256,14 @@ const Card: React.FC<{
           handleDragStart(e as React.DragEvent<HTMLDivElement>, {
             title,
             id,
-            column,
+            columnId,
           })
         }
         onTouchStart={(e) =>
           handleDragStart(e as React.TouchEvent<HTMLDivElement>, {
             title,
             id,
-            column,
+            columnId,
           })
         }
         className="cursor-grab rounded border border-neutral-700 bg-neutral-800 p-3 active:cursor-grabbing"
@@ -249,14 +274,14 @@ const Card: React.FC<{
   )
 }
 
-const DropIndicator: React.FC<{ beforeId: string | null; column: string }> = ({
-  beforeId,
-  column,
-}) => {
+const DropIndicator: React.FC<{
+  beforeId: string | null
+  columnId: string
+}> = ({ beforeId, columnId }) => {
   return (
     <div
       data-before={beforeId || '-1'}
-      data-column={column}
+      data-column={columnId}
       className="my-0.5 h-0.5 w-full bg-violet-400 opacity-0"
     />
   )
@@ -276,12 +301,26 @@ const BurnBarrel: React.FC<{
     setActive(false)
   }
 
-  const handleDragEnd = (e: React.DragEvent) => {
+  const handleDragEnd = async (e: React.DragEvent) => {
     const cardId = e.dataTransfer.getData('cardId')
+
+    console.log('cardId: ', cardId)
 
     setCards((pv) => pv.filter((c) => c.id !== cardId))
 
     setActive(false)
+
+    try {
+      const response = await fetch('/api/kanban', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cardId }),
+      })
+    } catch (error) {
+      console.error('Error deleting card:', error)
+    }
   }
 
   return (
@@ -301,19 +340,19 @@ const BurnBarrel: React.FC<{
 }
 
 const AddCard: React.FC<{
-  column: string
+  columnId: string
   setCards: React.Dispatch<React.SetStateAction<Card[]>>
-}> = ({ column, setCards }) => {
+}> = ({ columnId, setCards }) => {
   const [text, setText] = useState('')
   const [adding, setAdding] = useState(false)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!text.trim().length) return
 
     const newCard = {
-      column,
+      columnId,
       title: text.trim(),
       id: Math.random().toString(),
     }
@@ -321,6 +360,30 @@ const AddCard: React.FC<{
     setCards((pv) => [...pv, newCard])
 
     setAdding(false)
+
+    try {
+      const response = await fetch('/api/kanban', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newCard), // Corrected to use newCard instead of { title, columnId }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create card')
+      }
+
+      // If successful, update the UI accordingly
+      // For example, you can fetch the updated list of cards
+      // and update the local state (setCards) to reflect the changes
+      // setCards((prevCards) => [...prevCards, newCard])
+
+      // setAdding(false) // Hide the form after successful creation
+    } catch (error) {
+      console.error('Error creating card:', error)
+      // Handle error, show error message to user, etc.
+    }
   }
 
   return (
@@ -365,30 +428,29 @@ const AddCard: React.FC<{
 
 const DEFAULT_CARDS: Card[] = [
   // BACKLOG
-  { title: 'Look into render bug in dashboard', id: '1', column: 'backlog' },
-  { title: 'SOX compliance checklist', id: '2', column: 'backlog' },
-  { title: '[SPIKE] Migrate to Azure', id: '3', column: 'backlog' },
-  { title: 'Document Notifications service', id: '4', column: 'backlog' },
-  // TODO
-  {
-    title: 'Research DB options for new microservice',
-    id: '5',
-    column: 'todo',
-  },
-  { title: 'Postmortem for outage', id: '6', column: 'todo' },
-  { title: 'Sync with product on Q3 roadmap', id: '7', column: 'todo' },
-
-  // DOING
-  {
-    title: 'Refactor context providers to use Zustand',
-    id: '8',
-    column: 'doing',
-  },
-  { title: 'Add logging to daily CRON', id: '9', column: 'doing' },
-  // DONE
-  {
-    title: 'Set up DD dashboards for Lambda listener',
-    id: '10',
-    column: 'done',
-  },
+  // { title: 'Look into render bug in dashboard', id: '1', column: 'backlog' },
+  // { title: 'SOX compliance checklist', id: '2', column: 'backlog' },
+  // { title: '[SPIKE] Migrate to Azure', id: '3', column: 'backlog' },
+  // { title: 'Document Notifications service', id: '4', column: 'backlog' },
+  // // TODO
+  // {
+  //   title: 'Research DB options for new microservice',
+  //   id: '5',
+  //   column: 'todo',
+  // },
+  // { title: 'Postmortem for outage', id: '6', column: 'todo' },
+  // { title: 'Sync with product on Q3 roadmap', id: '7', column: 'todo' },
+  // // DOING
+  // {
+  //   title: 'Refactor context providers to use Zustand',
+  //   id: '8',
+  //   column: 'doing',
+  // },
+  // { title: 'Add logging to daily CRON', id: '9', column: 'doing' },
+  // // DONE
+  // {
+  //   title: 'Set up DD dashboards for Lambda listener',
+  //   id: '10',
+  //   column: 'done',
+  // },
 ]
