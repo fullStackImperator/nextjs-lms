@@ -9,9 +9,8 @@ import Link from 'next/link'
 import { SearchInput } from './search-input'
 import { isTeacher } from '@/lib/teacher'
 import useSwr from 'swr'
-import { Logo } from '@/app/(landing)/(routes)/_components/logo'
+import { Logo } from '@/app/(main)/(routes)/_components/logo'
 // import useSwr from 'swr'
-
 
 export const NavbarRoutes = () => {
   const { userId } = useAuth()
@@ -40,15 +39,11 @@ export const NavbarRoutes = () => {
   //   error,
   // } = useSwr('users', fetchTeacherStatus(userId))
 
-// const { data: orders } = useSWR({ url: '/api/orders', args: userId }, isTeacher)
+  // const { data: orders } = useSWR({ url: '/api/orders', args: userId }, isTeacher)
 
-
-
-// const { data: userIsTeacher, error } = useSWR('isTeacher', () =>
-//   isTeacher(userId)
-// )
-
-
+  // const { data: userIsTeacher, error } = useSWR('isTeacher', () =>
+  //   isTeacher(userId)
+  // )
 
   // console.log('userId: ', userId)
   // console.log('client error: ', error)
@@ -57,42 +52,49 @@ export const NavbarRoutes = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-    
+
   // const isUserTeacher = userId && await isTeacher(userId)
 
-    return (
-      <>
+  return (
+    <>
+      <div className="px-6">
+        <Logo />
+      </div>
+      <div>
+        <h1 className="text-2xl font-extrabold text-slate-600 tracking-wide">
+          MiSHN
+        </h1>
+        <p className="text-xs text-muted-foreground">
+          Makerspaces in Schulen Hamburg Netzwerk
+        </p>
+      </div>
 
-        <div className='px-6'>
-          <Logo />
+      {isSearchPage && (
+        <div className="hidden md:block">
+          <SearchInput />
         </div>
-      
-        {isSearchPage && (
-          <div className="hidden md:block">
-            <SearchInput />
-          </div>
-        )}
-        <div className="flex gap-x-2 ml-auto">
-          {isTeacherPage || isPlayerPage ? (
-            <Link href="/dashboard">
-              <Button size="sm" variant="ghost">
-                <LogOut className="h-4 w-4 mr-2" />
-                Exit
-              </Button>
-            </Link>
-          ) : userIsTeacher ? (
-            <Link href="/teacher/courses">
-              <Button size="sm" variant="ghost">
-                <UserCog className="h-4 w-4 mr-2" />
-                Lehrer modus
-              </Button>
-            </Link>
-          ) : null}
-          <UserButton afterSignOutUrl="/" />
-        </div>
-      </>
-    )
-  }
+      )}
+      <div className="flex gap-x-2 ml-auto">
+        {isTeacherPage || isPlayerPage ? (
+          <Link href="/dashboard">
+            <Button size="sm" variant="ghost">
+              <LogOut className="h-4 w-4 mr-2" />
+              Exit
+            </Button>
+          </Link>
+        ) : userIsTeacher ? (
+          <Link href="/teacher/courses">
+            <Button size="sm" variant="ghost">
+              <UserCog className="h-4 w-4 mr-2" />
+              Lehrer modus
+            </Button>
+          </Link>
+        ) : null}
+        <UserButton afterSignOutUrl="/" />
+      </div>
+    </>
+  )
+}
 
 //   return (
 //     <>

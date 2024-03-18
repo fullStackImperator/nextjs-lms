@@ -1,26 +1,45 @@
 "use client"
-
 import { Sidebar } from "./sidebar"
-import { Compass, Layout, List, BarChart, Trophy, ShieldPlus, Users} from 'lucide-react'
+import {
+  Compass,
+  Layout,
+  List,
+  BarChart,
+  Trophy,
+  ShieldPlus,
+  Users,
+  Columns3,
+  MessageCircleQuestion,
+} from 'lucide-react'
 import { SidebarItem } from "./sidebar-item"
 import { usePathname } from "next/navigation"
 
 const guestRoutes = [
-    {
-        icon: Layout,
-        label: "Dashboard",
-        href: "/dashboard",
-    },
-    {
-        icon: Compass,
-        label: "Projekte",
-        href: "/search",
-    },
-    {
-        icon: Trophy,
-        label: "Leaderboard",
-        href: "/leaderboard",
-    }
+  {
+    icon: Layout,
+    label: 'Dashboard',
+    href: '/dashboard',
+  },
+  {
+    icon: Compass,
+    label: 'Projekte',
+    href: '/search',
+  },
+  {
+    icon: Trophy,
+    label: 'Leaderboard',
+    href: '/leaderboard',
+  },
+  {
+    icon: Columns3,
+    label: 'Kanban',
+    href: '/kanban',
+  },
+  {
+    icon: MessageCircleQuestion,
+    label: 'Voting',
+    href: '/voting',
+  },
 ]
 
 const teacherRoutes = [
@@ -36,7 +55,7 @@ const teacherRoutes = [
   },
   {
     icon: ShieldPlus,
-    label: 'Bedges',
+    label: 'Badges',
     href: '/teacher/create-badges',
   },
   {

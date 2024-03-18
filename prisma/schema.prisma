@@ -216,3 +216,18 @@ model UserBadge {
 
   @@index([userId, badgeId], name: "unique_user_badge")
 }
+
+
+
+model Column {
+  id        String      @id @default(uuid())
+  title     String
+  cards     Card[]
+}
+
+model Card {
+  id        String      @id @default(uuid())
+  title     String
+  column    Column   @relation(fields: [columnId], references: [id])
+  columnId  String
+}

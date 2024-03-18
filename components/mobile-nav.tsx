@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { useLockBody } from '@/hooks/use-lock-body'
-import { Logo } from '@/app/(landing)/_components/logo'
-
+import { Logo } from '@/app/(main)/_components/logo'
 
 type NavItem = {
   title: string
@@ -14,7 +13,6 @@ type NavItem = {
 }
 
 type MainNavItem = NavItem
-
 
 interface MobileNavProps {
   items: MainNavItem[]

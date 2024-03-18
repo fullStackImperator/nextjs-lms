@@ -8,7 +8,7 @@ import { useSelectedLayoutSegment } from 'next/navigation'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { MobileNav } from '@/components/mobile-nav'
-import { Logo } from '@/app/(landing)/_components/logo'
+import { Logo } from '@/app/(main)/_components/logo'
 import { X } from 'lucide-react'
 
 type NavItem = {
@@ -18,7 +18,6 @@ type NavItem = {
 }
 
 type MainNavItem = NavItem
-
 
 interface MainNavProps {
   items?: MainNavItem[]
@@ -32,7 +31,7 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Logo/>
+        <Logo />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>

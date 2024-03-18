@@ -18,7 +18,7 @@ import type {
 } from '@excalidraw/excalidraw/types/types'
 import type { ImportedLibraryData } from '@excalidraw/excalidraw/types/data/types'
 import { SET_DIALOGS_COMMAND } from '../commands'
-import { getImageDimensions } from '../../../../../editor/nodes/utils'
+import { getImageDimensions } from '../../../../nodes/utils'
 import useFixedBodyScroll from '../../../../../hooks/useFixedBodyScroll'
 import { useTheme } from '@mui/material/styles'
 import {
