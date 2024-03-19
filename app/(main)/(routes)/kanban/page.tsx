@@ -426,7 +426,7 @@ const AddCard: React.FC<{
   )
 }
 
-const DEFAULT_CARDS: Card[] = [
+// const DEFAULT_CARDS: Card[] = [
   // BACKLOG
   // { title: 'Look into render bug in dashboard', id: '1', column: 'backlog' },
   // { title: 'SOX compliance checklist', id: '2', column: 'backlog' },
@@ -453,4 +453,4 @@ const DEFAULT_CARDS: Card[] = [
   //   id: '10',
   //   column: 'done',
   // },
-]
+// ]

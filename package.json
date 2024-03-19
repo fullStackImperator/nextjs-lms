@@ -45,6 +45,7 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@syncfusion/ej2-react-schedule": "^25.1.35",
     "@tanstack/react-table": "^8.10.7",
     "@toeverything/y-indexeddb": "^0.10.0-canary.9",
     "@types/node": "20.9.4",

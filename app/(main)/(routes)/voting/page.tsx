@@ -1,6 +1,17 @@
-"use client"
+'use client'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { motion } from 'framer-motion'
+import CreatePollButton from './_components/create-poll-button'
+import CreatePollForm from './_components/create-poll-form'
+import { MessageCircleQuestion } from 'lucide-react'
+import PollDialog from './_components/pollDialog'
+
+type Poll = {
+  id: string
+  question: string
+  options: VoteType[]
+}
+
 
 type VoteType = {
   title: string
@@ -30,8 +41,49 @@ const BarPoll = () => {
     },
   ])
 
+  const [selectedPoll, setSelectedPoll] = useState<Poll | null>(null)
+  const [dialogMode, setDialogMode] = useState<'create' | 'edit'>('create')
+
+
+  // Function to handle opening the dialog and setting the selected badge data
+  const handleOpenDialog = (poll: Poll) => {
+    setSelectedPoll(poll)
+    setDialogMode('edit')
+  }
+
+  // Function to handle closing the dialog and resetting the selected badge data
+  const handleCloseDialog = () => {
+    setSelectedPoll(null)
+    setDialogMode('create')
+  }
+
   return (
-    <section className="bg-slate-900 px-4 py-12">
+    <section>
+      <div className="text-center mb-8 mt-8">
+        <span className="justify-center flex mb-8">
+          <MessageCircleQuestion className="h-12 w-12" />
+        </span>
+        <h1 className="text-2xl text-center  ">Erstelle eine Umfrage</h1>
+        {/* <p className="mt-1 text-sm text-slate-600 text-center">
+          Der Badge kann anschliessend{' '}
+          <Link
+            href="/teacher/courses"
+            className="underline"
+            // target="_blank"
+          >
+            {' '}
+            in den Projekten{' '}
+          </Link>{' '}
+          an Schüler vergeben werden
+        </p> */}
+        <PollDialog
+          // <BadgesDialog
+          open={!!selectedPoll}
+          onClose={handleCloseDialog}
+          pollData={selectedPoll || undefined}
+          mode={dialogMode} // Pass the dialog mode
+        />
+      </div>
       <div className="mx-auto grid max-w-4xl grid-cols-1 gap-2 md:grid-cols-[1fr_400px] md:gap-12">
         <Options votes={votes} setVotes={setVotes} />
         <Bars votes={votes} />
@@ -57,7 +109,7 @@ const Options = ({
 
   return (
     <div className="col-span-1 py-12">
-      <h3 className="mb-6 text-3xl font-semibold text-slate-50">
+      <h3 className="mb-6 text-3xl font-semibold text-slate-500">
         What is your opinion?
       </h3>
       <div className="mb-6 space-y-2">

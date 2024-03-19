@@ -29,12 +29,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         {/* <RecoilRoot> */}
-          <body className={inter.className}>
-            <ConfettiProvider />
-            <ToastProvider />
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            {children}
-          </body>
+        <body className={inter.className}>
+          <ConfettiProvider />
+          <ToastProvider />
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          {children}
+        </body>
         {/* </RecoilRoot> */}
       </html>
     </ClerkProvider>

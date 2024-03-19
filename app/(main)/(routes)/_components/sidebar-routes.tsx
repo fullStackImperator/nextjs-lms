@@ -10,6 +10,7 @@ import {
   Users,
   Columns3,
   MessageCircleQuestion,
+  CalendarDays,
 } from 'lucide-react'
 import { SidebarItem } from "./sidebar-item"
 import { usePathname } from "next/navigation"
@@ -39,6 +40,11 @@ const guestRoutes = [
     icon: MessageCircleQuestion,
     label: 'Voting',
     href: '/voting',
+  },
+  {
+    icon: CalendarDays,
+    label: 'Kalender',
+    href: '/kalender',
   },
 ]
 
