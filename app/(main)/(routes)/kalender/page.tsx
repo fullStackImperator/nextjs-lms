@@ -41,7 +41,7 @@ export default function Home() {
         width="100%"
         height="550px"
         currentView="Month"
-        selectedDate={new Date(2018, 3, 4)}
+        selectedDate={new Date(2024, 3, 4)}
         eventSettings={eventSettings}
         group={group}
       >
