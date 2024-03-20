@@ -13,7 +13,8 @@ import {
   Resize,
   DragAndDrop,
 } from '@syncfusion/ej2-react-schedule'
-import { timelineResourceData } from '@/lib/kalender/data'
+import { timelineResourceData } from '@/lib/kalender/data2'
+// import { timelineResourceData } from '@/lib/kalender/data'
 import { registerLicense } from '@syncfusion/ej2-base'
 
 // Registering Syncfusion license key
@@ -43,14 +44,14 @@ export default function Home() {
         currentView="Month"
         selectedDate={new Date(2024, 3, 4)}
         eventSettings={eventSettings}
-        group={group}
+        // group={group}
       >
         <ViewsDirective>
           <ViewDirective option="Week" />
           <ViewDirective option="Month" />
           <ViewDirective option="Agenda" />
         </ViewsDirective>
-        <ResourcesDirective>
+        {/* <ResourcesDirective>
           <ResourceDirective
             field="ProjectId"
             title="Choose Project"
@@ -71,7 +72,7 @@ export default function Home() {
             idField="id"
             colorField="color"
           ></ResourceDirective>
-        </ResourcesDirective>
+        </ResourcesDirective> */}
         <Inject services={[Week, Month, Agenda, Resize, DragAndDrop]} />
       </ScheduleComponent>
     </div>
