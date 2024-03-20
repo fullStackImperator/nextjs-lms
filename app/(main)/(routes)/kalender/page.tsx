@@ -12,6 +12,7 @@ import {
   Inject,
   Resize,
   DragAndDrop,
+  Year,
 } from '@syncfusion/ej2-react-schedule'
 import { timelineResourceData } from '@/lib/kalender/data2'
 // import { timelineResourceData } from '@/lib/kalender/data'
@@ -49,6 +50,7 @@ export default function Home() {
         <ViewsDirective>
           <ViewDirective option="Week" />
           <ViewDirective option="Month" />
+          <ViewDirective option="Year" />
           <ViewDirective option="Agenda" />
         </ViewsDirective>
         {/* <ResourcesDirective>
@@ -73,7 +75,7 @@ export default function Home() {
             colorField="color"
           ></ResourceDirective>
         </ResourcesDirective> */}
-        <Inject services={[Week, Month, Agenda, Resize, DragAndDrop]} />
+        <Inject services={[Week, Month, Year, Agenda, Resize, DragAndDrop]} />
       </ScheduleComponent>
     </div>
   )
