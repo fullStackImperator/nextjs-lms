@@ -38,7 +38,7 @@ const guestRoutes = [
   },
   {
     icon: MessageCircleQuestion,
-    label: 'Voting',
+    label: 'Umfragen',
     href: '/voting',
   },
   {

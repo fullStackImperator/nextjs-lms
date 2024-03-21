@@ -13,6 +13,7 @@ import {
   Resize,
   DragAndDrop,
   Year,
+  TimelineYear,
   EventClickArgs,
 } from '@syncfusion/ej2-react-schedule'
 import { timelineResourceData } from '@/lib/kalender/data2'
@@ -60,14 +61,20 @@ export default function Kalender() {
   // console.log('events: ', events)
   //   const eventSettings: EventSettingsModel = { dataSource: kalenderEvents || [] }
 
-  const save = 'e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary'
+  const save =
+    'e-event-create e-text-ellipsis e-control e-btn e-lib e-flat e-primary'
   const saveEvent = 'e-control e-btn e-lib e-primary e-event-save e-flat'
   const saveMore = 'e-schedule-dialog e-control e-btn e-lib e-primary e-event-save e-flat'
+  const saveMobile = 'e-save-icon e-icons'
   const moreDetails =
     'e-event-details e-text-ellipsis e-control e-btn e-lib e-flat'
-
-    // @ts-ignore
+  const deleteQuickEvent =
+    'e-quick-dialog e-control e-btn e-lib e-quick-alertok e-flat e-primary e-quick-dialog-delete'
+// e-lib e-dialog e-control e-device e-schedule-dialog e-dlg-modal e-popup e-popup-close
+  // @ts-ignore
   const handleEventCreate = async (args) => {
+    // console.log('args: ', args)
+    // console.log('args.event.target.className: ', args)
     // console.log('args.data: ', args.data)
     setId(args.data.Id)
 
@@ -88,36 +95,65 @@ export default function Kalender() {
       args.event.target.className !== moreDetails ||
       args.event.target.className === moreDetails
     ) {
-      if (
-        classNameSave === save ||
-        classNameSave === saveEvent ||
-        classNameSave === saveMore
-      ) {
-        try {
-          const response = await fetch('/api/kalender', {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
-            // body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
-          })
+        if (
+          classNameSave === save ||
+          classNameSave === saveEvent ||
+          classNameSave === saveMore ||
+          classNameSave === saveMobile
+        ) {
+          // save event
+          try {
+            const response = await fetch('/api/kalender', {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
+              // body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
+            })
 
-          if (!response.ok) {
-            throw new Error('Failed to create event')
+            if (!response.ok) {
+              throw new Error('Failed to create event')
+            }
+
+            // If successful, update the UI accordingly
+            // For example, you can fetch the updated list of cards
+            // and update the local state (setCards) to reflect the changes
+            // setCards((prevCards) => [...prevCards, newCard])
+
+            // setAdding(false) // Hide the form after successful creation
+          } catch (error) {
+            console.error('Error creating event:', error)
+            // Handle error, show error message to user, etc.
           }
+        } else if (classNameSave === deleteQuickEvent) {
+          // delete event
+          console.log('In delete')
+          try {
+            const response = await fetch('/api/kalender', {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
+              // body: JSON.stringify(eventData), // Corrected to use newCard instead of { title, columnId }
+            })
 
-          // If successful, update the UI accordingly
-          // For example, you can fetch the updated list of cards
-          // and update the local state (setCards) to reflect the changes
-          // setCards((prevCards) => [...prevCards, newCard])
+            if (!response.ok) {
+              throw new Error('Failed to delete event')
+            }
 
-          // setAdding(false) // Hide the form after successful creation
-        } catch (error) {
-          console.error('Error creating event:', error)
-          // Handle error, show error message to user, etc.
+            // If successful, update the UI accordingly
+            // For example, you can fetch the updated list of cards
+            // and update the local state (setCards) to reflect the changes
+            // setCards((prevCards) => [...prevCards, newCard])
+
+            // setAdding(false) // Hide the form after successful creation
+          } catch (error) {
+            console.error('Error deleting event:', error)
+            // Handle error, show error message to user, etc.
+          }
         }
-      }
     }
   }
 
@@ -125,21 +161,22 @@ export default function Kalender() {
 
   return (
     <div className="p-8">
-      <h2>MiSHN Kalender</h2>
+      <h2 className="py-4">MiSHN Kalender</h2>
       <ScheduleComponent
         width="100%"
         height="550px"
         currentView="Month"
-        selectedDate={new Date(2024, 3, 4)}
+        selectedDate={new Date()}
         eventSettings={{ dataSource: events }}
         // actionBegin={handleEventCreate} // Handle event creation
         popupClose={handleEventCreate}
         // group={group}
       >
         <ViewsDirective>
-          <ViewDirective option="Week" />
-          <ViewDirective option="Month" />
-          <ViewDirective option="Year" />
+          <ViewDirective option="Week" displayName="Woche" />
+          <ViewDirective option="Month" displayName="Monat" />
+          <ViewDirective option="Year" displayName="Jahr" />
+          <ViewDirective option="TimelineYear" displayName="Jahr Horizontal" />
           <ViewDirective option="Agenda" />
         </ViewsDirective>
         {/* <ResourcesDirective>
@@ -164,7 +201,17 @@ export default function Kalender() {
             colorField="color"
           ></ResourceDirective>
         </ResourcesDirective> */}
-        <Inject services={[Week, Month, Year, Agenda, Resize, DragAndDrop]} />
+        <Inject
+          services={[
+            Week,
+            Month,
+            Year,
+            TimelineYear,
+            Agenda,
+            Resize,
+            DragAndDrop,
+          ]}
+        />
       </ScheduleComponent>
     </div>
   )
