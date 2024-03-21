@@ -56,7 +56,7 @@ export async function PATCH(req: Request) {
     console.log('data: ', data)
 
     // Destructure the required fields from the data
-    const { Subject, StartTime, EndTime, Description, IsAllDay, IsReadonly } = data
+    const { Subject, StartTime, EndTime, Description, IsAllDay, IsReadonly, EventType } = data
 
     // Validate required fields
     if (!Subject || !StartTime || !EndTime) {
@@ -90,6 +90,7 @@ export async function PATCH(req: Request) {
           Description,
           IsAllDay,
           IsReadonly,
+          EventType,
         },
       })
       return NextResponse.json(updatedEvent, { status: 200 })
@@ -104,6 +105,7 @@ export async function PATCH(req: Request) {
           Description,
           IsAllDay,
           IsReadonly,
+          EventType,
         },
       })
       // return new NextResponse(JSON.stringify(newCard), { status: 201 })

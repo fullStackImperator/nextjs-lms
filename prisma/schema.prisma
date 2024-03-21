@@ -242,4 +242,5 @@ model Event {
   Description String?
   IsAllDay    Boolean?
   IsReadonly  Boolean?
+  EventType   String? // Add EventType field
 }
