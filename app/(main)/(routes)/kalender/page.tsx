@@ -21,6 +21,10 @@ import { timelineResourceData } from '@/lib/kalender/data2'
 // import { timelineResourceData } from '@/lib/kalender/data'
 import { registerLicense, createElement } from '@syncfusion/ej2-base'
 import { DropDownList } from '@syncfusion/ej2-dropdowns'
+import {
+  NumericTextBoxComponent,
+  NumericTextBox,
+} from '@syncfusion/ej2-react-inputs'
 
 import { useEffect, useState } from 'react'
 import { db } from '@/lib/db'
@@ -87,11 +91,14 @@ export default function Kalender() {
     const eventData = {
       Id: args.data.Id || id, // Assuming Id is unique and provided by the frontend
       Subject: args.data.Subject,
+      Location: args.data.Location,
       StartTime: args.data.StartTime,
       EndTime: args.data.EndTime,
       IsAllDay: args.data.IsAllDay || false, // Default value if not provided
       IsReadonly: args.data.IsReadonly || false, // Default value if not provided
       EventType: args.data.EventType, // Default value if not provided
+      MaxParticipants: args.data.MaxParticipants, // Default value if not provided
+      Description: args.data.Description, // Default value if not provided
     }
 
     // console.log('eventData in kalender : ', eventData)
@@ -168,23 +175,51 @@ export default function Kalender() {
     if (args.type === 'Editor') {
       // Create required custom elements in initial time
       const formElement = args.element.querySelector('.e-schedule-form')
+      const editorElement = formElement?.querySelector('.e-title-location-row')
       if (formElement) {
         const row: HTMLElement = createElement('div', {
-          className: 'custom-field-row',
+          className: 'event-type-row',
+        })
+        const col: HTMLElement = createElement('div', {
+          className: 'event-max-participants-col py-4',
         })
         formElement?.firstChild?.insertBefore(
           row,
           formElement.firstChild?.firstChild
         )
+        // formElement.insertBefore(col, formChildren[4].nextSibling)
+        editorElement?.parentNode?.insertBefore(col, editorElement)
         const container: HTMLElement = createElement('div', {
-          className: 'custom-field-container',
+          className: 'event-field-container',
+        })
+        const containerParticipants: HTMLElement = createElement('div', {
+          className:
+            'event-max-participants-container',
         })
         const inputEle: HTMLInputElement = createElement('input', {
           className: 'e-field',
           attrs: { name: 'EventType' },
         }) as HTMLInputElement
+        const inputEleMaxPart: HTMLInputElement = createElement('input', {
+          className: 'e-field',
+          attrs: { name: 'MaxParticipants' },
+        }) as HTMLInputElement
+        // const labelElement: HTMLElement = createElement('label', {
+        //   className: 'e-float-text e-label-top',
+        //   innerHTML: 'MaxParticipants', // Label text
+        //   attrs: { for: 'MaxParticipants' },
+        // })
+
+        // const inputParentElement = inputEleMaxPart.parentElement
+
+        // // Insert the label before the input field
+        // inputParentElement?.insertBefore(labelElement, inputEleMaxPart)
+
         container.appendChild(inputEle)
         row.appendChild(container)
+        // containerParticipants.appendChild(labelElement)
+        containerParticipants.appendChild(inputEleMaxPart)
+        col.appendChild(containerParticipants)
         const dropDownList: DropDownList = new DropDownList({
           dataSource: [
             { text: 'Workshop', value: 'workshop' },
@@ -198,7 +233,20 @@ export default function Kalender() {
           placeholder: 'Event Type',
         })
         dropDownList.appendTo(inputEle)
+        const numericTextBoxInstance: NumericTextBoxComponent =
+          new NumericTextBoxComponent({
+            format: 'n0', // You can adjust the format as needed
+            // value: 0, // Initial value
+            min: 0,
+            max: 10000,
+            value: args.data?.MaxParticipants as number,
+            placeholder: 'Maximale Teilnehmeranzahl',
+            label: 'TEST',
+          })
+        numericTextBoxInstance.appendTo(inputEleMaxPart)
         inputEle.setAttribute('name', 'EventType')
+
+        inputEleMaxPart.setAttribute('name', 'MaxParticipants')
       }
     }
   }

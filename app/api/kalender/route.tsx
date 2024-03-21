@@ -53,10 +53,10 @@ export async function PATCH(req: Request) {
     // const { userId } = auth()
     const data = await req.json()
 
-    console.log('data: ', data)
+    // console.log('data: ', data)
 
     // Destructure the required fields from the data
-    const { Subject, StartTime, EndTime, Description, IsAllDay, IsReadonly, EventType } = data
+    const { Subject, Location, StartTime, EndTime, Description, IsAllDay, IsReadonly, EventType, MaxParticipants } = data
 
     // Validate required fields
     if (!Subject || !StartTime || !EndTime) {
@@ -85,12 +85,14 @@ export async function PATCH(req: Request) {
         },
         data: {
           Subject,
+          Location,
           StartTime: new Date(StartTime),
           EndTime: new Date(EndTime),
           Description,
           IsAllDay,
           IsReadonly,
           EventType,
+          MaxParticipants,
         },
       })
       return NextResponse.json(updatedEvent, { status: 200 })
@@ -100,12 +102,14 @@ export async function PATCH(req: Request) {
       const newEvent = await db.event.create({
         data: {
           Subject,
+          Location,
           StartTime: new Date(StartTime),
           EndTime: new Date(EndTime),
           Description,
           IsAllDay,
           IsReadonly,
           EventType,
+          MaxParticipants,
         },
       })
       // return new NextResponse(JSON.stringify(newCard), { status: 201 })
