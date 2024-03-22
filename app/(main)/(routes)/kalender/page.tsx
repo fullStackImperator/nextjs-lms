@@ -30,6 +30,7 @@ import { useEffect, useState } from 'react'
 import { db } from '@/lib/db'
 
 import useSWR from 'swr'
+import { useRouter } from 'next/navigation'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -42,22 +43,10 @@ export default function Kalender() {
   //   const eventSettings: EventSettingsModel = { dataSource: timelineResourceData }
   //   const group = { byGroupID: false, resources: ['Projects', 'Categories'] }
 
-  //   const projectData: Object[] = [
-  //     { text: 'PROJECT 1', id: 1, color: '#cb6bb2' },
-  //     { text: 'PROJECT 2', id: 2, color: '#56ca85' },
-  //     { text: 'PROJECT 3', id: 3, color: '#df5286' },
-  //   ]
-  //   const categoryData: Object[] = [
-  //     { text: 'Development', id: 1, color: '#1aaa55' },
-  //     { text: 'Testing', id: 2, color: '#7fa900' },
-  //   ]
+  const router = useRouter()
+
   const { data: kalenderEvents, error } = useSWR('/api/kalender', fetcher)
-    console.log('kalenderEvents: ', kalenderEvents)
-
-  const [events, setEvents] = useState(kalenderEvents || []) // State to hold fetched events
-  const [id, setId] = useState([]) // State to hold fetched events
-
-
+  console.log('kalenderEvents: ', kalenderEvents)
 
   useEffect(() => {
     if (kalenderEvents) {
@@ -65,6 +54,10 @@ export default function Kalender() {
     }
   }, [kalenderEvents])
 
+  const [events, setEvents] = useState(kalenderEvents || []) // State to hold fetched events
+  const [id, setId] = useState([]) // State to hold fetched events
+
+  if (!kalenderEvents) return <div>Loading...</div>
   // console.log('events: ', events)
   //   const eventSettings: EventSettingsModel = { dataSource: kalenderEvents || [] }
 
@@ -193,8 +186,7 @@ export default function Kalender() {
           className: 'event-field-container',
         })
         const containerParticipants: HTMLElement = createElement('div', {
-          className:
-            'event-max-participants-container',
+          className: 'event-max-participants-container',
         })
         const inputEle: HTMLInputElement = createElement('input', {
           className: 'e-field',
@@ -251,6 +243,24 @@ export default function Kalender() {
     }
   }
 
+//   // @ts-ignore
+//   const handleEventClick = (args) => {
+//     // Extract event details
+//     const event = args.data
+
+//     // Redirect to the registration page with event details as query parameters
+//     router.push(`/courses`)
+//     // router.push(`/courses/${courseId}/chapters/${firstChapterId}`)
+
+//     // router.push({
+//     //   pathname: '/registration',
+//     //   query: {
+//     //     eventId: event.Id,
+//     //     eventName: encodeURIComponent(event.Subject),
+//     //   },
+//     // })
+//   }
+
   return (
     <div className="p-8">
       <h2 className="py-4">MiSHN Kalender</h2>
@@ -263,6 +273,7 @@ export default function Kalender() {
         // actionBegin={handleEventCreate} // Handle event creation
         popupOpen={onPopupOpen}
         popupClose={handleEventCreate}
+        // eventClick={handleEventClick}
         // group={group}
       >
         <ViewsDirective>
