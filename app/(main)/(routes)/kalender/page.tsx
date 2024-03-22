@@ -51,13 +51,13 @@ export default function Kalender() {
   //     { text: 'Development', id: 1, color: '#1aaa55' },
   //     { text: 'Testing', id: 2, color: '#7fa900' },
   //   ]
+  const { data: kalenderEvents, error } = useSWR('/api/kalender', fetcher)
+    console.log('kalenderEvents: ', kalenderEvents)
 
-  const [events, setEvents] = useState([]) // State to hold fetched events
+  const [events, setEvents] = useState(kalenderEvents || []) // State to hold fetched events
   const [id, setId] = useState([]) // State to hold fetched events
 
-  const { data: kalenderEvents, error } = useSWR('/api/kalender', fetcher)
 
-  //   console.log('kalenderEvents: ', kalenderEvents)
 
   useEffect(() => {
     if (kalenderEvents) {
