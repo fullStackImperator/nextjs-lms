@@ -3,7 +3,6 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { isTeacher } from '@/lib/teacher'
 
-
 export async function GET(req: Request) {
   try {
     const cards = await db.card.findMany()
@@ -17,35 +16,31 @@ export async function GET(req: Request) {
   }
 }
 
-
-
 export async function DELETE(req: Request) {
-    try {
-        const { userId } = auth()
-        const data = await req.json()
-        
-        const cardId = data.cardId
-        // const { cardId } = req.json()
-        
-        if (!cardId) {
-            return new NextResponse('Card ID is required', { status: 400 })
-        }
-        
-        // Assuming db.card.deleteOne() is a function to delete a card by ID
-        await db.card.delete({
-            where: {
-                id: String(cardId),
-            },
-        })
-        
-        return new NextResponse('Card deleted successfully', { status: 200 })
-    } catch (error) {
-        console.error('[KANBAN_DELETE_CARD]', error)
-        return new NextResponse('Internal Error', { status: 500 })
+  try {
+    const { userId } = auth()
+    const data = await req.json()
+
+    const cardId = data.cardId
+    // const { cardId } = req.json()
+
+    if (!cardId) {
+      return new NextResponse('Card ID is required', { status: 400 })
     }
+
+    // Assuming db.card.deleteOne() is a function to delete a card by ID
+    await db.card.delete({
+      where: {
+        id: String(cardId),
+      },
+    })
+
+    return new NextResponse('Card deleted successfully', { status: 200 })
+  } catch (error) {
+    console.error('[KANBAN_DELETE_CARD]', error)
+    return new NextResponse('Internal Error', { status: 500 })
+  }
 }
-
-
 
 // export async function POST(req: Request) {
 //   try {
@@ -68,7 +63,6 @@ export async function DELETE(req: Request) {
 //     return new NextResponse('Internal Error', { status: 500 })
 //   }
 // }
-
 
 export async function POST(req: Request) {
   try {
@@ -99,36 +93,32 @@ export async function POST(req: Request) {
   }
 }
 
-
-
 export async function PATCH(req: Request) {
   try {
-    const { userId } = auth()
-    const values = await req.json()
+    // const { userId } = auth()
+    const data = await req.json()
 
-    console.log('values :', values)
+    const { cardId, columnId } = data
 
-    if (!userId || !isTeacher()) {
-      return new NextResponse('Unauthorized', { status: 401 })
+    if (!cardId || !columnId) {
+      return new NextResponse('Card ID and column ID are required', {
+        status: 400,
+      })
     }
 
-    // Extract badge ID from values
-    const { id, oldImageUrl, ...badgeData } = values
-
-    // Update the badge with the specified ID
-    const badge = await db.badge.update({
-      where: { id }, // Specify the badge to update
-      data: badgeData, // Update the badge data
+    // Assuming db.card.update() is a function to update a card by ID
+    await db.card.update({
+      where: {
+        id: String(cardId),
+      },
+      data: {
+        columnId: String(columnId),
+      },
     })
-
-    // Extract filename from oldImageUrl
-    // console.log('oldImageUrl: ', oldImageUrl)
-
-    const filename = oldImageUrl.substring(oldImageUrl.lastIndexOf('/') + 1)
 
     // console.log('filename: ', filename)
 
-    return NextResponse.json(badge, { status: 200 })
+    return new NextResponse('Card updated successfully', { status: 200 })
   } catch (error) {
     console.log('[BADGES_UPDATE]', error)
     return new NextResponse('Internal Error', { status: 500 })

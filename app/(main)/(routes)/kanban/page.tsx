@@ -105,7 +105,7 @@ const Column: React.FC<ColumnProps> = ({
     }
   }
 
-  const handleDragEnd = (e: React.DragEvent) => {
+  const handleDragEnd = async (e: React.DragEvent) => {
     const cardId = e.dataTransfer.getData('cardId')
 
     setActive(false)
@@ -137,6 +137,22 @@ const Column: React.FC<ColumnProps> = ({
       }
 
       setCards(copy)
+
+      try {
+        const response = await fetch(`/api/kanban`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ columnId, cardId }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to update card')
+        }
+      } catch (error) {
+        console.error('Error updating card:', error)
+      }
     }
   }
 
@@ -427,30 +443,30 @@ const AddCard: React.FC<{
 }
 
 // const DEFAULT_CARDS: Card[] = [
-  // BACKLOG
-  // { title: 'Look into render bug in dashboard', id: '1', column: 'backlog' },
-  // { title: 'SOX compliance checklist', id: '2', column: 'backlog' },
-  // { title: '[SPIKE] Migrate to Azure', id: '3', column: 'backlog' },
-  // { title: 'Document Notifications service', id: '4', column: 'backlog' },
-  // // TODO
-  // {
-  //   title: 'Research DB options for new microservice',
-  //   id: '5',
-  //   column: 'todo',
-  // },
-  // { title: 'Postmortem for outage', id: '6', column: 'todo' },
-  // { title: 'Sync with product on Q3 roadmap', id: '7', column: 'todo' },
-  // // DOING
-  // {
-  //   title: 'Refactor context providers to use Zustand',
-  //   id: '8',
-  //   column: 'doing',
-  // },
-  // { title: 'Add logging to daily CRON', id: '9', column: 'doing' },
-  // // DONE
-  // {
-  //   title: 'Set up DD dashboards for Lambda listener',
-  //   id: '10',
-  //   column: 'done',
-  // },
+// BACKLOG
+// { title: 'Look into render bug in dashboard', id: '1', column: 'backlog' },
+// { title: 'SOX compliance checklist', id: '2', column: 'backlog' },
+// { title: '[SPIKE] Migrate to Azure', id: '3', column: 'backlog' },
+// { title: 'Document Notifications service', id: '4', column: 'backlog' },
+// // TODO
+// {
+//   title: 'Research DB options for new microservice',
+//   id: '5',
+//   column: 'todo',
+// },
+// { title: 'Postmortem for outage', id: '6', column: 'todo' },
+// { title: 'Sync with product on Q3 roadmap', id: '7', column: 'todo' },
+// // DOING
+// {
+//   title: 'Refactor context providers to use Zustand',
+//   id: '8',
+//   column: 'doing',
+// },
+// { title: 'Add logging to daily CRON', id: '9', column: 'doing' },
+// // DONE
+// {
+//   title: 'Set up DD dashboards for Lambda listener',
+//   id: '10',
+//   column: 'done',
+// },
 // ]
