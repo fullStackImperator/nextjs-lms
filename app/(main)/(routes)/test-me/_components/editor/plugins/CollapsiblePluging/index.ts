@@ -189,7 +189,7 @@ export default function CollapsiblePlugin(): null {
           }
 
           const anchorNode = selection.anchor.getNode()
-          const topLevelElement = anchorNode.getTopLevelElement()
+          const topLevelElement = anchorNode.getTopLevelElement() as ElementNode | null;
           if (topLevelElement === null) {
             return false
           }
