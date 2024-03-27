@@ -23,6 +23,10 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import { UploadFile } from '@mui/icons-material'
+import { FileUpload } from '@/components/file-upload' // Adjust the path as per your project structure
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 function ImageDialog({
   editor,
@@ -66,6 +70,9 @@ function ImageDialog({
 
   const updateFormData = async (event: any) => {
     const { name, value } = event.target
+
+    console.log('event.target', event.target)
+
     if (name === 'src') {
       try {
         const dimensions = await getImageDimensions(value)
@@ -150,6 +157,41 @@ function ImageDialog({
 
   useFixedBodyScroll(open)
 
+  const [imageUrl, setImageUrl] = useState<string>()
+  const router = useRouter()
+
+  const handleImageUpload = async (url: string) => {
+    setImageUrl(url)
+
+    try {
+      const values = {
+        // id: '123456',
+        // name: 'test1',
+        imageUrl: url,
+      }
+
+      // TODO: CHANGE API ROUTE, CREATE PROPER ROUTE OR ACTION
+
+      setFormData({ ...formData, src: url })
+      await axios.post(`/api/badges`, values)
+      // toast.success('Course updated')
+      router.refresh()
+    } catch (error) {
+      toast.error('Something went wrong')
+    }
+  }
+
+  // const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  //   try {
+  //     await axios.post(`/api/courses/${courseId}/attachments`, values)
+  //     toast.success('Course updated')
+  //     toggleEdit()
+  //     router.refresh()
+  //   } catch (error) {
+  //     toast.error('Something went wrong')
+  //   }
+  // }
+
   return (
     <Dialog
       open={!!open}
@@ -179,7 +221,18 @@ function ImageDialog({
           <Typography variant="h6" sx={{ mt: 1 }}>
             From File
           </Typography>
-          <Button
+
+
+          <FileUpload
+            endpoint="editorImage"
+            // name="src"
+            onChange={(url) => {
+              if (url) {
+                handleImageUpload(url)
+              }
+            }}
+          />
+          {/* <Button
             variant="outlined"
             sx={{ my: 2 }}
             startIcon={<UploadFile />}
@@ -193,7 +246,7 @@ function ImageDialog({
               onChange={(e) => loadImage(e.target.files)}
               autoFocus
             />
-          </Button>
+          </Button> */}
           <TextField
             margin="normal"
             size="small"

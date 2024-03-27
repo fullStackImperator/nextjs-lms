@@ -23,6 +23,9 @@ export interface EditorDialogs {
   layout: {
     open: boolean;
   },
+  youtube: {
+    open: boolean;
+  },
 };
 
 export type SetDialogsPayload = Readonly<Partial<EditorDialogs>>;

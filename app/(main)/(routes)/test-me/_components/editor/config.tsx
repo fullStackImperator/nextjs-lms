@@ -6,6 +6,9 @@ import {
 } from './nodes/TableNode/TableNode'
 import { ListItemNode, ListNode } from '@lexical/list'
 import { CodeHighlightNode, CodeNode } from './nodes/CodeNode'
+import { CollapsibleContainerNode } from './plugins/CollapsiblePluging/CollapsibleContainerNode'
+import { CollapsibleContentNode } from './plugins/CollapsiblePluging/CollapsibleContentNode'
+import { CollapsibleTitleNode } from './plugins/CollapsiblePluging/CollapsibleTitleNode'
 import { AutoLinkNode, LinkNode } from '@lexical/link'
 import { HorizontalRuleNode } from './nodes/HorizontalRuleNode/HorizontalRuleNode'
 import { MathNode } from './nodes/MathNode'
@@ -17,6 +20,8 @@ import theme from './theme'
 import { PageBreakNode } from './nodes/PageBreakNode'
 import { IFrameNode } from './nodes/IFrameNode/IFrameNode'
 import { LayoutContainerNode, LayoutItemNode } from './nodes/LayoutNode'
+import { YouTubeNode } from './nodes/YouTubeNode'
+import { AlertNode } from './nodes/AlertNode/AlertNode'
 
 export const editorConfig = {
   namespace: 'matheditor',
@@ -34,6 +39,9 @@ export const editorConfig = {
     QuoteNode,
     CodeNode,
     CodeHighlightNode,
+    CollapsibleContainerNode,
+    CollapsibleContentNode,
+    CollapsibleTitleNode,
     TableNode,
     TableCellNode,
     TableRowNode,
@@ -45,9 +53,11 @@ export const editorConfig = {
     SketchNode,
     GraphNode,
     StickyNode,
+    AlertNode,
     PageBreakNode,
     IFrameNode,
     LayoutContainerNode,
     LayoutItemNode,
+    YouTubeNode,
   ],
 }

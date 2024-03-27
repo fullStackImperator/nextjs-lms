@@ -20,10 +20,12 @@ export const generateHtml = (data: SerializedEditorState) => new Promise<string>
     editorState.read(() => {
       let html = $generateHtmlFromNodes(editor);
       const stickyRegex = /<p\b[^>]*>(?:(?!<\/p>).)*<div\b[^>]*class="sticky-note-wrapper"[^>]*>(?:(?!<\/div>).)*<\/div>(?:(?!<\/p>).)*<\/p>/gs;
+      const alertRegex = /<p\b[^>]*>(?:(?!<\/p>).)*<div\b[^>]*class="alert-note-wrapper"[^>]*>(?:(?!<\/div>).)*<\/div>(?:(?!<\/p>).)*<\/p>/gs;
       const figureRegex = /<p\b[^>]*>(?:(?!<\/p>).)*<figure\b[^>]*>(?:(?!<\/figure>).)*<\/figure>(?:(?!<\/p>).)*<\/p>/gs;
       const stickies = html.match(stickyRegex) || [];
+      const alerts = html.match(alertRegex) || [];
       const figures = html.match(figureRegex) || [];
-      [...stickies, ...figures].forEach((match) => html = html.replace(match, match.replace(/^<p/, '<div').replace(/<\/p>$/, '</div>')));
+      [...stickies, ...alerts, ...figures].forEach((match) => html = html.replace(match, match.replace(/^<p/, '<div').replace(/<\/p>$/, '</div>')));
       resolve(html);
     });
   } catch (error) {

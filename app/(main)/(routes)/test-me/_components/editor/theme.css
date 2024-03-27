@@ -117,16 +117,16 @@
   counter-reset: line-number;
 }
 
-.LexicalTheme__code>span:first-child,
-.LexicalTheme__code>br:first-child,
-.LexicalTheme__code>br+span,
-.LexicalTheme__code>br+br {
+.LexicalTheme__code > span:first-child,
+.LexicalTheme__code > br:first-child,
+.LexicalTheme__code > br + span,
+.LexicalTheme__code > br + br {
   counter-increment: line-number;
 }
 
-.LexicalTheme__code>span:first-child:before,
-.LexicalTheme__code>br+span:before,
-.LexicalTheme__code>br+br:before {
+.LexicalTheme__code > span:first-child:before,
+.LexicalTheme__code > br + span:before,
+.LexicalTheme__code > br + br:before {
   color: #777;
   content: counter(line-number);
   user-select: none;
@@ -136,7 +136,7 @@
   text-align: end;
 }
 
-.LexicalTheme__code>br+br {
+.LexicalTheme__code > br + br {
   display: block;
   content: counter(line-number);
   height: 20px;
@@ -249,7 +249,7 @@
 .LexicalTheme__listItemUnchecked:before,
 .LexicalTheme__listItemChecked:before {
   display: block;
-  content: "";
+  content: '';
   box-sizing: border-box;
   position: absolute;
   width: 18px;
@@ -274,7 +274,7 @@
 }
 
 .LexicalTheme__listItemChecked:after {
-  content: "";
+  content: '';
   display: block;
   box-sizing: border-box;
   position: absolute;
@@ -285,7 +285,7 @@
   border-width: 0 2px 2px 0;
   border-style: solid;
   transform-origin: bottom left;
-  transform: rotate(45deg)
+  transform: rotate(45deg);
 }
 
 .LexicalTheme__listItemUnchecked[dir='rtl']:after,
@@ -377,8 +377,8 @@ iframe {
   margin: 0;
 }
 
-.LexicalTheme__image>img,
-.LexicalTheme__image>svg {
+.LexicalTheme__image > img,
+.LexicalTheme__image > svg {
   min-width: 100px;
   max-width: 100%;
   height: auto;
@@ -401,7 +401,26 @@ iframe {
   z-index: 1;
 }
 
+.alert-note-wrapper {
+  /* float: right; */
+  margin: 0.5rem 0 0.5rem 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
 .sticky-note-wrapper .nested-contentEditable {
+  flex: 1;
+  border: 0;
+  resize: none;
+  color: rgba(0, 0, 0, 0.87);
+  caret-color: rgb(5, 5, 5);
+  display: flow-root;
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+}
+
+.alert-note-wrapper .nested-contentEditable {
   flex: 1;
   border: 0;
   resize: none;
@@ -427,10 +446,31 @@ iframe {
   pointer-events: none;
 }
 
+.alert-note-wrapper .nested-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 30px;
+  left: 20px;
+  width: 200px;
+  user-select: none;
+  white-space: nowrap;
+  display: inline-block;
+  pointer-events: none;
+}
+
 .sticky-note-container {
   min-width: 200px;
   max-width: 300px;
   display: inline-block;
+  position: relative;
+}
+
+.alert-note-container {
+  /* min-width: 200px;
+  max-width: 300px; */
+  /* display: inline-block; */
   position: relative;
 }
 
@@ -445,8 +485,21 @@ iframe {
   flex-direction: column;
 }
 
+.alert-note {
+  min-height: 148px;
+  padding: 20px;
+  position: relative;
+  color: rgba(0, 0, 0, 0.87);
+  border: 1px solid #e8e8e8;
+  /* border-bottom-right-radius: 60px 5px; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  /* box-shadow:  2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12) */
+}
+
 .sticky-note:after {
-  content: '';
+  /* content: '';
   position: absolute;
   z-index: -1;
   right: -0px;
@@ -454,25 +507,94 @@ iframe {
   width: 194px;
   height: 25px;
   box-shadow: 2px 15px 5px rgba(0, 0, 0, 0.4);
-  transform: matrix(-1, -0.1, 0, 1, 0, 0);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0); */
+}
+
+.alert-note:after {
+  /* content: '';
+  position: absolute;
+  z-index: -1;
+  right: -0px;
+  bottom: 20px;
+  width: 194px;
+  height: 25px;
+  box-shadow: 2px 15px 5px rgba(0, 0, 0, 0.4);
+  transform: matrix(-1, -0.1, 0, 1, 0, 0); */
 }
 
 .sticky-note.yellow {
   border-top: 1px solid #fdfd86;
-  background: linear-gradient(135deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%);
+  background: linear-gradient(
+    135deg,
+    #ffff88 81%,
+    #ffff88 82%,
+    #ffff88 82%,
+    #ffffc6 100%
+  );
+}
+
+.alert-note.yellow {
+  border-top: 1px solid #fdfd86;
+  background: linear-gradient(
+    135deg,
+    #ffff88 81%,
+    #ffff88 82%,
+    #ffff88 82%,
+    #ffffc6 100%
+  );
 }
 
 .sticky-note.pink {
   border-top: 1px solid #e7d1e4;
-  background: linear-gradient(135deg,
-      #f7cbe8 81%,
-      #f7cbe8 82%,
-      #f7cbe8 82%,
-      #e7bfe1 100%);
+  background: linear-gradient(
+    135deg,
+    #f7cbe8 81%,
+    #f7cbe8 82%,
+    #f7cbe8 82%,
+    #e7bfe1 100%
+  );
+}
+
+.alert-note.pink {
+  border-top: 1px solid #e7d1e4;
+  background: linear-gradient(
+    135deg,
+    #f7cbe8 81%,
+    #f7cbe8 82%,
+    #f7cbe8 82%,
+    #e7bfe1 100%
+  );
+}
+
+.alert-note.blue {
+  border-top: 1px solid #b8c7ee;
+  background: linear-gradient(
+    135deg,
+    #b8c7ee 81%,
+    #b0caed 82%,
+    #b4c7ec 82%,
+    #abb0ea 100%
+  );
+}
+.alert-note.green {
+  border-top: 1px solid #b8eec8;
+  background: linear-gradient(
+    135deg,
+    #b8eec8 81%,
+    #b8eec8 82%,
+    #b8eec8 82%,
+    #b8eec8 100%
+  );
+}
+.alert-note.red {
+  border-top: 1px solid #f3a49a;
+  background: linear-gradient(
+    135deg,
+    #f3a49a 81%,
+    #f3a49a 82%,
+    #f3a49a 82%,
+    #f3a49a 100%
+  );
 }
 
 .LexicalTheme__hr {
@@ -502,7 +624,7 @@ iframe {
   z-index: 2;
 }
 
-.LexicalTheme__math>.ML__latex {
+.LexicalTheme__math > .ML__latex {
   user-select: auto;
   padding: 2px 0px 2px 1px;
 }
@@ -601,35 +723,35 @@ iframe {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-[theme=light] .LexicalTheme__quote {
+[theme='light'] .LexicalTheme__quote {
   color: rgb(101, 103, 107);
   border-left-color: rgb(206, 208, 212);
 }
 
-[theme=light] .LexicalTheme__link {
+[theme='light'] .LexicalTheme__link {
   color: rgb(33, 111, 219);
 }
 
-[theme=light] .LexicalTheme__code {
+[theme='light'] .LexicalTheme__code {
   background-color: rgb(240, 242, 245);
   color: inherit;
 }
 
-[theme=light] .LexicalTheme__code:before {
+[theme='light'] .LexicalTheme__code:before {
   background-color: #eee;
   border-right-color: #ccc;
   color: #777;
 }
 
-[theme=light] .LexicalTheme__code:after {
+[theme='light'] .LexicalTheme__code:after {
   color: rgba(0, 0, 0, 0.5);
 }
 
-[theme=light] .LexicalTheme__tableCell {
+[theme='light'] .LexicalTheme__tableCell {
   border-color: rgba(0, 0, 0, 0.3);
 }
 
-[theme=light] .LexicalTheme__tableCellHeader {
+[theme='light'] .LexicalTheme__tableCellHeader {
   background-color: rgba(0, 0, 0, 0.05);
 }
 

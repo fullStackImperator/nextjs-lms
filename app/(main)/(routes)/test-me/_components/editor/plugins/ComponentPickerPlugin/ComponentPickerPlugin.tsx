@@ -34,16 +34,18 @@ import * as ReactDOM from 'react-dom';
 
 import { INSERT_MATH_COMMAND } from '../MathPlugin';
 import { INSERT_STICKY_COMMAND } from '../StickyPlugin';
+import { INSERT_ALERT_COMMAND } from '../AlertPlugin';
 
 import { SET_DIALOGS_COMMAND } from '../ToolbarPlugin/Dialogs/commands';
 import { ImageNode } from '../../nodes/ImageNode/ImageNode';
 import { GraphNode } from '../../nodes/GraphNode';
 import { SketchNode } from '../../nodes/SketchNode/SketchNode';
+import { AlertNode } from '../../nodes/AlertNode/AlertNode';
 import { StickyNode } from '../../nodes/StickyNode/StickyNode';
 import { PageBreakNode } from '../../nodes/PageBreakNode';
 import { INSERT_PAGE_BREAK } from '../PageBreakPlugin';
 import { Paper, MenuList, MenuItem, ListItemIcon, ListItemText, Typography, SvgIcon } from '@mui/material';
-import { FormatAlignLeft, FormatAlignCenter, FormatAlignRight, FormatAlignJustify, FormatListNumbered, FormatListBulleted, PlaylistAddCheck, FormatQuote, Code, Image as ImageIcon, TableChart, HorizontalRule, Functions, Brush, StickyNote2, InsertPageBreak, Web, ViewColumn } from '@mui/icons-material';
+import { FormatAlignLeft, FormatAlignCenter, FormatAlignRight, FormatAlignJustify, FormatListNumbered, FormatListBulleted, PlaylistAddCheck, FormatQuote, Code, Image as ImageIcon, TableChart, HorizontalRule, Functions, Brush, AddAlert,  StickyNote2, InsertPageBreak, Web, ViewColumn } from '@mui/icons-material';
 import { IFrameNode } from '../../nodes/IFrameNode/IFrameNode';
 import { LayoutContainerNode } from '../../nodes/LayoutNode';
 
@@ -368,6 +370,17 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
       );
     }
 
+    if (editor.hasNode(AlertNode)) {
+      baseOptions.push(
+        new ComponentPickerOption('Alert', {
+          icon: <AddAlert />,
+          keywords: ['alert', 'note', 'alert note'],
+          keyboardShortcut: '/alert',
+          onSelect: () =>
+            editor.dispatchCommand(INSERT_ALERT_COMMAND, undefined),
+        }),
+      );
+    }
     if (editor.hasNode(StickyNode)) {
       baseOptions.push(
         new ComponentPickerOption('Note', {
@@ -424,6 +437,17 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
         }),
       );
     }
+
+    // if (editor.hasNode(YouTubeNode)) {
+    //   baseOptions.push(
+    //     new ComponentPickerOption('YouTube', {
+    //       icon: <Web />,
+    //       keywords: ['you tube', 'youtube', 'You'],
+    //       keyboardShortcut: '/youtube',
+    //       onSelect: openIFrameDialog,
+    //     }),
+    //   );
+    // }
 
     const dynamicOptions = getDynamicOptions();
 

@@ -24,6 +24,8 @@ import ImagePlugin from './ImagePlugin'
 import SketchPlugin from './SketchPlugin'
 import GraphPlugin from './GraphPlugin'
 import StickyPlugin from './StickyPlugin'
+import CollapsiblePlugin from './CollapsiblePluging'
+import AlertPlugin from './AlertPlugin'
 import ClickableLinkPlugin from './LinkPlugin/ClickableLinkPlugin'
 import ComponentPickerMenuPlugin from './ComponentPickerPlugin/ComponentPickerPlugin'
 import TabFocusPlugin from './TabFocusPlugin'
@@ -33,6 +35,7 @@ import { ImageNode } from '../nodes/ImageNode/ImageNode'
 import { SketchNode } from '../nodes/SketchNode/SketchNode'
 import { GraphNode } from '../nodes/GraphNode'
 import { StickyNode } from '../nodes/StickyNode/StickyNode'
+import { AlertNode } from '../nodes/AlertNode/AlertNode'
 import { TableNode } from '../nodes/TableNode/TableNode'
 import { PageBreakNode } from '../nodes/PageBreakNode'
 import PageBreakPlugin from './PageBreakPlugin'
@@ -41,6 +44,12 @@ import IFramePlugin from './IFramePlugin'
 import { LayoutPlugin } from './LayoutPlugin'
 import { LayoutContainerNode } from '../nodes/LayoutNode'
 import SpeechToTextPlugin from './SpeechToTextPlugin'
+import YouTubePlugin from './YouTubePlugin'
+import { YouTubeNode } from '../nodes/YouTubeNode'
+
+import { CollapsibleContainerNode } from '../plugins/CollapsiblePluging/CollapsibleContainerNode'
+import { CollapsibleContentNode } from '../plugins/CollapsiblePluging/CollapsibleContentNode'
+import { CollapsibleTitleNode } from '../plugins/CollapsiblePluging/CollapsibleTitleNode'
 
 export const EditorPlugins: React.FC<{
   contentEditable: React.ReactElement
@@ -88,6 +97,9 @@ export const EditorPlugins: React.FC<{
       <CodeHighlightPlugin />
       <AutoLinkPlugin />
       <SpeechToTextPlugin />
+      {/* <YouTubePlugin /> */}
+      {/* <CollapsiblePlugin /> */}
+      {editor.hasNode(CollapsibleContainerNode) && <CollapsiblePlugin />}
       {editor.hasNode(TableNode) && <TablePlugin />}
       {editor.hasNode(TableNode) && <TableCellActionMenuPlugin />}
       {editor.hasNode(TableNode) && <TableCellResizer />}
@@ -95,9 +107,11 @@ export const EditorPlugins: React.FC<{
       {editor.hasNode(SketchNode) && <SketchPlugin />}
       {editor.hasNode(GraphNode) && <GraphPlugin />}
       {editor.hasNode(StickyNode) && <StickyPlugin />}
+      {editor.hasNode(AlertNode) && <AlertPlugin />}
       {editor.hasNode(PageBreakNode) && <PageBreakPlugin />}
       {editor.hasNode(IFrameNode) && <IFramePlugin />}
       {editor.hasNode(LayoutContainerNode) && <LayoutPlugin />}
+      {editor.hasNode(YouTubeNode) && <YouTubePlugin />}
     </>
   )
 }

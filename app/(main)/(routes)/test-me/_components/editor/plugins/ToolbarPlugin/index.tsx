@@ -49,8 +49,10 @@ import {
   IFrameDialog,
   LinkDialog,
   LayoutDialog,
+  // InsertYouTubeDialog,
 } from './Dialogs'
 import { $isStickyNode } from '../../nodes/StickyNode/StickyNode'
+import { $isAlertNode } from '../../nodes/AlertNode/AlertNode'
 import {
   SelectChangeEvent,
   useScrollTrigger,
@@ -92,6 +94,9 @@ const blockTypeToBlockName = {
   number: 'Numbered List',
   paragraph: 'Normal',
 }
+
+
+
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = []
@@ -143,6 +148,9 @@ function ToolbarPlugin() {
       open: false,
     },
     layout: {
+      open: false,
+    },
+    youtube: {
       open: false,
     },
   })
@@ -356,7 +364,9 @@ function ToolbarPlugin() {
   const showImageTools = $isImageNode(selectedNode)
   const showTableTools = !!selectedTable
   const showTextTools =
-    (!showMathTools && !showImageTools) || $isStickyNode(selectedNode)
+    (!showMathTools && !showImageTools) ||
+    $isStickyNode(selectedNode) ||
+    $isAlertNode(selectedNode)
 
   const [toolbarRef, toolbarDimensions] = useMeasure()
   const [toolboxRef, toolboxDimensions] = useMeasure()
@@ -547,6 +557,7 @@ function ToolbarPlugin() {
         open={dialogs.link.open}
       />
       <LayoutDialog editor={activeEditor} open={dialogs.layout.open} />
+      {/* <InsertYouTubeDialog editor={activeEditor} open={dialogs.youtube.open} /> */}
     </>
   )
 }

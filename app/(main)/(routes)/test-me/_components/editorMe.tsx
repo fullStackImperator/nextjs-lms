@@ -72,6 +72,7 @@ const Container: React.FC<{
     try {
       const response = await axios.post('/api/matheditor', {
         ...document,
+        name: "mathe editor stiv",
         data: editorState, // Pass serialized state to the backend
       })
       if (response.status === 200) {
@@ -88,7 +89,10 @@ const Container: React.FC<{
     <>
       <Editor
         // initialConfig={{ editorState: JSON.stringify(editorState) }}
-        initialConfig={{ editorState: JSON.stringify(document.data) }}
+        initialConfig={{
+          editorState: JSON.stringify(document.data),
+          // editable: false,
+        }}
         onChange={onEditorChange}
         editorRef={editorRef}
       />
