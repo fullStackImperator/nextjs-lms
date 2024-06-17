@@ -59,6 +59,22 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     }
   }
 
+    // const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    //   try {
+    //     // const response = await axios.post('/api/courses', values)
+    //     const response = await addCourse(values)
+    //     if (response && response.id) {
+    //       toast.success('Course created')
+    //       router.push(`/teacher/courses/${response.id}`)
+    //     } else {
+    //       throw new Error('Invalid response')
+    //     }
+    //   } catch {
+    //     toast.error('Something went wrong in creating course')
+    //   }
+    // }
+
+    
   return (
     <div className="mt-6 bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">

@@ -93,10 +93,11 @@ body,
 .toolbar {
   height: 56px !important
 }
-/* 
+
 .yoopta-editor {
-  background-color: white !important
-} */
+  background-color: white !important;
+  width: auto !important;
+}
 
 @keyframes pendulum {
   0% {

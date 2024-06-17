@@ -1,13 +1,8 @@
-import Mux from '@mux/mux-node'
 import { db } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { isTeacher } from '@/lib/teacher'
 
-const { Video } = new Mux(
-  process.env.MUX_TOKEN_ID!,
-  process.env.MUX_TOKEN_SECRET!
-)
 
 export async function DELETE(
   req: Request,

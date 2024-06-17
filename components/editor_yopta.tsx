@@ -1,28 +1,42 @@
-// import { Inter } from 'next/font/google';
-// import NextImage from 'next/image'
-
-// import { useEffect, useState } from 'react'
-import YooptaEditor from '@yoopta/editor'
+import YooptaEditor, {
+  createYooptaEditor,
+  Elements,
+  Blocks,
+  useYooptaEditor,
+} from '@yoopta/editor'
 
 import Paragraph from '@yoopta/paragraph'
 import Blockquote from '@yoopta/blockquote'
-import Code from '@yoopta/code'
 import Embed from '@yoopta/embed'
 import Image from '@yoopta/image'
 import Link from '@yoopta/link'
-import File from '@yoopta/file'
 import Callout from '@yoopta/callout'
 import Video from '@yoopta/video'
+import File from '@yoopta/file'
+import Accordion from '@yoopta/accordion'
 import { NumberedList, BulletedList, TodoList } from '@yoopta/lists'
-import { Bold, Italic, CodeMark, Underline, Strike } from '@yoopta/marks'
+import {
+  Bold,
+  Italic,
+  CodeMark,
+  Underline,
+  Strike,
+  Highlight,
+} from '@yoopta/marks'
 import { HeadingOne, HeadingThree, HeadingTwo } from '@yoopta/headings'
-
-import LinkTool from '@yoopta/link-tool'
-import ActionMenu from '@yoopta/action-menu-list'
-import Toolbar from '@yoopta/toolbar'
+import Code from '@yoopta/code'
+import ActionMenuList, {
+  DefaultActionMenuRender,
+} from '@yoopta/action-menu-list'
+import Toolbar, { DefaultToolbarRender } from '@yoopta/toolbar'
+import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 
 // import { uploadToCloudinary } from '@/utils/cloudinary'
-import { YooptaValue } from '@/lib/yopta/initialData'
+import { useEffect, useMemo, useRef } from 'react'
+import { WITH_BASIC_INIT_VALUE } from '@/lib/yopta/initValue'
+
+// import { uploadToCloudinary } from '@/utils/cloudinary'
+// import { YooptaValue } from '@/lib/yopta/initialData'
 import { uploadFiles } from '@/lib/uploadFiles'
 
 // Function to handle image upload using UploadThing
@@ -36,11 +50,11 @@ const handleImageUpload = async (file: File) => {
     // const height = response[0]?.data?.height;
 
     // Return the image URL and dimensions in the required format
-    return { url: imageUrl }
+    return { src: imageUrl }
     // return { url: imageUrl, width, height };
   } catch (error) {
     console.error('Error uploading image:', error)
-    return { url: '' }
+    return { src: '' }
   }
 }
 
@@ -85,38 +99,41 @@ const handleFileUpload = async (file: File) => {
 // list of plugins should be placed outside component
 const plugins = [
   Paragraph,
-  Blockquote,
-  Callout,
-  Code,
-  Link,
-  NumberedList,
-  BulletedList,
-  TodoList,
+  Accordion,
   HeadingOne,
   HeadingTwo,
   HeadingThree,
+  Blockquote,
+  Callout,
+  NumberedList,
+  BulletedList,
+  TodoList,
+  Code,
+  Link,
+  Embed,
   File.extend({
     options: {
       onUpload: async (file: File) => {
         const response = await handleFileUpload(file)
-        return { url: response.url }
+        return { src: response.url }
       },
     },
   }),
   Embed.extend({
     options: {
-      maxWidth: 1024,
-      maxHeight: 1024,
+      // maxWidth: 1024,
+      // maxHeight: 1024,
     },
   }),
   Image.extend({
     options: {
-      maxWidth: 1024,
-      maxHeight: 1024,
-      onUpload: async (file: File) => {
+      // maxWidth: 1024,
+      // maxHeight: 1024,
+      async onUpload(file: File) {
         const response = await handleImageUpload(file)
         return {
-          url: response.url,
+          src: response.src,
+          alt: 'uploadthing',
           width: 850,
           height: 650,
         }
@@ -125,12 +142,13 @@ const plugins = [
   }),
   Video.extend({
     options: {
-      maxWidth: 1024,
-      maxHeight: 1024,
+      // maxWidth: 1024,
+      // maxHeight: 1024,
       onUpload: async (file: File) => {
         const response = await handleVideoUpload(file)
         return {
-          url: response.url,
+          src: response.url,
+          alt: 'uploadthing',
           width: 850,
           height: 650,
         }
@@ -141,21 +159,34 @@ const plugins = [
 
 // tools should be placed outside your component
 const TOOLS = {
-  Toolbar: <Toolbar />,
-  ActionMenu: <ActionMenu />,
-  LinkTool: <LinkTool />,
+  ActionMenu: {
+    render: DefaultActionMenuRender,
+    tool: ActionMenuList,
+  },
+  Toolbar: {
+    render: DefaultToolbarRender,
+    tool: Toolbar,
+  },
+  LinkTool: {
+    render: DefaultLinkToolRender,
+    tool: LinkTool,
+  },
 }
 
-interface EditorProps {
-  value: YooptaValue[]
-  onChange: (value: YooptaValue[]) => void
-}
+const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight]
 
-export default function Editor({ value, onChange }: EditorProps) {
+// interface EditorProps {
+//   value: YooptaValue[]
+//   onChange: (value: YooptaValue[]) => void
+// }
+
+// @ts-ignore
+export default function Editor({ value, onChange, readOnly = false }) {
+  // export default function Editor({ value, onChange }: EditorProps) {
   // const [editorContent, setEditorContent] = useState(value)
   // const [editorValue, setEditorValue] = useState<YooptaValue[]>(initalValue)
   // list of marks should be placed inside your component
-  const marks = [Bold, Italic, CodeMark, Underline, Strike]
+  // const marks = [Bold, Italic, CodeMark, Underline, Strike]
 
   // console.log('yopta val: ', editorContent)
 
@@ -164,13 +195,29 @@ export default function Editor({ value, onChange }: EditorProps) {
   //   setEditorContent(value)
   // }, [value])
 
+  // console.log('value in editort: ', value)
+
+  const editor = useMemo(() => createYooptaEditor(), [])
+  const selectionRef = useRef(null)
+
+  useEffect(() => {
+    const handleChange = () => {
+      const newValue = editor.getEditorValue()
+      onChange(newValue)
+    }
+    editor.on('change', handleChange)
+    return () => {
+      editor.off('change', handleChange)
+    }
+  }, [editor, onChange])
+
   return (
     // <main
     //   style={{ padding: '5rem 0' }}
     //   className={`flex min-h-screen w-full h-full flex-col items-center justify-between p-24`}
     // >
-    <div className="w-full h-full bg-white p-14">
-      <YooptaEditor<any>
+    <div className="w-full h-full bg-white p-14" ref={selectionRef}>
+      {/* <YooptaEditor<any>
         // value={editorValue}
         value={value}
         // onChange={(val: YooptaValue[]) => setEditorValue(val)}
@@ -181,6 +228,23 @@ export default function Editor({ value, onChange }: EditorProps) {
         autoFocus
         tools={TOOLS}
         // offline="withBasicExample"
+      /> */}
+
+      <YooptaEditor
+        // className="w-[1024px]"
+        editor={editor}
+        // @ts-ignore
+        plugins={plugins}
+        tools={TOOLS}
+        marks={MARKS}
+        selectionBoxRoot={selectionRef}
+        value={value}
+        // value={WITH_BASIC_INIT_VALUE}
+        onChange={onChange}
+        // onSave={onSave}
+        placeholder="Schreibe  '/'  um das Menü zu öffnen..."
+        autoFocus
+        readOnly={readOnly} // Pass readOnly prop to YooptaEditor
       />
     </div>
     // </main>

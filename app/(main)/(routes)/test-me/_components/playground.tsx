@@ -24,7 +24,6 @@ const document = playgroundTemplate as unknown as EditorDocument
 const Playground: React.FC = () => (
   <>
     <Editor document={document} />
-    {/* <DisplayAd sx={{ mt: 2 }} /> */}
   </>
 )
 

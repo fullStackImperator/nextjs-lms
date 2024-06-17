@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 
 import { db } from '@/lib/db'
+import { revalidatePath } from 'next/cache'
 
 const { Video } = new Mux(
   process.env.MUX_TOKEN_ID!,
@@ -90,9 +91,6 @@ export async function DELETE(
   }
 }
 
-
-
-
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
@@ -125,6 +123,10 @@ export async function PATCH(
         ...values,
       },
     })
+
+    revalidatePath(
+      `/teacher/courses/${params.courseId}/chapters/${params.chapterId}`
+    )
 
     // if (values.videoUrl) {
     //   const existingMuxData = await db.muxData.findFirst({

@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import { addCourse } from './_actions/course'
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -37,20 +38,27 @@ const CreatePage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post('/api/courses', values)
-      router.push(`/teacher/courses/${response.data.id}`)
-      toast.success('Course created')
+      // const response = await axios.post('/api/courses', values)
+      const response = await addCourse(values)
+      if (response && response.id) {
+        toast.success('Course created')
+        router.push(`/teacher/courses/${response.id}`)
+      } else {
+        throw new Error('Invalid response')
+      }
     } catch {
-      toast.error('Something went wrong')
+      toast.error('Something went wrong in creating course')
     }
   }
+
 
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
       <div>
         <h1 className="text-2xl">Geben Sie ein Projekttitel an</h1>
         <p className="text-sm text-slate-600">
-          Wie möchten Sie das Projekt nennen? Keine Sorge, Sie können den Titel später anpassen.
+          Wie möchten Sie das Projekt nennen? Keine Sorge, Sie können den Titel
+          später anpassen.
         </p>
         <Form {...form}>
           <form

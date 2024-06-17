@@ -29,7 +29,6 @@ import { LevelForm } from './_components/level-form'
 import { LongDescriptionForm } from './_components/longDescription-form'
 import Link from 'next/link'
 
-
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
 
@@ -59,7 +58,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
 
   // console.log('course from db: ', course)
 
-
   const categories = await db.category.findMany({
     orderBy: {
       name: 'asc',
@@ -77,7 +75,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.description,
     course.longDescription,
     course.imageUrl,
-    course.price,
+    // course.price,
     // course.categoryId,
     course.chapters.some((chapter) => chapter.isPublished),
     course.prerequisites,
@@ -97,7 +95,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       {!course.isPublished && (
         <Banner
           variant="warning"
-          label="Dieser Kurs ist nicht veröffentlicht. Er wird im Dashboard nicht sichtbar sein."
+          label="Dieser Kurs ist nicht veröffentlicht. Er ist für die SuS nicht sichtbar."
         />
       )}
       <div className="p-6">
@@ -112,7 +110,8 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             </Link>
             <h1 className="text-2xl font-medium">Projekt Gestaltung</h1>
             <span className="text-sm text-slate-700">
-              Alle Felder ausfüllen {completionText}
+              Mindestens ein Kapitel veröffentlichen und alle Felder ausfüllen{' '}
+              {completionText}
             </span>
           </div>
           <CourseActions

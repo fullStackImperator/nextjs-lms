@@ -5,6 +5,14 @@ import { redirect } from 'next/navigation'
 import { CourseSidebar } from '@/app/(course)/courses/[courseId]/_components/course-sidebar'
 import { CourseNavbar } from '@/app/(course)/courses/[courseId]/_components/course-navbar'
 
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable'
+
+
+
 const CourseLayout = async ({
   children,
   params,
@@ -64,3 +72,18 @@ const CourseLayout = async ({
 }
 
 export default CourseLayout
+
+
+    //   <ResizablePanelGroup direction="horizontal">
+    //     <ResizablePanel defaultSize={25}>
+    //       <div className="flex h-full items-center justify-center p-6 z-50">
+    //         {/* <div className="hidden pt-[80px] md:flex h-full w-80 flex-col fixed inset-y-0 z-50"> */}
+    //         <CourseSidebar course={course} progressCount={progressCount} />
+    //       </div>
+    //     </ResizablePanel>
+    //     <ResizableHandle withHandle />{' '}
+    //     <ResizablePanel defaultSize={75}>
+    //       <main className="md:pl-80 pt-[80px] h-full">{children}</main>
+    //     </ResizablePanel>
+    //   </ResizablePanelGroup>
+    // </div>
