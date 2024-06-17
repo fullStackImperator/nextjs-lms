@@ -1,3 +1,5 @@
+
+'use client'
 import { JsonObject, JsonArray } from 'type-fest'
 import YooptaEditor, {
   createYooptaEditor,
