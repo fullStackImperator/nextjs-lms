@@ -3,7 +3,7 @@ import type { BlockquoteElement } from '@yoopta/blockquote'
 import type { CodeElement } from '@yoopta/code'
 import type { EmbedElement } from '@yoopta/embed'
 import type { ImageElement } from '@yoopta/image'
-import type { LinkElement } from '@yoopta/link'
+// import type { LinkElement } from '@yoopta/link'
 import type { CalloutElement } from '@yoopta/callout'
 import type { VideoElement } from '@yoopta/video'
 import type {
@@ -18,7 +18,7 @@ export type YooptaValue =
   | CodeElement
   | EmbedElement
   | ImageElement
-  | LinkElement
+  // | LinkElement
   | CalloutElement
   | VideoElement
   | HeadingOneElement
