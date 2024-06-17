@@ -2,14 +2,15 @@ import { getChapter } from "@/actions/get-chapter";
 import { Banner } from "@/components/banner";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { VideoPlayer } from "./_components/video-player";
+// import { VideoPlayer } from "./_components/video-player";
 import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
-import Preview from "@/components/preview";
+// import Preview from "@/components/preview";
+import Editor from '@/components/editor_yopta'
 import { File } from "lucide-react";
 // import { CourseProgressButton } from "./_components/course-progress-button";
 import { CourseProgressButton } from "@/app/(course)/courses/[courseId]/chapters/[chapterId]/_components/course-progress-button";
-import { YooptaValue } from '@/lib/yopta/initialData'
+import { YooEditor, YooptaContentValue } from '@yoopta/editor/dist/editor/types'
 
 
 const ChapterIdPage = async ({
@@ -95,7 +96,13 @@ const ChapterIdPage = async ({
             </div>
             <Separator />
             <div className="mt-4">
-              <Preview value={chapter.descriptionEditor! as YooptaValue[]} />
+              {/* <Preview value={chapter.descriptionEditor! as YooptaValue[]} /> */}
+              <Editor
+                key="readonly-editor" // Add a unique key to force re-render on update
+                value={chapter.descriptionEditor! as YooptaContentValue}
+                onChange={()=>{}}
+                readOnly={true} // Example: Pass readOnly based on state or props
+              />
             </div>
             {!!attachments.length && (
               <>

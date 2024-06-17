@@ -26,6 +26,8 @@ import { cn } from '@/lib/utils'
 // import { Editor } from '@/components/editor'
 // import Editor from '@/components/editor_lexical'
 import Editor from '@/components/editor_yopta'
+import { YooEditor, YooptaContentValue } from '@yoopta/editor/dist/editor/types'
+
 // import NoteViewer from '@/components/editor_lexical'
 // import Show from '@/components/show'
 // import Preview from '@/components/preview'
@@ -44,7 +46,7 @@ import Editor from '@/components/editor_yopta'
 //   HeadingTwoElement,
 //   HeadingThreeElement,
 // } from '@yoopta/headings'
-import { YooptaValue } from '@/lib/yopta/initialData'
+// import { YooptaValue } from '@/lib/yopta/initialData'
 
 
 
@@ -63,8 +65,8 @@ export const ChapterDescriptionForm = ({
 }: ChapterDescriptionFormProps) => {
 
   const [isEditing, setIsEditing] = useState(false)
-  const [editorContent, setEditorContent] = useState(
-    initialData?.descriptionEditor!
+  const [editorContent, setEditorContent] = useState<YooptaContentValue>(
+    initialData?.descriptionEditor! as YooptaContentValue
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -132,7 +134,7 @@ export const ChapterDescriptionForm = ({
         <div className="p-2">
           <Editor
             key="editable-editor" // Add a unique key to force re-render on update
-            value={initialData?.descriptionEditor!}
+            value={initialData?.descriptionEditor! as YooptaContentValue}
             onChange={setEditorContent}
             readOnly={false} // Example: Pass readOnly based on state or props
           />

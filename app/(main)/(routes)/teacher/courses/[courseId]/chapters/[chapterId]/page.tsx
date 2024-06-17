@@ -11,7 +11,7 @@ import { ChapterAccessForm } from './_components/chapter-access-form'
 import { ChapterVideoForm } from './_components/chapter-video-form'
 import { Banner } from '@/components/banner'
 import { ChapterActions } from './_components/chapter-actions'
-import {ChapterEditorForm} from './_components/chapter-editor-form'
+import { ChapterEditorForm } from './_components/chapter-editor-form'
 
 const ChapterIdPage = async ({
   params,
@@ -113,11 +113,11 @@ const ChapterIdPage = async ({
         </div>
 
         <div className="grid grid-cols-1 gap-2 mt-4">
-          <ChapterEditorForm
+          {/* <ChapterEditorForm
             initialData={chapter}
             courseId={params.courseId}
             chapterId={params.chapterId}
-          />
+          /> */}
           <ChapterDescriptionForm
             initialData={chapter}
             courseId={params.courseId}

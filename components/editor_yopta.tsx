@@ -1,9 +1,11 @@
+import { JsonObject, JsonArray } from 'type-fest'
 import YooptaEditor, {
   createYooptaEditor,
   Elements,
   Blocks,
   useYooptaEditor,
 } from '@yoopta/editor'
+import { YooEditor, YooptaContentValue } from '@yoopta/editor/dist/editor/types'
 
 import Paragraph from '@yoopta/paragraph'
 import Blockquote from '@yoopta/blockquote'
@@ -175,25 +177,18 @@ const TOOLS = {
 
 const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight]
 
-// interface EditorProps {
-//   value: YooptaValue[]
-//   onChange: (value: YooptaValue[]) => void
-// }
+interface EditorProps {
+  value: YooptaContentValue
+  onChange: (value: YooptaContentValue) => void
+  readOnly?: boolean
+}
 
 // @ts-ignore
-export default function Editor({ value, onChange, readOnly = false }) {
-  // export default function Editor({ value, onChange }: EditorProps) {
-  // const [editorContent, setEditorContent] = useState(value)
-  // const [editorValue, setEditorValue] = useState<YooptaValue[]>(initalValue)
-  // list of marks should be placed inside your component
-  // const marks = [Bold, Italic, CodeMark, Underline, Strike]
-
-  // console.log('yopta val: ', editorContent)
-
-  // Update the editor content when the value prop changes
-  // useEffect(() => {
-  //   setEditorContent(value)
-  // }, [value])
+export default function Editor({
+  value,
+  onChange,
+  readOnly = false,
+}: EditorProps) {
 
   // console.log('value in editort: ', value)
 
@@ -203,6 +198,7 @@ export default function Editor({ value, onChange, readOnly = false }) {
   useEffect(() => {
     const handleChange = () => {
       const newValue = editor.getEditorValue()
+      console.log('type of editor value: ', newValue)
       onChange(newValue)
     }
     editor.on('change', handleChange)
