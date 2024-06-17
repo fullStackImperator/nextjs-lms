@@ -1,58 +1,22 @@
 'use client'
 
-import * as z from 'zod'
 import axios from 'axios'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { Chapter } from '@prisma/client'
 
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormLabel,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
 
 
-// YOOPTA EDITOR
-// import { Editor } from '@/components/editor'
-// import Editor from '@/components/editor_yopta'
-
 // LEXICAL EDITOR
 import Editor from './editorMe'
 import playgroundTemplate from '@/templates/Playground.json'
-// import type { EditorDocument } from '@/types'
 import type { SerializedEditorState } from 'lexical'
-
-
-import Preview from '@/components/preview'
-// import { Preview } from '@/components/preview'
-
-import type { ParagraphElement } from '@yoopta/paragraph'
-import type { BlockquoteElement } from '@yoopta/blockquote'
-import type { CodeElement } from '@yoopta/code'
-import type { EmbedElement } from '@yoopta/embed'
-import type { ImageElement } from '@yoopta/image'
-import type { LinkElement } from '@yoopta/link'
-import type { CalloutElement } from '@yoopta/callout'
-import type { VideoElement } from '@yoopta/video'
-import type {
-  HeadingOneElement,
-  HeadingTwoElement,
-  HeadingThreeElement,
-} from '@yoopta/headings'
-import { YooptaValue } from '@/lib/yopta/initialData'
 
 interface ChapterEditorFormProps {
   initialData: Chapter
@@ -81,7 +45,7 @@ export const ChapterEditorForm = ({
   chapterId,
 }: ChapterEditorFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [editorContent, setEditorContent] = useState<YooptaValue[]>([])
+  const [editorContent, setEditorContent] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -135,10 +99,6 @@ export const ChapterEditorForm = ({
       {isEditing && (
         <div className="p-2 bg-white">
           <Editor document={document} />
-          {/* <Editor
-            value={initialData?.descriptionEditor! as YooptaValue[]}
-            onChange={setEditorContent}
-          /> */}
           <div className="flex items-center gap-x-2">
             <Button onClick={onSubmit} disabled={isSubmitting} className="mt-4">
               {isSubmitting ? 'Submitting...' : 'Save'}
