@@ -64,6 +64,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           </div>
           <div className="grid grid-cols-2 items-center justify-center gap-6 sm:grid-cols-3 md:grid-cols-4 lg:gap-8">
             {levels.map(({ level }) => (
+              level !== null && (
               <Link
                 key={level}
                 href={`/projekte/${level}`}
@@ -72,9 +73,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
                 <Card>
                   <CardContent className="flex flex-col items-center gap-2 p-6">
                     <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-full ${getLevelColor(
-                        level
-                      )}`}
+                      className={`flex h-12 w-12 items-center justify-center rounded-full ${getLevelColor(level)}`}
                     >
                       <div className="h-6 w-6 rounded-full bg-gray-900 dark:bg-gray-50" />
                     </div>
@@ -82,6 +81,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
                   </CardContent>
                 </Card>
               </Link>
+              )
             ))}
             <Link
               href={`/projekte/alle-projekte`}
