@@ -14,7 +14,6 @@ import {
 } from 'react-icons/fc'
 import { IconType } from 'react-icons'
 import { CategoryItem } from './category-item'
-// import { CategoryItem } from '../(routes)/search/_components/category-item'
 
 interface CategoriesProps {
   categories: Category[]

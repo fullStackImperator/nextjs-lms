@@ -58,6 +58,7 @@ model Course {
 
   // categoryId String?
   // category Category? @relation(fields: [categoryId], references: [id])
+  faecher Fach[] // Define the many-to-many relationship with Category
   categories Category[] // Define the many-to-many relationship with Category
 
 
@@ -75,6 +76,12 @@ model Course {
 
   @@index([userId])
   @@fulltext([title])
+}
+
+model Fach {
+  id String @id @default(uuid())
+  name String @unique
+  courses Course[]
 }
 
 model Category {
