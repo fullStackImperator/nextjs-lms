@@ -37,7 +37,7 @@ import LinkTool, { DefaultLinkToolRender } from '@yoopta/link-tool'
 
 // import { uploadToCloudinary } from '@/utils/cloudinary'
 import { useEffect, useMemo, useRef } from 'react'
-import { WITH_BASIC_INIT_VALUE } from '@/lib/yopta/initValue'
+// import { WITH_BASIC_INIT_VALUE } from '@/lib/yopta/initValue'
 
 // import { uploadToCloudinary } from '@/utils/cloudinary'
 // import { YooptaValue } from '@/lib/yopta/initialData'
@@ -181,7 +181,7 @@ const MARKS = [Bold, Italic, CodeMark, Underline, Strike, Highlight]
 
 interface EditorProps {
   value: YooptaContentValue
-  onChange: (value: YooptaContentValue) => void
+  onChange?: (value: YooptaContentValue) => void
   readOnly?: boolean
 }
 
@@ -198,14 +198,15 @@ export default function Editor({
   const selectionRef = useRef(null)
 
   useEffect(() => {
-    const handleChange = () => {
-      const newValue = editor.getEditorValue()
-      console.log('type of editor value: ', newValue)
-      onChange(newValue)
-    }
-    editor.on('change', handleChange)
-    return () => {
-      editor.off('change', handleChange)
+    if (onChange) {
+      const handleChange = () => {
+        const newValue = editor.getEditorValue()
+        onChange(newValue)
+      }
+      editor.on('change', handleChange)
+      return () => {
+        editor.off('change', handleChange)
+      }
     }
   }, [editor, onChange])
 

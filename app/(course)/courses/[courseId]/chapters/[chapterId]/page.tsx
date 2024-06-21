@@ -100,7 +100,7 @@ const ChapterIdPage = async ({
               <Editor
                 key="readonly-editor" // Add a unique key to force re-render on update
                 value={chapter.descriptionEditor! as YooptaContentValue}
-                onChange={()=>{}}
+                // onChange={()=>{}}
                 readOnly={true} // Example: Pass readOnly based on state or props
               />
             </div>
